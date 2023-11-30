@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(App());
+  runApp(const App());
 }
 
 // State for the app
@@ -53,7 +53,7 @@ class App extends StatelessWidget {
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         ),
-        home: HomePage(),
+        home: const HomePage(),
       ),
     );
   }
@@ -61,6 +61,8 @@ class App extends StatelessWidget {
 
 // Home page for the app
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -75,9 +77,9 @@ class _HomePageState extends State<HomePage> {
     Widget page;
     switch (selectedIndex) {
       case 0:
-        page = GeneratorPage();
+        page = const GeneratorPage();
       case 1:
-        page = FavoritesPage();
+        page = const FavoritesPage();
       default:
         throw Exception('Invalid index: $selectedIndex');
     }
@@ -86,7 +88,7 @@ class _HomePageState extends State<HomePage> {
     var mainArea = ColoredBox(
       color: colorScheme.surfaceVariant,
       child: AnimatedSwitcher(
-        duration: Duration(milliseconds: 400),
+        duration: const Duration(milliseconds: 400),
         child: page,
       ),
     );
@@ -100,7 +102,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Expanded(child: mainArea),
                 BottomNavigationBar(
-                  items: [
+                  items: const [
                     BottomNavigationBarItem(
                       icon: Icon(Icons.home),
                       label: 'Home',
@@ -126,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                 SafeArea(
                   child: NavigationRail(
                     extended: constraints.maxWidth >= 600,
-                    destinations: [
+                    destinations: const [
                       NavigationRailDestination(
                         icon: Icon(Icons.home),
                         label: Text('Home'),
@@ -155,6 +157,8 @@ class _HomePageState extends State<HomePage> {
 }
 
 class FavoritesPage extends StatelessWidget {
+  const FavoritesPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<AppState>();
@@ -164,7 +168,7 @@ class FavoritesPage extends StatelessWidget {
     );
 
     if (appState.favorites.isEmpty) {
-      return Center(
+      return const Center(
         child: Text('No favorites yet.'),
       );
     }
@@ -178,7 +182,7 @@ class FavoritesPage extends StatelessWidget {
         for (var pair in appState.favorites)
           ListTile(
             leading: IconButton(
-              icon: Icon(Icons.delete_outline, semanticLabel: 'Delete'),
+              icon: const Icon(Icons.delete_outline, semanticLabel: 'Delete'),
               color: theme.colorScheme.primary,
               onPressed: () {
                 appState.removeFavorite(pair);
@@ -196,6 +200,8 @@ class FavoritesPage extends StatelessWidget {
 }
 
 class GeneratorPage extends StatelessWidget {
+  const GeneratorPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     var state = context.watch<AppState>();
@@ -213,7 +219,7 @@ class GeneratorPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(
+          const Expanded(
             flex: 3,
             child: HistoryListView(),
           ),
@@ -231,14 +237,14 @@ class GeneratorPage extends StatelessWidget {
                     state.toggleFavorite(pair);
                   },
                   icon: Icon(icon),
-                  label: Text('Like'),
+                  label: const Text('Like'),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () {
                     state.getNext();
                   },
-                  child: Text('Next'),
+                  child: const Text('Next'),
                 ),
               ],
             ),
@@ -250,7 +256,7 @@ class GeneratorPage extends StatelessWidget {
 }
 
 class HistoryListView extends StatefulWidget {
-  const HistoryListView({Key? key}) : super(key: key);
+  const HistoryListView({super.key});
 
   @override
   State<HistoryListView> createState() => _HistoryListViewState();
@@ -288,7 +294,7 @@ class _HistoryListViewState extends State<HistoryListView> {
       child: AnimatedList(
         key: _key,
         reverse: true,
-        padding: EdgeInsets.only(top: 100),
+        padding: const EdgeInsets.only(top: 100),
         initialItemCount: appState.history.length,
         itemBuilder: (context, index, animation) {
           final pair = appState.history[index];
@@ -299,8 +305,9 @@ class _HistoryListViewState extends State<HistoryListView> {
                 onPressed: () {
                   appState.toggleFavorite(pair);
                 },
-                icon:
-                    appState.favorites.contains(pair) ? Icon(Icons.favorite, size: 18) : SizedBox(),
+                icon: appState.favorites.contains(pair)
+                    ? const Icon(Icons.favorite, size: 18)
+                    : const SizedBox(),
                 label: Text(
                   pair.asLowerCase,
                   style: textStyle,
