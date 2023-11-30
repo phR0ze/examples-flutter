@@ -9,34 +9,49 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text(Consts.appName),
+        leading: IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.menu),
+        ),
+        title: const Text(Const.appName),
         actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.grid_on),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Transform.scale(
+              scale: 1.1,
+              child: const Icon(Icons.add_box),
+            ),
+          ),
           IconButton(
             onPressed: () {
               showAboutDialog(
                 context: context,
-                applicationName: Consts.appName,
-                applicationVersion: Consts.appVersion,
+                applicationName: Const.appName,
+                applicationVersion: Const.appVersion,
                 applicationIcon: const Icon(Icons.image),
                 children: [
                   const Text('This is a simple image viewer app.'),
                 ],
               );
             },
-            icon: const Icon(Icons.settings),
+            // Push the icon down a bit to make it not look retarded
+            // Scale a little to match the grid size
+            icon: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 1.5),
+              child: Transform.scale(
+                scale: 1.1,
+                child: const Icon(Icons.add_a_photo),
+              ),
+            ),
           ),
         ],
       ),
@@ -44,19 +59,13 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            Image.asset('assets/images/placeholder.png'),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        onPressed: () {},
+        tooltip: 'Add folder',
         child: const Icon(Icons.add),
       ),
     );
