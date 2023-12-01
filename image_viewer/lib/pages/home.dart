@@ -5,6 +5,7 @@ import 'package:image_viewer/const.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_viewer/log.dart';
 import 'package:image_viewer/utils/file_ext.dart';
+import 'package:image_viewer/utils/mime_ext.dart' as mime;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -25,7 +26,18 @@ class _HomePageState extends State<HomePage> {
 
     // Asynchronously load the folders from the root
     await for (var x in Directory(root).list(followLinks: false)) {
-      log.yellow(x.path);
+      if (x is Directory) {
+        log.yellow('Dir: ${x.path}');
+      } else {
+        // Filter formats
+        if (mime.isImage(x.path)) {
+          log.green('Image: ${x.path}');
+        } else if (mime.isVideo(x.path)) {
+          log.cyan('Video: ${x.path}');
+        } else {
+          log.red('Unknown: ${x.path}');
+        }
+      }
       folders.add(x);
     }
 
@@ -57,7 +69,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var image = Image.asset('assets/images/placeholder.png');
+    var image = Image.asset(Const.imagePlaceholder);
     // if (folders.isNotEmpty) {
     //   image = Image.file(File(folders.values.first.first));
     // }
@@ -126,8 +138,10 @@ class _HomePageState extends State<HomePage> {
                 return ListTile(
                   title: Text(entity.name),
                   subtitle: Text(entity.path),
-                  onTap: () async {
-                    await showDialog(context: context, builder: (_) => ImageDialog(entity));
+                  onTap: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) => ImageDialog(entity)));
+                    //await showDialog(context: context, builder: (_) => ImageDialog(entity));
                   },
                 );
               },
