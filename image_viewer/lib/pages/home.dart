@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:image_viewer/const.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_viewer/log.dart';
-import 'package:path/path.dart' as path;
 import 'package:image_viewer/utils/file_ext.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,8 +20,8 @@ class _HomePageState extends State<HomePage> {
   Future<List<FileSystemEntity>> _loadFolders() async {
     List<FileSystemEntity> folders = [];
 
-    // Hardcode the root folder for now
-    var root = '${Platform.environment['HOME']}${Platform.pathSeparator}Pictures';
+    // Pull root folders from persisted config
+    var root = '${Platform.environment['HOME']}${Platform.pathSeparator}Pictures/2023/2023.01/';
 
     // Asynchronously load the folders from the root
     await for (var x in Directory(root).list(followLinks: false)) {
@@ -123,13 +122,12 @@ class _HomePageState extends State<HomePage> {
             return ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (BuildContext context, int index) {
+                var entity = snapshot.data!.elementAt(index);
                 return ListTile(
-                  title: Text(snapshot.data!.elementAt(index).name),
-                  subtitle: Text(snapshot.data!.elementAt(index).path),
-                  onTap: () {
-                    // setState(() {
-                    //   image = Image.file(File(folders.values.elementAt(index).first));
-                    // });
+                  title: Text(entity.name),
+                  subtitle: Text(entity.path),
+                  onTap: () async {
+                    await showDialog(context: context, builder: (_) => ImageDialog(entity));
                   },
                 );
               },
@@ -139,6 +137,36 @@ class _HomePageState extends State<HomePage> {
             return const Center(child: CircularProgressIndicator());
           }
         },
+      ),
+    );
+  }
+}
+
+class ImageDialog extends StatelessWidget {
+  final FileSystemEntity entity;
+  const ImageDialog(this.entity, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: GestureDetector(
+        // Allow for vertical swiping to close the dialog
+        onVerticalDragUpdate: (details) {
+          int sensitivity = 10;
+          if (details.delta.dy > sensitivity || details.delta.dy < -sensitivity) {
+            Navigator.of(context).pop();
+          }
+        },
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: FileImage(File(entity.path)),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
       ),
     );
   }
