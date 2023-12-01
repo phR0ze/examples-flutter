@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 Logger get log => Logger();
 
 class Logger {
+  // Singleton pattern with factory constructor
   Logger._internal();
   static final Logger _singleton = Logger._internal();
 

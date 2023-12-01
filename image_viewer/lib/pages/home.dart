@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:image_viewer/const.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_viewer/log.dart';
+import 'package:path/path.dart' as path;
+import 'package:image_viewer/utils/file_ext.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,6 +16,22 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var folders = SplayTreeMap<String, List<String>>();
+
+  // Load the persisted folders on startup
+  Future<List<FileSystemEntity>> _loadFolders() async {
+    List<FileSystemEntity> folders = [];
+
+    // Hardcode the root folder for now
+    var root = '${Platform.environment['HOME']}${Platform.pathSeparator}Pictures';
+
+    // Asynchronously load the folders from the root
+    await for (var x in Directory(root).list(followLinks: false)) {
+      log.yellow(x.path);
+      folders.add(x);
+    }
+
+    return folders;
+  }
 
   void _pickFolder() async {
     final dir = await FilePicker.platform.getDirectoryPath(
@@ -40,6 +58,11 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var image = Image.asset('assets/images/placeholder.png');
+    // if (folders.isNotEmpty) {
+    //   image = Image.file(File(folders.values.first.first));
+    // }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -93,13 +116,29 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image.asset('assets/images/placeholder.png'),
-          ],
-        ),
+      body: FutureBuilder(
+        future: _loadFolders(),
+        builder: (BuildContext context, AsyncSnapshot<List<FileSystemEntity>> snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  title: Text(snapshot.data!.elementAt(index).name),
+                  subtitle: Text(snapshot.data!.elementAt(index).path),
+                  onTap: () {
+                    // setState(() {
+                    //   image = Image.file(File(folders.values.elementAt(index).first));
+                    // });
+                  },
+                );
+              },
+            );
+          } else {
+            // Show a loading indicator while waiting for the folders to load
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
       ),
     );
   }

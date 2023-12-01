@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:image_viewer/const.dart';
-import 'package:image_viewer/log.dart';
 import 'package:image_viewer/pages/home.dart';
 
 class App extends StatelessWidget {
