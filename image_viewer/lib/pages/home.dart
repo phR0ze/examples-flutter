@@ -1,5 +1,9 @@
+import 'dart:collection';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_viewer/const.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:image_viewer/log.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,6 +13,31 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var folders = SplayTreeMap<String, List<String>>();
+
+  void _pickFolder() async {
+    final dir = await FilePicker.platform.getDirectoryPath(
+      dialogTitle: 'Choose a folder to include',
+      initialDirectory: '${Platform.environment['HOME']}${Platform.pathSeparator}Pictures',
+    );
+
+    // Load the images from the folder
+    if (dir != null) {
+      setState(() {
+        log.cyan(dir);
+
+        if (!folders.containsKey(dir)) {
+          folders[dir] = [];
+          Directory(dir).listSync(followLinks: false).forEach((x) {
+            folders[dir]!.add(x.path);
+            log.yellow(x.path);
+          });
+          return;
+        }
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,17 +49,25 @@ class _HomePageState extends State<HomePage> {
         ),
         title: const Text(Const.appName),
         actions: [
+          // Change the layout of the view
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.grid_on),
           ),
+
+          // Pick a new folder to include
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              _pickFolder();
+            },
+            // Scale a little to match the grid size
             icon: Transform.scale(
               scale: 1.1,
               child: const Icon(Icons.add_box),
             ),
           ),
+
+          // Launch the camera or screen capture tool
           IconButton(
             onPressed: () {
               showAboutDialog(
@@ -43,6 +80,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               );
             },
+
             // Push the icon down a bit to make it not look retarded
             // Scale a little to match the grid size
             icon: Padding(
@@ -62,11 +100,6 @@ class _HomePageState extends State<HomePage> {
             Image.asset('assets/images/placeholder.png'),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Add folder',
-        child: const Icon(Icons.add),
       ),
     );
   }

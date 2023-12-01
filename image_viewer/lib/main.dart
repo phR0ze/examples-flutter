@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_viewer/const.dart';
+import 'package:image_viewer/log.dart';
 import 'package:image_viewer/pages/home.dart';
-
-void main() {
-  runApp(const App());
-}
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -21,4 +18,8 @@ class App extends StatelessWidget {
       home: const HomePage(),
     );
   }
+}
+
+void main() {
+  runApp(const App());
 }
