@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_viewer/const.dart';
-import 'package:image_viewer/utils/file_ext.dart';
+import 'package:image_viewer/utils/file.dart';
 
 class FolderPage extends StatelessWidget {
   final FileSystemEntity folder;

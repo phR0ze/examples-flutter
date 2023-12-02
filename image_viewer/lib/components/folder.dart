@@ -1,16 +1,8 @@
 import 'dart:io';
-import 'package:path/path.dart' as path;
-
 import '../const.dart';
-import '../log.dart';
-import '../model/folder.dart';
-import '../utils/mime_ext.dart' as mime;
-
-extension FileExtention on FileSystemEntity {
-  String get name {
-    return path.basename(this.path);
-  }
-}
+import '../utils/log.dart';
+import '../utils/file.dart';
+import '../utils/mime.dart' as mime;
 
 // Asynchronously load files recursively for the given path.
 Future<Folder> loadFolders(String path) async {
@@ -43,4 +35,27 @@ Future<Folder> loadFolders(String path) async {
   }
 
   return folder;
+}
+
+class Folder {
+  final String _path;
+  int count = 0;
+  final List<Folder> folders = [];
+  final List<FileSystemEntity> files = [];
+
+  String get path => _path;
+
+  Folder(String path) : _path = path;
+
+  // Add a file
+  addFile(FileSystemEntity file) {
+    count++;
+    files.add(file);
+  }
+
+  // Add a folder
+  addFolder(Folder folder) {
+    count++;
+    folders.add(folder);
+  }
 }

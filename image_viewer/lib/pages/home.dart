@@ -2,9 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import '../const.dart';
-import '../utils/file_ext.dart';
 import '../widgets/folder_cover.dart';
-import '../model/folder.dart';
+import '../components/folder.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
