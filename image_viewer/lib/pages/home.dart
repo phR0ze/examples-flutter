@@ -102,43 +102,46 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: FutureBuilder(
-        future: _loadFolders(),
-        builder: (BuildContext context, AsyncSnapshot<List<Folder>> snapshot) {
-          if (snapshot.hasData && snapshot.data != null) {
-            return CustomScrollView(
-              slivers: [
-                snapshot.data!.isEmpty
-                    ? const SliverToBoxAdapter(
-                        child: Center(
-                          child: Text('No folders found'),
+      body: LayoutBuilder(builder: (context, constraints) {
+        return FutureBuilder(
+          future: _loadFolders(),
+          builder: (BuildContext context, AsyncSnapshot<List<Folder>> snapshot) {
+            if (snapshot.hasData && snapshot.data != null) {
+              return CustomScrollView(
+                slivers: [
+                  snapshot.data!.isEmpty
+                      ? const SliverToBoxAdapter(
+                          child: Center(child: Text('No folders found')),
+                        )
+                      : SliverGrid(
+                          // Build folder covers lazily as we scroll with SliverGrid
+                          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: constraints.maxWidth >= 600
+                                  ? MediaQuery.of(context).size.width * 0.1
+                                  : MediaQuery.of(context).size.width * 0.6,
+                              mainAxisSpacing: 2.0,
+                              crossAxisSpacing: 2.0),
+                          delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index) {
+                              var folder = snapshot.data!.elementAt(index);
+                              return FolderCover(
+                                folderPath: folder.path,
+                                folderImagePath: folder.files.first.path,
+                                folderImageCount: folder.count,
+                              );
+                            },
+                            childCount: snapshot.data!.length,
+                          ),
                         ),
-                      )
-                    : SliverGrid(
-                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.6,
-                            mainAxisSpacing: 2.0,
-                            crossAxisSpacing: 2.0),
-                        delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                            var folder = snapshot.data!.elementAt(index);
-                            return FolderCover(
-                              folderPath: folder.path,
-                              folderImagePath: folder.files.first.path,
-                              folderImageCount: folder.count,
-                            );
-                          },
-                          childCount: snapshot.data!.length,
-                        ),
-                      ),
-              ],
-            );
-          } else {
-            // Show a loading indicator while waiting for the folders to load
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
+                ],
+              );
+            } else {
+              // Show a loading indicator while waiting for the folders to load
+              return const Center(child: CircularProgressIndicator());
+            }
+          },
+        );
+      }),
     );
   }
 }
