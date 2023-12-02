@@ -113,13 +113,7 @@ class _HomePageState extends State<HomePage> {
                           child: Center(child: Text('No folders found')),
                         )
                       : SliverGrid(
-                          // Build folder covers lazily as we scroll with SliverGrid
-                          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent: constraints.maxWidth >= 600
-                                  ? MediaQuery.of(context).size.width * 0.1
-                                  : MediaQuery.of(context).size.width * 0.6,
-                              mainAxisSpacing: 2.0,
-                              crossAxisSpacing: 2.0),
+                          // Build the folder covers
                           delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index) {
                               var folder = snapshot.data!.elementAt(index);
@@ -131,6 +125,13 @@ class _HomePageState extends State<HomePage> {
                             },
                             childCount: snapshot.data!.length,
                           ),
+                          // Adjust the folder covers widget's size
+                          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: constraints.maxWidth >= 600
+                                  ? MediaQuery.of(context).size.width * 0.1
+                                  : MediaQuery.of(context).size.width * 0.6,
+                              mainAxisSpacing: 2.0,
+                              crossAxisSpacing: 2.0),
                         ),
                 ],
               );
