@@ -1,11 +1,10 @@
-import 'dart:collection';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_viewer/const.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:image_viewer/log.dart';
-import 'package:image_viewer/utils/file_ext.dart';
-import 'package:image_viewer/utils/mime_ext.dart' as mime;
+import '../const.dart';
+import '../utils/file_ext.dart';
+import '../widgets/folder_cover.dart';
+import '../model/folder.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,65 +14,41 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var folders = SplayTreeMap<String, List<String>>();
+  // Load the persisted folders on startup.
+  // This should only be done a needed as it is costly.
+  Future<List<Folder>> _loadFolders() async {
+    var rootPath = '${Platform.environment['HOME']}${Platform.pathSeparator}Pictures/2023/';
 
-  // Load the persisted folders on startup
-  Future<List<FileSystemEntity>> _loadFolders() async {
-    List<FileSystemEntity> folders = [];
-
-    // Pull root folders from persisted config
-    var root = '${Platform.environment['HOME']}${Platform.pathSeparator}Pictures/2023/2023.01/';
-
-    // Asynchronously load the folders from the root
-    await for (var x in Directory(root).list(followLinks: false)) {
-      if (x is Directory) {
-        log.yellow('Dir: ${x.path}');
-      } else {
-        // Filter formats
-        if (mime.isImage(x.path)) {
-          log.green('Image: ${x.path}');
-        } else if (mime.isVideo(x.path)) {
-          log.cyan('Video: ${x.path}');
-        } else {
-          log.red('Unknown: ${x.path}');
-        }
-      }
-      folders.add(x);
-    }
-
-    return folders;
+    // Not reading files from root only folders?
+    var rootFolder = await loadFolders(rootPath);
+    return rootFolder.folders;
   }
 
-  void _pickFolder() async {
-    final dir = await FilePicker.platform.getDirectoryPath(
-      dialogTitle: 'Choose a folder to include',
-      initialDirectory: '${Platform.environment['HOME']}${Platform.pathSeparator}Pictures',
-    );
+  // void _pickFolder() async {
+  //   final dir = await FilePicker.platform.getDirectoryPath(
+  //     dialogTitle: 'Choose a folder to include',
+  //     initialDirectory: '${Platform.environment['HOME']}${Platform.pathSeparator}Pictures',
+  //   );
 
-    // Load the images from the folder
-    if (dir != null) {
-      setState(() {
-        log.cyan(dir);
+  //   // Load the images from the folder
+  //   if (dir != null) {
+  //     setState(() {
+  //       log.cyan(dir);
 
-        if (!folders.containsKey(dir)) {
-          folders[dir] = [];
-          Directory(dir).listSync(followLinks: false).forEach((x) {
-            folders[dir]!.add(x.path);
-            log.yellow(x.path);
-          });
-          return;
-        }
-      });
-    }
-  }
+  //       if (!tree.containsKey(dir)) {
+  //         tree[dir] = [];
+  //         Directory(dir).listSync(followLinks: false).forEach((x) {
+  //           tree[dir]!.add(x.path);
+  //           log.yellow(x.path);
+  //         });
+  //         return;
+  //       }
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
-    var image = Image.asset(Const.imagePlaceholder);
-    // if (folders.isNotEmpty) {
-    //   image = Image.file(File(folders.values.first.first));
-    // }
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -92,7 +67,7 @@ class _HomePageState extends State<HomePage> {
           // Pick a new folder to include
           IconButton(
             onPressed: () {
-              _pickFolder();
+              // _pickFolder();
             },
             // Scale a little to match the grid size
             icon: Transform.scale(
@@ -129,22 +104,34 @@ class _HomePageState extends State<HomePage> {
       ),
       body: FutureBuilder(
         future: _loadFolders(),
-        builder: (BuildContext context, AsyncSnapshot<List<FileSystemEntity>> snapshot) {
-          if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (BuildContext context, int index) {
-                var entity = snapshot.data!.elementAt(index);
-                return ListTile(
-                  title: Text(entity.name),
-                  subtitle: Text(entity.path),
-                  onTap: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) => ImageDialog(entity)));
-                    //await showDialog(context: context, builder: (_) => ImageDialog(entity));
-                  },
-                );
-              },
+        builder: (BuildContext context, AsyncSnapshot<List<Folder>> snapshot) {
+          if (snapshot.hasData && snapshot.data != null) {
+            return CustomScrollView(
+              slivers: [
+                snapshot.data!.isEmpty
+                    ? const SliverToBoxAdapter(
+                        child: Center(
+                          child: Text('No folders found'),
+                        ),
+                      )
+                    : SliverGrid(
+                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.6,
+                            mainAxisSpacing: 2.0,
+                            crossAxisSpacing: 2.0),
+                        delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                            var folder = snapshot.data!.elementAt(index);
+                            return FolderCover(
+                              folderPath: folder.path,
+                              folderImagePath: folder.files.first.path,
+                              folderImageCount: folder.count,
+                            );
+                          },
+                          childCount: snapshot.data!.length,
+                        ),
+                      ),
+              ],
             );
           } else {
             // Show a loading indicator while waiting for the folders to load
