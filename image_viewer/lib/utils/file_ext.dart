@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:path/path.dart' as path;
 
+import '../const.dart';
 import '../log.dart';
 import '../model/folder.dart';
 import '../utils/mime_ext.dart' as mime;
@@ -17,6 +18,10 @@ Future<Folder> loadFolders(String path) async {
 
   await for (var x in Directory(folder.path).list(followLinks: false)) {
     if (x is Directory) {
+      // Skipping well-known folders that won't have data we care about
+      if (Const.skipDirs.contains(x.name)) {
+        continue;
+      }
       var subFolder = await loadFolders(x.path);
       if (subFolder.files.isNotEmpty) {
         log.green('Adding dir: ${x.path}');
@@ -27,12 +32,12 @@ Future<Folder> loadFolders(String path) async {
     } else {
       // Filter formats
       if (mime.isImage(x.path)) {
-        log.cyan('Image: ${x.path}');
+        //log.cyan('Image: ${x.path}');
         folder.addFile(x);
       } else if (mime.isVideo(x.path)) {
-        log.yellow('Video: ${x.path}');
+        //log.yellow('Video: ${x.path}');
       } else {
-        log.red('Unknown: ${x.path}');
+        //log.red('Unknown: ${x.path}');
       }
     }
   }
