@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import '../const.dart';
+import '../utils/log.dart';
 import '../widgets/folder_cover.dart';
 import '../components/folder.dart';
 
@@ -102,37 +103,42 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: LayoutBuilder(builder: (context, constraints) {
+        log.cyan('Screen width: ${constraints.maxWidth}');
         return FutureBuilder(
           future: _loadFolders(),
           builder: (BuildContext context, AsyncSnapshot<List<Folder>> snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
               return CustomScrollView(
                 slivers: [
-                  snapshot.data!.isEmpty
-                      ? const SliverToBoxAdapter(
-                          child: Center(child: Text('No folders found')),
-                        )
-                      : SliverGrid(
-                          // Build the folder covers
-                          delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                              var folder = snapshot.data!.elementAt(index);
-                              return FolderCover(
-                                folderPath: folder.path,
-                                folderImagePath: folder.files.first.path,
-                                folderImageCount: folder.count,
-                              );
-                            },
-                            childCount: snapshot.data!.length,
+                  SliverPadding(
+                    padding: const EdgeInsets.all(Const.gridSpacing),
+                    sliver: snapshot.data!.isEmpty
+                        ? const SliverToBoxAdapter(
+                            child: Center(child: Text('No folders found')),
+                          )
+                        : SliverGrid(
+                            // Build the folder covers
+                            delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index) {
+                                var folder = snapshot.data!.elementAt(index);
+                                return FolderCover(
+                                  folderPath: folder.path,
+                                  folderImagePath: folder.files.first.path,
+                                  folderImageCount: folder.count,
+                                );
+                              },
+                              childCount: snapshot.data!.length,
+                            ),
+                            // Make folder cover size be responsive
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                //constraints.maxWidth >= 600
+                                //    ? MediaQuery.of(context).size.width * 0.1
+                                //    : MediaQuery.of(context).size.width * 0.6,
+                                mainAxisSpacing: Const.gridSpacing,
+                                crossAxisSpacing: Const.gridSpacing,
                           ),
-                          // Adjust the folder covers widget's size
-                          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent: constraints.maxWidth >= 600
-                                  ? MediaQuery.of(context).size.width * 0.1
-                                  : MediaQuery.of(context).size.width * 0.6,
-                              mainAxisSpacing: 2.0,
-                              crossAxisSpacing: 2.0),
-                        ),
+                  ),
                 ],
               );
             } else {

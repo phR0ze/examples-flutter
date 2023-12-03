@@ -8,4 +8,10 @@ class Const {
 
   // App configuration
   static const skipDirs = <String>['.git'];
+  static const cacheHeight = 400;
+  static const gridSpacing = 2.0;
+
+  // screen: 2560
+  static const ultraWideLayoutThreshold = 1200;
+  static const wideLayoutThreshold = 600;
 }

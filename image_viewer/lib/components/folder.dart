@@ -16,10 +16,10 @@ Future<Folder> loadFolders(String path) async {
       }
       var subFolder = await loadFolders(x.path);
       if (subFolder.files.isNotEmpty) {
-        log.green('Adding dir: ${x.path}');
+        //log.green('Adding dir: ${x.path}');
         folder.addFolder(subFolder);
       } else {
-        log.yellow('Skipping dir: ${x.path}');
+        //log.yellow('Skipping dir: ${x.path}');
       }
     } else {
       // Filter formats
