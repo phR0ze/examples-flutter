@@ -41,14 +41,14 @@ class HomePage extends StatelessWidget {
                           width: 200.0,
                           color: Colors.amber,
                           child: const Center(
-                            child: Text('Navigation'),
+                            child: Text('Navigation Rail'),
                           ),
                         ),
                         Expanded(
                           child: Container(
                             color: Colors.green,
                             child: const Center(
-                              child: Text('Main Content'),
+                              child: Text('Wide Content'),
                             ),
                           ),
                         ),
@@ -60,7 +60,7 @@ class HomePage extends StatelessWidget {
                           child: Container(
                             color: Colors.green,
                             child: const Center(
-                              child: Text('Main Content'),
+                              child: Text('Narrow Content'),
                             ),
                           ),
                         ),
@@ -68,7 +68,7 @@ class HomePage extends StatelessWidget {
                           height: 60.0,
                           color: Colors.amber,
                           child: const Center(
-                            child: Text('Navigation'),
+                            child: Text('Bottom Navigation'),
                           ),
                         ),
                       ],
