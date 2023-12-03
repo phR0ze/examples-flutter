@@ -45,12 +45,7 @@ class HomePage extends StatelessWidget {
                           ),
                         ),
                         Expanded(
-                          child: Container(
-                            color: Colors.green,
-                            child: const Center(
-                              child: Text('Wide Content'),
-                            ),
-                          ),
+                          child: Container(color: Colors.green, child: _buildContent()),
                         ),
                       ],
                     )
@@ -59,9 +54,7 @@ class HomePage extends StatelessWidget {
                         Expanded(
                           child: Container(
                             color: Colors.green,
-                            child: const Center(
-                              child: Text('Narrow Content'),
-                            ),
+                            child: _buildContent(),
                           ),
                         ),
                         Container(
@@ -79,4 +72,24 @@ class HomePage extends StatelessWidget {
       }),
     );
   }
+}
+
+GridView _buildContent() {
+  return GridView.count(
+    crossAxisCount: 3,
+    mainAxisSpacing: 2.0,
+    crossAxisSpacing: 2.0,
+    children: List.generate(100, (index) {
+      return _buildImage();
+    }),
+  );
+}
+
+GridTile _buildImage() {
+  return GridTile(
+      child: Image.asset(
+    'assets/images/placeholder.png',
+    fit: BoxFit.cover,
+    cacheWidth: 100,
+  ));
 }
