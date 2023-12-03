@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:provider/provider.dart';
+import '../components/state.dart';
 import '../const.dart';
 import '../utils/log.dart';
 import '../widgets/folder_cover.dart';
@@ -49,6 +51,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var state = context.watch<AppState>();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -58,10 +62,36 @@ class _HomePageState extends State<HomePage> {
         ),
         title: const Text(Const.appName),
         actions: [
-          // Change the layout of the view
+          // Zoom in the thumbnail images
           IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.grid_on),
+            onPressed: () {
+              setState(() {
+                state.zoomInImage();
+              });
+            },
+            icon: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 2.0, 0, 0),
+              child: Transform.scale(
+                scale: 1.3,
+                child: const Icon(Icons.zoom_in),
+              ),
+            ),
+          ),
+
+          // Zoom out the thumbnail images
+          IconButton(
+            onPressed: () {
+              setState(() {
+                state.zoomOutImage();
+              });
+            },
+            icon: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 2.0, 0, 0),
+              child: Transform.scale(
+                scale: 1.3,
+                child: const Icon(Icons.zoom_out),
+              ),
+            ),
           ),
 
           // Pick a new folder to include
@@ -108,11 +138,11 @@ class _HomePageState extends State<HomePage> {
         return FutureBuilder(
           future: _loadFolders(),
           builder: (BuildContext context, AsyncSnapshot<List<Folder>> snapshot) {
-            if (snapshot.hasData && snapshot.data != null) {
+            if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
               return CustomScrollView(
                 slivers: [
                   SliverPadding(
-                    padding: const EdgeInsets.all(Const.gridSpacing),
+                    padding: const EdgeInsets.all(Const.imageGridSpacing),
                     sliver: snapshot.data!.isEmpty
                         ? const SliverToBoxAdapter(
                             child: Center(child: Text('No folders found')),
@@ -131,10 +161,10 @@ class _HomePageState extends State<HomePage> {
                               childCount: snapshot.data!.length,
                             ),
                             // Make folder cover size be responsive
-                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 4,
-                              mainAxisSpacing: Const.gridSpacing,
-                              crossAxisSpacing: Const.gridSpacing,
+                            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: state.imageSize,
+                              mainAxisSpacing: Const.imageGridSpacing,
+                              crossAxisSpacing: Const.imageGridSpacing,
                             ),
                           ),
                   ),
@@ -156,16 +186,16 @@ class ImageDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      child: GestureDetector(
-        // Allow for vertical swiping to close the dialog
-        onVerticalDragUpdate: (details) {
-          int sensitivity = 10;
-          if (details.delta.dy > sensitivity || details.delta.dy < -sensitivity) {
-            Navigator.of(context).pop();
-          }
-        },
-        child: const SizedBox(
+    return GestureDetector(
+      // Allow for vertical swiping to close the dialog
+      onVerticalDragUpdate: (details) {
+        int sensitivity = 10;
+        if (details.delta.dy > sensitivity || details.delta.dy < -sensitivity) {
+          Navigator.of(context).pop();
+        }
+      },
+      child: const Dialog(
+        child: SizedBox(
           width: double.infinity,
           height: double.infinity,
           child: Center(child: Text('hello world')),

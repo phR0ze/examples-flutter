@@ -25,7 +25,7 @@ Future<Folder> loadExampleFolders() async {
     examples.addFolder(folder);
     for (var y
         in assetMap.keys.where((String y) => y.startsWith('${Const.assetImageExamples}/$x'))) {
-      log.cyan('Adding asset: $y');
+      // log.cyan('Adding asset: $y');
       folder.addFile(y);
     }
   }
