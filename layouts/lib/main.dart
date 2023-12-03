@@ -25,43 +25,35 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: LayoutBuilder(builder: (context, constraints) {
         if (constraints.maxWidth > 600) {
-          return Row(
+          return Column(
             children: [
               Container(
-                width: constraints.maxWidth * 0.25,
-                height: constraints.maxHeight,
-                color: Colors.pink,
+                height: 50.0,
+                color: Colors.blue,
                 child: const Center(
-                  child: Text('Right Sidebar'),
+                  child: Text('App Bar'),
                 ),
               ),
-              Column(
-                children: [
-                  Container(
-                    height: constraints.maxHeight * 0.15,
-                    width: constraints.maxWidth * 0.75,
-                    color: Colors.blueAccent,
-                    child: const Center(
-                      child: Text('Header'),
+              Expanded(
+                child: Row(
+                  children: [
+                    Container(
+                      width: 200.0,
+                      color: Colors.amber,
+                      child: const Center(
+                        child: Text('Navigation'),
+                      ),
                     ),
-                  ),
-                  Container(
-                    height: constraints.maxHeight * 0.75,
-                    width: constraints.maxWidth * 0.75,
-                    color: Colors.amber,
-                    child: const Center(
-                      child: Text('Main Content'),
+                    Expanded(
+                      child: Container(
+                        color: Colors.green,
+                        child: const Center(
+                          child: Text('Main Content'),
+                        ),
+                      ),
                     ),
-                  ),
-                  Container(
-                    height: constraints.maxHeight * 0.10,
-                    width: constraints.maxWidth * 0.75,
-                    color: Colors.lightGreen,
-                    child: const Center(
-                      child: Text('Footer'),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           );
@@ -71,24 +63,26 @@ class HomePage extends StatelessWidget {
         return Column(
           children: [
             Container(
-              height: 100,
+              height: 50.0,
               color: Colors.blue,
               child: const Center(
-                child: Text('Header'),
+                child: Text('App Bar'),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                height: 300,
+                color: Colors.green,
+                child: const Center(
+                  child: Text('Main Content'),
+                ),
               ),
             ),
             Container(
-              height: 300,
+              height: 60.0,
               color: Colors.amber,
               child: const Center(
-                child: Text('Main Content'),
-              ),
-            ),
-            Container(
-              height: constraints.maxHeight - 400,
-              color: Colors.lightGreen,
-              child: const Center(
-                child: Text('Footer'),
+                child: Text('Navigation'),
               ),
             )
           ],
