@@ -4,8 +4,8 @@ import 'package:image_viewer/const.dart';
 import 'package:image_viewer/utils/file.dart';
 
 class FolderPage extends StatelessWidget {
-  final FileSystemEntity folder;
-  final List<FileSystemEntity> entities;
+  final String folder;
+  final List<String> entities;
   final List<Directory> folders;
   final List<File> images;
 
@@ -23,7 +23,7 @@ class FolderPage extends StatelessWidget {
           expandedHeight: 200,
           pinned: true,
           title: Text(
-            '${folder.name} (${entities.length})',
+            '${folder} (${entities.length})',
             textAlign: TextAlign.center,
             style: const TextStyle(
               color: Colors.white,
@@ -47,7 +47,7 @@ class FolderPage extends StatelessWidget {
                 tag: images[index].path,
                 child: Image.file(File(images[index].path), cacheHeight: 200, fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
-                  return Image.asset(Const.imagePlaceholder);
+                  return Image.asset(Const.assetImagePlaceholder);
                 }),
               );
             },

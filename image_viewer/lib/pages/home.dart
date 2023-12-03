@@ -17,10 +17,10 @@ class _HomePageState extends State<HomePage> {
   // Load the persisted folders on startup.
   // This should only be done a needed as it is costly.
   Future<List<Folder>> _loadFolders() async {
-    var rootPath = '${Platform.environment['HOME']}${Platform.pathSeparator}Pictures/2023/';
+    //var rootPath = '${Platform.environment['HOME']}${Platform.pathSeparator}Pictures/2023/';
+    //var rootFolder = await loadFolders(rootPath);
+    var rootFolder = await loadExampleFolders();
 
-    // Not reading files from root only folders?
-    var rootFolder = await loadFolders(rootPath);
     return rootFolder.folders;
   }
 
@@ -79,15 +79,16 @@ class _HomePageState extends State<HomePage> {
           // Launch the camera or screen capture tool
           IconButton(
             onPressed: () {
-              showAboutDialog(
-                context: context,
-                applicationName: Const.appName,
-                applicationVersion: Const.appVersion,
-                applicationIcon: const Icon(Icons.image),
-                children: [
-                  const Text('This is a simple image viewer app.'),
-                ],
-              );
+              showDialog(context: context, builder: (context) => const ImageDialog());
+              // showAboutDialog(
+              //   context: context,
+              //   applicationName: Const.appName,
+              //   applicationVersion: Const.appVersion,
+              //   applicationIcon: const Icon(Icons.image),
+              //   children: [
+              //     const Text('This is a simple image viewer app.'),
+              //   ],
+              // );
             },
 
             // Push the icon down a bit to make it not look retarded
@@ -123,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                                 var folder = snapshot.data!.elementAt(index);
                                 return FolderCover(
                                   folderPath: folder.path,
-                                  folderImagePath: folder.files.first.path,
+                                  folderImagePath: folder.files.first,
                                   folderImageCount: folder.count,
                                 );
                               },
@@ -131,12 +132,10 @@ class _HomePageState extends State<HomePage> {
                             ),
                             // Make folder cover size be responsive
                             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
-                                //constraints.maxWidth >= 600
-                                //    ? MediaQuery.of(context).size.width * 0.1
-                                //    : MediaQuery.of(context).size.width * 0.6,
-                                mainAxisSpacing: Const.gridSpacing,
-                                crossAxisSpacing: Const.gridSpacing,
+                              crossAxisCount: 4,
+                              mainAxisSpacing: Const.gridSpacing,
+                              crossAxisSpacing: Const.gridSpacing,
+                            ),
                           ),
                   ),
                 ],
@@ -153,8 +152,7 @@ class _HomePageState extends State<HomePage> {
 }
 
 class ImageDialog extends StatelessWidget {
-  final FileSystemEntity entity;
-  const ImageDialog(this.entity, {super.key});
+  const ImageDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -167,15 +165,10 @@ class ImageDialog extends StatelessWidget {
             Navigator.of(context).pop();
           }
         },
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: FileImage(File(entity.path)),
-              fit: BoxFit.cover,
-            ),
-          ),
+        child: const SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: Center(child: Text('hello world')),
         ),
       ),
     );
