@@ -85,10 +85,11 @@ class Content extends StatelessWidget {
         future: _loadImages(),
         builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
           if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
-            return GridView.count(
-              crossAxisCount: 3,
+            return GridView.extent(
+              maxCrossAxisExtent: 100.0,
               mainAxisSpacing: 2.0,
               crossAxisSpacing: 2.0,
+              padding: const EdgeInsets.all(2.0),
               children: snapshot.data!.map<Widget>((String x) => _buildImage(x)).toList(),
             );
           } else {
@@ -105,5 +106,5 @@ GridTile _buildImage(String image) {
 
 // Simulate loading images
 Future<List<String>> _loadImages() async {
-  return List.generate(100, (index) => 'assets/images/placeholder.png');
+  return List.generate(200, (index) => 'assets/images/placeholder.png');
 }
