@@ -1,0 +1,40 @@
+import 'package:flutter/material.dart';
+import '../widgets/image_scroll_view.dart';
+import '../widgets/nav_rail.dart';
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Layout Examples'),
+        backgroundColor: Colors.blue,
+      ),
+      body: LayoutBuilder(builder: (context, constraints) {
+        return Expanded(
+          child: constraints.maxWidth > 600
+              ? const Row(
+                  children: [
+                    NavRail(),
+                    Expanded(child: ImageScrollView()),
+                  ],
+                )
+              : Column(
+                  children: [
+                    const Expanded(child: ImageScrollView()),
+                    Container(
+                      height: 60.0,
+                      color: Colors.amber,
+                      child: const Center(
+                        child: Text('Bottom Navigation'),
+                      ),
+                    ),
+                  ],
+                ),
+        );
+      }),
+    );
+  }
+}
