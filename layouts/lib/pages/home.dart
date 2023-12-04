@@ -13,21 +13,19 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.blue,
       ),
       body: LayoutBuilder(builder: (context, constraints) {
-        return Expanded(
-          child: constraints.maxWidth > 450
-              ? Row(
-                  children: [
-                    NavRail(constraints),
-                    const Expanded(child: ImageScrollView()),
-                  ],
-                )
-              : Column(
-                  children: [
-                    const Expanded(child: ImageScrollView()),
-                    NavRail(constraints),
-                  ],
-                ),
-        );
+        return constraints.maxWidth > 450
+            ? Row(
+                children: [
+                  NavRail(constraints),
+                  const Expanded(child: ImageScrollView()),
+                ],
+              )
+            : Column(
+                children: [
+                  const Expanded(child: ImageScrollView()),
+                  NavRail(constraints),
+                ],
+              );
       }),
     );
   }

@@ -13,6 +13,7 @@ class NavRail extends StatefulWidget {
 }
 
 class _NavRailState extends State<NavRail> {
+  // Keep state to track the selected index
   var selectedIndex = 0;
 
   @override
