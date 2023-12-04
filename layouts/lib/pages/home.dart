@@ -14,11 +14,11 @@ class HomePage extends StatelessWidget {
       ),
       body: LayoutBuilder(builder: (context, constraints) {
         return Expanded(
-          child: constraints.maxWidth > 600
-              ? const Row(
+          child: constraints.maxWidth > 450
+              ? Row(
                   children: [
-                    NavRail(),
-                    Expanded(child: ImageScrollView()),
+                    NavRail(constraints),
+                    const Expanded(child: ImageScrollView()),
                   ],
                 )
               : Column(
