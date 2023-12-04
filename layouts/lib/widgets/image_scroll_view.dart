@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'image_tile.dart';
 
-class ImageScrollView extends StatelessWidget {
+class ImageScrollView extends StatefulWidget {
   const ImageScrollView({
     super.key,
   });
+
+  @override
+  State<ImageScrollView> createState() => _ImageScrollViewState();
+}
+
+class _ImageScrollViewState extends State<ImageScrollView> {
+  Future<List<String>> loadImages() async {
+    return List.generate(2000, (index) => 'assets/images/placeholder.png');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +34,7 @@ class ImageScrollView extends StatelessWidget {
                       ),
                       delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                          return buildImage(snapshot.data![index]);
+                          return ImageTile(snapshot.data![index]);
                         },
                         childCount: snapshot.data!.length,
                       )),
