@@ -23,51 +23,44 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Layout Examples'),
+        backgroundColor: Colors.blue,
+      ),
       body: LayoutBuilder(builder: (context, constraints) {
-        return Column(
-          children: [
-            Container(
-              height: 50.0,
-              color: Colors.blue,
-              child: const Center(
-                child: Text('App Bar'),
-              ),
-            ),
-            Expanded(
-              child: constraints.maxWidth > 600
-                  ? Row(
-                      children: [
-                        Container(
-                          width: 200.0,
-                          color: Colors.amber,
-                          child: const Center(
-                            child: Text('Navigation Rail'),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(color: Colors.green, child: const Content()),
-                        ),
-                      ],
-                    )
-                  : Column(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            color: Colors.pink,
-                            child: const Content(),
-                          ),
-                        ),
-                        Container(
-                          height: 60.0,
-                          color: Colors.amber,
-                          child: const Center(
-                            child: Text('Bottom Navigation'),
-                          ),
-                        ),
-                      ],
+        return Expanded(
+          child: constraints.maxWidth > 600
+              ? Row(
+                  children: [
+                    Container(
+                      width: 200.0,
+                      color: Colors.amber,
+                      child: const Center(
+                        child: Text('Navigation Rail'),
+                      ),
                     ),
-            ),
-          ],
+                    Expanded(
+                      child: Container(color: Colors.green, child: const Content()),
+                    ),
+                  ],
+                )
+              : Column(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        color: Colors.pink,
+                        child: const Content(),
+                      ),
+                    ),
+                    Container(
+                      height: 60.0,
+                      color: Colors.amber,
+                      child: const Center(
+                        child: Text('Bottom Navigation'),
+                      ),
+                    ),
+                  ],
+                ),
         );
       }),
     );
