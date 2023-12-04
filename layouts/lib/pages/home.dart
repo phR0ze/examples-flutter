@@ -24,13 +24,7 @@ class HomePage extends StatelessWidget {
               : Column(
                   children: [
                     const Expanded(child: ImageScrollView()),
-                    Container(
-                      height: 60.0,
-                      color: Colors.amber,
-                      child: const Center(
-                        child: Text('Bottom Navigation'),
-                      ),
-                    ),
+                    NavRail(constraints),
                   ],
                 ),
         );

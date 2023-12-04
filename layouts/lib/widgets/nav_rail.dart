@@ -17,24 +17,45 @@ class _NavRailState extends State<NavRail> {
 
   @override
   Widget build(BuildContext context) {
-    return NavigationRail(
-      extended: widget._constraints.maxWidth > 800,
-      destinations: const [
-        NavigationRailDestination(
-          icon: Icon(Icons.home),
-          label: Text('Home'),
-        ),
-        NavigationRailDestination(
-          icon: Icon(Icons.favorite),
-          label: Text('Favorites'),
-        ),
-      ],
-      selectedIndex: selectedIndex,
-      onDestinationSelected: (value) {
-        setState(() {
-          selectedIndex = value;
-        });
-      },
-    );
+    return widget._constraints.maxWidth > 450
+        ? NavigationRail(
+            extended: widget._constraints.maxWidth > 800,
+            destinations: const [
+              NavigationRailDestination(
+                icon: Icon(Icons.home),
+                label: Text('Home'),
+              ),
+              NavigationRailDestination(
+                icon: Icon(Icons.favorite),
+                label: Text('Favorites'),
+              ),
+            ],
+            selectedIndex: selectedIndex,
+            onDestinationSelected: (value) {
+              setState(() {
+                selectedIndex = value;
+              });
+            },
+          )
+        : BottomNavigationBar(
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.favorite),
+                label: 'Favorites',
+              ),
+            ],
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            currentIndex: selectedIndex,
+            onTap: (value) {
+              setState(() {
+                selectedIndex = value;
+              });
+            },
+          );
   }
 }
