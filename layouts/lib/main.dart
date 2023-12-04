@@ -53,7 +53,7 @@ class HomePage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Container(
-                            color: Colors.green,
+                            color: Colors.pink,
                             child: const Content(),
                           ),
                         ),
@@ -85,13 +85,23 @@ class Content extends StatelessWidget {
         future: _loadImages(),
         builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
           if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
-            return GridView.extent(
-              maxCrossAxisExtent: 100.0,
-              mainAxisSpacing: 2.0,
-              crossAxisSpacing: 2.0,
-              padding: const EdgeInsets.all(2.0),
-              children: snapshot.data!.map<Widget>((String x) => _buildImage(x)).toList(),
-            );
+            return CustomScrollView(slivers: [
+              SliverPadding(
+                padding: const EdgeInsets.all(2.0),
+                sliver: SliverGrid(
+                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 100.0,
+                      mainAxisSpacing: 2.0,
+                      crossAxisSpacing: 2.0,
+                    ),
+                    delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        return _buildImage(snapshot.data![index]);
+                      },
+                      childCount: snapshot.data!.length,
+                    )),
+              ),
+            ]);
           } else {
             return const Center(child: CircularProgressIndicator());
           }
@@ -106,5 +116,5 @@ GridTile _buildImage(String image) {
 
 // Simulate loading images
 Future<List<String>> _loadImages() async {
-  return List.generate(200, (index) => 'assets/images/placeholder.png');
+  return List.generate(2000, (index) => 'assets/images/placeholder.png');
 }
