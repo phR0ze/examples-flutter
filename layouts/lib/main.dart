@@ -45,7 +45,7 @@ class HomePage extends StatelessWidget {
                           ),
                         ),
                         Expanded(
-                          child: Container(color: Colors.green, child: _buildContent()),
+                          child: Container(color: Colors.green, child: const Content()),
                         ),
                       ],
                     )
@@ -54,7 +54,7 @@ class HomePage extends StatelessWidget {
                         Expanded(
                           child: Container(
                             color: Colors.green,
-                            child: _buildContent(),
+                            child: const Content(),
                           ),
                         ),
                         Container(
@@ -74,22 +74,36 @@ class HomePage extends StatelessWidget {
   }
 }
 
-GridView _buildContent() {
-  return GridView.count(
-    crossAxisCount: 3,
-    mainAxisSpacing: 2.0,
-    crossAxisSpacing: 2.0,
-    children: List.generate(100, (index) {
-      return _buildImage();
-    }),
-  );
+class Content extends StatelessWidget {
+  const Content({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: _loadImages(),
+        builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
+            return GridView.count(
+              crossAxisCount: 3,
+              mainAxisSpacing: 2.0,
+              crossAxisSpacing: 2.0,
+              children: snapshot.data!.map<Widget>((String x) => _buildImage(x)).toList(),
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        });
+  }
 }
 
-GridTile _buildImage() {
-  return GridTile(
-      child: Image.asset(
-    'assets/images/placeholder.png',
-    fit: BoxFit.cover,
-    cacheWidth: 100,
-  ));
+// Build image widget
+GridTile _buildImage(String image) {
+  return GridTile(child: Image.asset(image, fit: BoxFit.cover, cacheWidth: 100));
+}
+
+// Simulate loading images
+Future<List<String>> _loadImages() async {
+  return List.generate(100, (index) => 'assets/images/placeholder.png');
 }
