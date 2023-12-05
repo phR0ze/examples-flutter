@@ -18,6 +18,20 @@ class ImageScreen extends StatelessWidget {
               Navigator.of(context).pop();
             }
           },
+          onHorizontalDragUpdate: (details) {
+            int sensitivity = 10;
+            if (details.delta.dx > sensitivity) {
+              // Scroll right
+              showDialog(
+                  context: context,
+                  builder: (context) => const AlertDialog(title: Text('Scroll right')));
+            } else if (details.delta.dx < -sensitivity) {
+              // scroll left
+              showDialog(
+                  context: context,
+                  builder: (context) => const AlertDialog(title: Text('Scroll left')));
+            }
+          },
           // Horizontal swiping loads the next image
           child: Center(child: Image.asset('assets/images/placeholder.png'))),
     );
