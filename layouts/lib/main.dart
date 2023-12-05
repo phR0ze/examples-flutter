@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'const.dart';
 import 'screens/narrow/home.dart' as narrow;
 import 'screens/wide/home.dart' as wide;
 import 'state.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
             title: "layout examples",
             home: Scaffold(
               body: LayoutBuilder(builder: (context, constraints) {
-                return constraints.maxWidth > 450
+                return constraints.maxWidth > Const.narrowThreshold
                     ? wide.HomeScreen(constraints)
                     : narrow.HomeScreen(constraints);
               }),

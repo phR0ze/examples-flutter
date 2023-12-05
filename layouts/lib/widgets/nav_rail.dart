@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../const.dart';
+
 class NavRail extends StatefulWidget {
   final BoxConstraints constraints;
 
@@ -18,9 +20,9 @@ class _NavRailState extends State<NavRail> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.constraints.maxWidth > 450
+    return widget.constraints.maxWidth > Const.narrowThreshold
         ? NavigationRail(
-            extended: widget.constraints.maxWidth > 800,
+            extended: widget.constraints.maxWidth > Const.wideThreshold,
             destinations: const [
               NavigationRailDestination(
                 icon: Icon(Icons.home),

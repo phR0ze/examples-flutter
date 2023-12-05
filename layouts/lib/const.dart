@@ -10,9 +10,10 @@ class Const {
   static const skipDirs = <String>['.git'];
   static const imageSizeDefault = 100.0;
   static const imageGridSpacing = 1.0;
-  static const imageCacheQuality = 400;
+  static const imageCacheQuality = 100;
 
   // screen: 2560
-  static const layoutUltraWideThreshold = 1200;
-  static const layoutWideThreshold = 600;
+  static const ultraWideThreshold = 1200;
+  static const wideThreshold = 800;
+  static const narrowThreshold = 450;
 }
