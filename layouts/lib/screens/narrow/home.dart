@@ -26,6 +26,7 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+// Need to keep this separate from HomeScreen to avoid performance issues for some reason.
 class HomeScreenScroller extends StatelessWidget {
   const HomeScreenScroller({
     super.key,
