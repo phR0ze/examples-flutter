@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'image_tile.dart';
 
 class ImageScrollView extends StatelessWidget {
-  final List<String> images;
-
-  const ImageScrollView(
-    List<String>? images, {
+  const ImageScrollView({
     super.key,
-  }) : images = images ?? const [];
+  });
+
+  Future<List<String>> loadImages() async {
+    return List.generate(2000, (index) => 'assets/images/placeholder.png');
+  }
 
   @override
   Widget build(BuildContext context) {
