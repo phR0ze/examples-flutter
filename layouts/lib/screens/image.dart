@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:layouts/comms.dart';
 
 class ImageScreen extends StatelessWidget {
   const ImageScreen({super.key});
@@ -18,9 +19,7 @@ class ImageScreen extends StatelessWidget {
               Navigator.of(context).pop();
             } else if (details.delta.dy < -sensitivity) {
               // Swipe up to show detail
-              showDialog(
-                  context: context,
-                  builder: (context) => const AlertDialog(title: Text('Show detail')));
+              showSnackBar(context, 'Show detail');
             }
           },
           onHorizontalDragUpdate: (details) {

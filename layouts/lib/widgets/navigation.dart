@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../comms.dart';
 import '../const.dart';
 import '../state.dart';
 
@@ -43,7 +44,12 @@ class Navigation extends StatelessWidget {
             selectedIndex: state.currentRoute,
             selectedIconTheme: const IconThemeData(color: Colors.blue),
             onDestinationSelected: (value) {
-              state.currentRoute = value;
+              showSnackBar(context, 'You chose navigation option: #$value');
+
+              // Check if the route has changed so we don't trigger a rebuild when not needed
+              if (state.currentRoute != value) {
+                state.currentRoute = value;
+              }
             },
           )
         : BottomNavigationBar(
@@ -71,10 +77,12 @@ class Navigation extends StatelessWidget {
             unselectedItemColor: Colors.black,
             currentIndex: state.currentRoute,
             onTap: (value) {
-              showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(title: Text('You chose: $value')));
-              state.currentRoute = value;
+              showSnackBar(context, 'You chose navigation option: #$value');
+
+              // Check if the route has changed so we don't trigger a rebuild when not needed
+              if (state.currentRoute != value) {
+                state.currentRoute = value;
+              }
             });
   }
 }

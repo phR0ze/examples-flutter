@@ -14,7 +14,7 @@ class AppState extends ChangeNotifier {
     }
   }
 
-  // Load images from disk
+  // Load images from disk in an async fashion so as to not block the UI
   Future<List<String>> loadImages() async {
     _images ??= List.generate(2000, (index) => Const.imagePlaceholder);
     return _images!;
