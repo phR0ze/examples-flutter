@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../state.dart';
 import '../../widgets/image_tile.dart';
-import '../../widgets/nav_rail.dart';
+import '../../widgets/navigation.dart';
 
 class HomeScreen extends StatelessWidget {
   final BoxConstraints constraints;
@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
         ),
         body: Row(
           children: [
-            NavRail(constraints),
+            Navigation(constraints),
             Expanded(child: Container(color: Colors.pink, child: const HomeScreenScroller())),
           ],
         ));

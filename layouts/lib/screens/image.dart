@@ -11,11 +11,16 @@ class ImageScreen extends StatelessWidget {
         backgroundColor: Colors.grey,
       ),
       body: GestureDetector(
-          // Vertical swiping closes the page
           onVerticalDragUpdate: (details) {
             int sensitivity = 10;
-            if (details.delta.dy > sensitivity || details.delta.dy < -sensitivity) {
+            if (details.delta.dy > sensitivity) {
+              // Swipe down to close
               Navigator.of(context).pop();
+            } else if (details.delta.dy < -sensitivity) {
+              // Swipe up to show detail
+              showDialog(
+                  context: context,
+                  builder: (context) => const AlertDialog(title: Text('Show detail')));
             }
           },
           onHorizontalDragUpdate: (details) {
