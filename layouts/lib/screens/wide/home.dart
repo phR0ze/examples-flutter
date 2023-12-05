@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../state.dart';
 import '../../widgets/image_tile.dart';
 import '../../widgets/nav_rail.dart';
-
-// Data loader function
-Future<List<String>> loadImages() async {
-  return List.generate(2000, (index) => 'assets/images/placeholder.png');
-}
 
 class HomeScreen extends StatelessWidget {
   final BoxConstraints constraints;
@@ -35,8 +32,10 @@ class HomeScreenScroller extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var state = context.watch<AppState>();
+
     return FutureBuilder<List<String>>(
-      future: loadImages(),
+      future: state.loadImages(),
       builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
         if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
           return CustomScrollView(slivers: [
