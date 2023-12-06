@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../comms.dart';
+import 'comms.dart';
 import '../const.dart';
 import '../state.dart';
 

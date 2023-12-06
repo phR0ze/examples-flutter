@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utils/log.dart';
+
 class SwipeDetector extends StatelessWidget {
   /// Child widget to wrap
   final Widget child;
@@ -42,10 +44,10 @@ class SwipeDetector extends StatelessWidget {
       this.onSwipeRight,
       this.verticalMinDrag = 100.0,
       this.horizontalMaxJitter = 50.0,
-      this.verticalMinVelocity = 300.0,
+      this.verticalMinVelocity = 150.0,
       this.horizontalMinDrag = 100.0,
       this.verticalMaxJitter = 50.0,
-      this.horizontalMinVelocity = 300.0,
+      this.horizontalMinVelocity = 150.0,
       required this.child});
 
   @override
@@ -92,7 +94,7 @@ class SwipeDetector extends StatelessWidget {
         if (velocity.abs() < verticalMinVelocity) return;
 
         // Finally determine if the swipe it was up or down
-        if (velocity < 0) {
+        if (dy < 0) {
           if (onSwipeUp != null) onSwipeUp!();
         } else {
           if (onSwipeDown != null) onSwipeDown!();
