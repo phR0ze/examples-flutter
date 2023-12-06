@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:image_viewer/const.dart';
-import 'package:image_viewer/pages/home.dart';
 import 'package:provider/provider.dart';
-import 'components/state.dart';
+import 'state.dart';
+import 'screens/narrow/home.dart' as narrow;
+import 'screens/wide/home.dart' as wide;
 
 void main() {
   runApp(const App());
@@ -22,7 +23,13 @@ class App extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
           useMaterial3: true,
         ),
-        home: const HomePage(),
+        home: Scaffold(
+          body: LayoutBuilder(builder: (context, constraints) {
+            return constraints.maxWidth > Const.narrowThreshold
+                ? wide.HomeScreen(constraints)
+                : narrow.HomeScreen(constraints);
+          }),
+        ),
       ),
     );
   }

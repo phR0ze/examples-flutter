@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:provider/provider.dart';
-import '../components/state.dart';
+import '../state.dart';
 import '../const.dart';
 import '../utils/log.dart';
 import '../widgets/folder_cover.dart';

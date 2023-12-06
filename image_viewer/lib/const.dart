@@ -20,6 +20,7 @@ class Const {
   static const imageCacheQuality = 400;
 
   // screen: 2560
-  static const layoutUltraWideThreshold = 1200;
-  static const layoutWideThreshold = 600;
+  static const ultraWideThreshold = 1200;
+  static const wideThreshold = 800;
+  static const narrowThreshold = 450;
 }
