@@ -7,11 +7,15 @@ import '../screens/image.dart';
 // Image tile widget
 class ImageTile extends StatelessWidget {
   final String id;
+  final int index;
   final String image;
+  final List<String> images;
 
   const ImageTile(
     this.id,
-    this.image, {
+    this.index,
+    this.image,
+    this.images, {
     super.key,
   });
 
@@ -25,7 +29,8 @@ class ImageTile extends StatelessWidget {
         child: GestureDetector(
             child: Image.asset(image, fit: BoxFit.cover, cacheWidth: Const.imageCacheQuality),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const ImageScreen()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ImageScreen(id, index, image, images)));
             }));
   }
 }

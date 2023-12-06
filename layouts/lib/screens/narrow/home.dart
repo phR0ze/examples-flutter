@@ -65,7 +65,8 @@ class HomeScreenScroller extends StatelessWidget {
                         ),
                         delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
-                            return ImageTile('1.$index', snapshot.data![index]);
+                            return ImageTile(
+                                '1.$index', index, snapshot.data![index], snapshot.data!);
                           },
                           childCount: snapshot.data!.length,
                         )),

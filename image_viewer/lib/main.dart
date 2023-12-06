@@ -4,6 +4,10 @@ import 'package:image_viewer/pages/home.dart';
 import 'package:provider/provider.dart';
 import 'components/state.dart';
 
+void main() {
+  runApp(const App());
+}
+
 class App extends StatelessWidget {
   const App({super.key});
 
@@ -22,8 +26,4 @@ class App extends StatelessWidget {
       ),
     );
   }
-}
-
-void main() {
-  runApp(const App());
 }
