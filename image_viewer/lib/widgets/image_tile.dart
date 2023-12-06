@@ -1,6 +1,4 @@
-// Build image widget
 import 'package:flutter/material.dart';
-
 import '../const.dart';
 import '../screens/image.dart';
 

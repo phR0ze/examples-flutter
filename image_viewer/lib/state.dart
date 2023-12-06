@@ -4,6 +4,18 @@ import 'const.dart';
 class AppState extends ChangeNotifier {
   List<String>? _images;
 
+  // Track folder vs all image view
+  bool _folderView = false;
+  bool get folderView => _folderView;
+  void toggleFolderView() {
+    if (_folderView) {
+      _folderView = false;
+    } else {
+      _folderView = true;
+    }
+    notifyListeners();
+  }
+
   // Route tracking for responsive navigation sharing
   int _currentRoute = 0;
   int get currentRoute => _currentRoute;

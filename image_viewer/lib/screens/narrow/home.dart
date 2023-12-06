@@ -78,6 +78,20 @@ class HomeScreenScroller extends StatelessWidget {
                   ),
                 ),
 
+                // View as folders instead of images
+                IconButton(
+                  onPressed: () {
+                    state.toggleFolderView();
+                  },
+                  icon: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 2.0, 0, 0),
+                    child: Transform.scale(
+                      scale: 1.1,
+                      child: Icon(state.folderView ? Icons.perm_media : Icons.photo_library),
+                    ),
+                  ),
+                ),
+
                 // Pick a new folder to include
                 IconButton(
                   onPressed: () {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:path/path.dart' as path;
 import '../widgets/comms.dart';
 import '../widgets/swipe_detector.dart';
-
 import '../const.dart';
 
 class ImageScreen extends StatefulWidget {
@@ -20,7 +20,7 @@ class _ImageScreenState extends State<ImageScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Image view'),
+        title: Text('${widget.id} - ${path.basename(widget.image)}'),
         backgroundColor: Colors.grey,
       ),
       body: SwipeDetector(
