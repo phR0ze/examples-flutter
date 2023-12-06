@@ -14,10 +14,10 @@ class ImageScreen extends StatelessWidget {
       ),
       body: SwipeDetector(
         child: Center(child: Image.asset('assets/images/placeholder.png')),
-        onSwipeUp: () => showSnackBar(context, 'You swiped up!'),
-        onSwipeDown: () => showSnackBar(context, 'You swiped down!'),
-        onSwipeLeft: () => showSnackBar(context, 'You swiped left!'),
-        onSwipeRight: () => showSnackBar(context, 'You swiped right!'),
+        onSwipeUp: () => showSnackBar(context, 'Show image details!'),
+        onSwipeDown: () => showSnackBar(context, 'Dismiss image view!'),
+        onSwipeLeft: () => showSnackBar(context, 'Load next image!'),
+        onSwipeRight: () => showSnackBar(context, 'Load previous image!'),
       ),
     );
   }
