@@ -16,7 +16,7 @@ class Const {
   // App configuration
   static const skipDirs = <String>['.git'];
   static const imageSizeDefault = 100.0;
-  static const imageGridSpacing = 1.0;
+  static const imageGridSpacing = 2.0;
   static const imageCacheQuality = 400;
 
   // screen: 2560

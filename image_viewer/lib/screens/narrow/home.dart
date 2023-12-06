@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../const.dart';
 import '../../state.dart';
 import '../../widgets/image_tile.dart';
 import '../../widgets/navigation.dart';
@@ -44,10 +45,68 @@ class HomeScreenScroller extends StatelessWidget {
               expandedHeight: 200.0,
               flexibleSpace: FlexibleSpaceBar(
                 background: Image.asset(
-                  'assets/images/placeholder.png',
+                  Const.assetImagePlaceholder,
                   fit: BoxFit.cover,
                 ),
               ),
+              actions: [
+                // Zoom in the thumbnail images
+                IconButton(
+                  onPressed: () {
+                    state.zoomInImage();
+                  },
+                  icon: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 2.0, 0, 0),
+                    child: Transform.scale(
+                      scale: 1.3,
+                      child: const Icon(Icons.zoom_in),
+                    ),
+                  ),
+                ),
+
+                // Zoom out the thumbnail images
+                IconButton(
+                  onPressed: () {
+                    state.zoomOutImage();
+                  },
+                  icon: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 2.0, 0, 0),
+                    child: Transform.scale(
+                      scale: 1.3,
+                      child: const Icon(Icons.zoom_out),
+                    ),
+                  ),
+                ),
+
+                // Pick a new folder to include
+                IconButton(
+                  onPressed: () {
+                    // _pickFolder();
+                  },
+                  // Scale a little to match the grid size
+                  icon: Transform.scale(
+                    scale: 1.1,
+                    child: const Icon(Icons.add_box),
+                  ),
+                ),
+
+                // Launch the camera or screen capture tool
+                IconButton(
+                  onPressed: () {
+                    //
+                  },
+
+                  // Push the icon down a bit to make it not look retarded
+                  // Scale a little to match the grid size
+                  icon: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 1.5),
+                    child: Transform.scale(
+                      scale: 1.1,
+                      child: const Icon(Icons.add_a_photo),
+                    ),
+                  ),
+                ),
+              ],
             ),
             snapshot.data == null || snapshot.data!.isEmpty
                 ? const SliverFillRemaining(
@@ -56,12 +115,12 @@ class HomeScreenScroller extends StatelessWidget {
                     ),
                   )
                 : SliverPadding(
-                    padding: const EdgeInsets.all(2.0),
+                    padding: const EdgeInsets.all(Const.imageGridSpacing),
                     sliver: SliverGrid(
-                        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 100.0,
-                          mainAxisSpacing: 2.0,
-                          crossAxisSpacing: 2.0,
+                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: state.imageSize,
+                          mainAxisSpacing: Const.imageGridSpacing,
+                          crossAxisSpacing: Const.imageGridSpacing,
                         ),
                         delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
