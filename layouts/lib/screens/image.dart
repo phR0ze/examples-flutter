@@ -16,6 +16,8 @@ class ImageScreen extends StatelessWidget {
         child: Center(child: Image.asset('assets/images/placeholder.png')),
         onSwipeUp: () => showSnackBar(context, 'You swiped up!'),
         onSwipeDown: () => showSnackBar(context, 'You swiped down!'),
+        onSwipeLeft: () => showSnackBar(context, 'You swiped left!'),
+        onSwipeRight: () => showSnackBar(context, 'You swiped right!'),
       ),
     );
   }
