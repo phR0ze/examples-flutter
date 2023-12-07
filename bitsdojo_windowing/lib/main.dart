@@ -13,14 +13,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-          body: Row(
-        children: [
-          LeftSide(),
-          RightSide(),
-        ],
+          body: WindowBorder(
+        width: 1,
+        color: Const.borderColor,
+        child: const Row(
+          children: [
+            LeftSide(),
+            RightSide(),
+          ],
+        ),
       )),
     );
   }
@@ -34,7 +38,15 @@ class LeftSide extends StatelessWidget {
     return SizedBox(
       width: 200,
       child: Container(
-        color: Colors.yellow,
+        color: Const.backgroundEndColor,
+        child: Column(
+          children: [
+            // Add draggable here to match main content side
+            WindowTitleBarBox(
+              child: MoveWindow(),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -60,7 +72,8 @@ class RightSide extends StatelessWidget {
           WindowTitleBarBox(
             child: Row(
               children: [
-                Expanded(child: Container()),
+                // MoveWindow is a widget that moves the window when you drag it
+                Expanded(child: MoveWindow()),
                 const WindowButtons(),
               ],
             ),
