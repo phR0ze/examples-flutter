@@ -9,7 +9,7 @@ import 'package:path/path.dart' as path;
 class FolderCover extends StatelessWidget {
   final String folderPath;
   final String folderImagePath;
-  final int? folderImageCount;
+  final int folderImageCount;
 
   // Construct a new FolderCover widget
   const FolderCover(

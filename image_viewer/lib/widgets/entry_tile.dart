@@ -28,9 +28,7 @@ class EntryTile extends StatelessWidget {
             onTap: () {
               if (entry is model.File) {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => FileScreen(index, entry as model.File, entries)));
+                    context, MaterialPageRoute(builder: (_) => FileScreen(index, entries)));
               }
             }));
   }

@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../../const.dart';
 import '../../model.dart' as model;
 import '../../state.dart';
-import '../../widgets/file_tile.dart';
+import '../../widgets/entry_tile.dart';
 import '../../widgets/navigation.dart';
 
 class HomeScreen extends StatelessWidget {
