@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../const.dart';
+import '../../model.dart' as model;
 import '../../state.dart';
-import '../../widgets/image_tile.dart';
+import '../../widgets/file_tile.dart';
 import '../../widgets/navigation.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -95,9 +96,9 @@ class HomeScreenScroller extends StatelessWidget {
   Widget build(BuildContext context) {
     var state = context.watch<AppState>();
 
-    return FutureBuilder<List<String>>(
-      future: state.loadExampleImages(),
-      builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+    return FutureBuilder<List<model.Entry>>(
+      future: state.loadExampleEntries(),
+      builder: (BuildContext context, AsyncSnapshot<List<model.Entry>> snapshot) {
         if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
           return CustomScrollView(slivers: [
             snapshot.data == null || snapshot.data!.isEmpty
@@ -116,8 +117,7 @@ class HomeScreenScroller extends StatelessWidget {
                         ),
                         delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
-                            return ImageTile(
-                                '1.$index', index, snapshot.data![index], snapshot.data!);
+                            return EntryTile(index, snapshot.data![index], snapshot.data!);
                           },
                           childCount: snapshot.data!.length,
                         )),

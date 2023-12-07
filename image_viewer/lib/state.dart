@@ -2,15 +2,11 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'model/folder.dart';
+import 'model.dart';
 import 'const.dart';
-import 'utils/file.dart';
-import 'model/file.dart';
-import 'utils/mime.dart' as mime;
+import 'model.dart' as model;
 
 class AppState extends ChangeNotifier {
-  List<String>? _images;
-
   // Track folder vs all image view
   bool _folderView = false;
   bool get folderView => _folderView;
@@ -86,9 +82,11 @@ class AppState extends ChangeNotifier {
   //   return folder;
   // }
 
-  Future<List<String>> loadExampleImages() async {
-    _images ??= List.generate(2000, (index) => Const.assetImagePlaceholder);
-    return _images!;
+  List<model.Entry>? _entries;
+  Future<List<model.Entry>> loadExampleEntries() async {
+    _entries ??=
+        List.generate(2000, (index) => model.Image(Const.assetImagePlaceholder, title: '1.$index'));
+    return _entries!;
   }
 }
 

@@ -3,24 +3,24 @@ import 'package:path/path.dart' as path;
 import '../widgets/comms.dart';
 import '../widgets/swipe_detector.dart';
 import '../const.dart';
+import '../model.dart' as model;
 
-class ImageScreen extends StatefulWidget {
-  String id;
+class FileScreen extends StatefulWidget {
   int index;
-  String image;
-  final List<String> images;
-  ImageScreen(this.id, this.index, this.image, this.images, {super.key});
+  model.File file;
+  final List<model.Entry> entries;
+  FileScreen(this.index, this.file, this.entries, {super.key});
 
   @override
-  State<ImageScreen> createState() => _ImageScreenState();
+  State<FileScreen> createState() => _FileScreenState();
 }
 
-class _ImageScreenState extends State<ImageScreen> {
+class _FileScreenState extends State<FileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${widget.id} - ${path.basename(widget.image)}'),
+        title: Text('${widget.file.title} - ${path.basename(widget.file.path)}'),
         backgroundColor: Colors.grey,
       ),
       body: SwipeDetector(
@@ -28,7 +28,8 @@ class _ImageScreenState extends State<ImageScreen> {
               child: GridTile(
             header: Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Text(widget.id, style: const TextStyle(color: Colors.black, fontSize: 36.0)),
+              child: Text(widget.file.title,
+                  style: const TextStyle(color: Colors.black, fontSize: 36.0)),
             ),
             child: Image.asset(
               Const.assetImagePlaceholder,
@@ -40,12 +41,12 @@ class _ImageScreenState extends State<ImageScreen> {
           onSwipeUp: () => showSnackBar(context, 'Show image details!'),
           onSwipeDown: () => Navigator.pop(context),
           onSwipeLeft: () => {
-                if (widget.index + 1 < widget.images.length - 1)
+                if (widget.index + 1 < widget.entries.length - 1)
                   {
                     setState(() {
                       widget.index++;
-                      widget.id = '1.${widget.index}';
-                      widget.image = widget.images[widget.index];
+                      // Need to check for folders and videos and docs and handle them differently
+                      widget.file = widget.entries[widget.index] as model.File;
                     })
                   }
               },
@@ -54,8 +55,8 @@ class _ImageScreenState extends State<ImageScreen> {
                   {
                     setState(() {
                       widget.index--;
-                      widget.id = '1.${widget.index}';
-                      widget.image = widget.images[widget.index];
+                      // Need to check for folders and videos and docs and handle them differently
+                      widget.file = widget.entries[widget.index] as model.File;
                     })
                   }
               }),
