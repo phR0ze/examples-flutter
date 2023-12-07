@@ -35,7 +35,7 @@ class HomeScreenScroller extends StatelessWidget {
     var state = context.watch<AppState>();
 
     return FutureBuilder<List<String>>(
-      future: state.loadImages(),
+      future: state.loadExampleImages(),
       builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
         if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
           return CustomScrollView(slivers: [
