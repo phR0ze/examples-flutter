@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:bitsdojo_window/bitsdojo_window.dart';
+
+import 'const.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,24 +40,55 @@ class LeftSide extends StatelessWidget {
   }
 }
 
-var backgroundStartColor = const Color(0xFFFFD500);
-var backgroundEndColor = const Color(0xFFF6A00C);
-
 class RightSide extends StatelessWidget {
   const RightSide({super.key}) /*  */;
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-          decoration: BoxDecoration(
+        child: Container(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [backgroundStartColor, backgroundEndColor],
-          stops: const [0.0, 1.0],
+          colors: [Const.backgroundStartColor, Const.backgroundEndColor],
+          stops: [0.0, 1.0],
         ),
-      )),
+      ),
+      child: Column(
+        children: [
+          WindowTitleBarBox(
+            child: Row(
+              children: [
+                Expanded(child: Container()),
+                const WindowButtons(),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ));
+  }
+}
+
+class WindowButtons extends StatelessWidget {
+  const WindowButtons({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        MinimizeWindowButton(colors: buttonColors),
+        MaximizeWindowButton(colors: buttonColors),
+        CloseWindowButton(),
+      ],
     );
   }
 }
+
+var buttonColors = WindowButtonColors(
+    iconNormal: Const.iconNormalColor,
+    mouseOver: Const.mouseOverColor,
+    mouseDown: Const.mouseDownColor,
+    iconMouseOver: Const.iconMouseOverColor,
+    iconMouseDown: Const.iconMouseDownColor);
