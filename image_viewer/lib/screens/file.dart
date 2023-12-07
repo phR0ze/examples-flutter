@@ -18,10 +18,10 @@ class FileScreen extends StatefulWidget {
 }
 
 class _FileScreenState extends State<FileScreen> {
-  // Only need to recreate the state varibles that change
-  // Use late to indicate that we will initialize the variables before use
-  late int index;
-  late model.File entry;
+  // Only need to recreate the varibles as state here if they will change.
+  // Use late to indicate that we will initialize the variables before use.
+  late int _index;
+  late model.File _entry;
 
   // Initialize the state from the FileScreen widget then update the state when the
   // widget changes. This methods is only ever called once.
@@ -29,38 +29,38 @@ class _FileScreenState extends State<FileScreen> {
   void initState() {
     super.initState();
     setState(() {
-      index = widget.index;
-      entry = widget.entries[widget.index] as model.File;
+      _index = widget.index;
+      _entry = widget.entries[widget.index] as model.File;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    // Make reusable actions for responsive design
     prev() => {
-          if (index > 0)
+          if (_index > 0)
             {
               setState(() {
-                index--;
+                _index--;
                 // Need to check for folders and videos and docs and handle them differently
-                entry = widget.entries[widget.index] as model.File;
+                _entry = widget.entries[_index] as model.File;
               })
             }
         };
     next() => {
-          if (index + 1 < widget.entries.length - 1)
+          if (_index + 1 < widget.entries.length - 1)
             {
               setState(() {
-                log.red("TEST1");
-                index++;
+                _index++;
                 // Need to check for folders and videos and docs and handle them differently
-                entry = widget.entries[widget.index] as model.File;
+                _entry = widget.entries[_index] as model.File;
               })
             }
         };
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('${entry.title} - ${path.basename(entry.path)}'),
+        title: Text('${_entry.title} - ${path.basename(_entry.path)}'),
         backgroundColor: Colors.grey,
       ),
       body: SwipeDetector(
@@ -71,7 +71,7 @@ class _FileScreenState extends State<FileScreen> {
             child: Row(
               children: [
                 IconButton(onPressed: () => prev(), icon: const Icon(Icons.arrow_back)),
-                Text(entry.title, style: const TextStyle(color: Colors.black, fontSize: 36.0)),
+                Text(_entry.title, style: const TextStyle(color: Colors.black, fontSize: 36.0)),
                 IconButton(onPressed: () => next(), icon: const Icon(Icons.arrow_forward)),
               ],
             ),
