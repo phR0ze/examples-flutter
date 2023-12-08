@@ -41,7 +41,7 @@ class HomeScreenScroller extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
           return CustomScrollView(slivers: [
             SliverAppBar(
-              title: const Text('Narrow layout example'),
+              //title: const Text('Narrow layout example'),
               backgroundColor: Colors.blue,
               expandedHeight: 200.0,
               flexibleSpace: FlexibleSpaceBar(
@@ -50,6 +50,8 @@ class HomeScreenScroller extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
+              // pinned: true, // keep the action portion of the app bar always visible
+
               actions: [
                 // Zoom in the thumbnail images
                 IconButton(
