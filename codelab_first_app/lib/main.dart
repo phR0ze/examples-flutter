@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MaterialApp(
-    title: 'Simple App',
+    title: 'codelab_first_app',
     home: SafeArea(child: App()),
   ));
 }

@@ -1,16 +1,16 @@
-# simple_app
+# codelab_first_app
 
-Shows examples of:
-* ***NavigationRail***
-* ***Basic layout***
-* ***Basic widgets***
+A new Flutter project.
 
+## Getting Started
 
-Large Screen NavigationRail
-![](../examples/NavigationRail%20-%20Large%20Screen.png)
+This project is a starting point for a Flutter application.
 
-Medium Screen NavigationRail
-![](../examples/NavigationRail%20-%20Medium%20Screen.png)
+A few resources to get you started if this is your first Flutter project:
 
-Small Screen NavigationRail
-![](../examples/NavigationRail%20-%20Small%20Screen.png)
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
