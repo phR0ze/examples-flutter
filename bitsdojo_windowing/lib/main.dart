@@ -5,6 +5,16 @@ import 'const.dart';
 
 void main() {
   runApp(const MyApp());
+
+  doWhenWindowReady(() {
+    const initialSize = Size(600, 450);
+    appWindow.minSize = initialSize;
+    appWindow.size = initialSize;
+    appWindow.alignment = Alignment.center;
+    // Changes the title of the window in taskbar, but not in window switching in XFCE
+    appWindow.title = "Flutter Window Example";
+    appWindow.show();
+  });
 }
 
 class MyApp extends StatelessWidget {
