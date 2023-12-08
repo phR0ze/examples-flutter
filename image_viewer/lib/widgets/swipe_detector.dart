@@ -70,7 +70,7 @@ class SwipeDetector extends StatelessWidget {
       // Once drag is complete, check if it was a swipe
       onVerticalDragEnd: (endDetails) {
         // Abort if not fully initialized yet. I doubt this will ever happen
-        if (startVerticalDragDetails == null && updateVerticalDragDetails == null) {
+        if (startVerticalDragDetails == null || updateVerticalDragDetails == null) {
           return;
         }
 
@@ -110,7 +110,7 @@ class SwipeDetector extends StatelessWidget {
       // Once horizontal drag is complete, check if it was a swipe
       onHorizontalDragEnd: (endDetails) {
         // Abort if not fully initialized yet. I doubt this will ever happen
-        if (startHorizontalDragDetails == null && updateHorizontalDragDetails == null) {
+        if (startHorizontalDragDetails == null || updateHorizontalDragDetails == null) {
           return;
         }
 
