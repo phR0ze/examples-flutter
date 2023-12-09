@@ -22,17 +22,17 @@ final playlistsProvider = PlaylistsProvider();
 const List<NavigationDestination> destinations = [
   NavigationDestination(
     label: 'Home',
-    icon: Icon(Icons.home), // Modify this line
+    icon: Icon(Icons.home),
     route: '/',
   ),
   NavigationDestination(
     label: 'Playlists',
-    icon: Icon(Icons.playlist_add_check), // Modify this line
+    icon: Icon(Icons.playlist_add_check),
     route: '/playlists',
   ),
   NavigationDestination(
     label: 'Artists',
-    icon: Icon(Icons.people), // Modify this line
+    icon: Icon(Icons.people),
     route: '/artists',
   ),
 ];
@@ -86,7 +86,8 @@ final appRouter = GoRouter(
               key: _scaffoldKey,
               currentIndex: 1,
               child: PlaylistScreen(
-                playlist: playlistsProvider.getPlaylist(state.pathParameters['pid']!)!,
+                playlist: playlistsProvider
+                    .getPlaylist(state.pathParameters['pid']!)!,
               ),
             ),
           ),
@@ -114,7 +115,8 @@ final appRouter = GoRouter(
               key: _scaffoldKey,
               currentIndex: 2,
               child: ArtistScreen(
-                artist: artistsProvider.getArtist(state.pathParameters['aid']!)!,
+                artist:
+                    artistsProvider.getArtist(state.pathParameters['aid']!)!,
               ),
             ),
           ),
