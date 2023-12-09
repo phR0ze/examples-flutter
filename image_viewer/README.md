@@ -29,6 +29,7 @@ Focus will be on ***mobile*** first then ***desktop***
 
 ## Sometime
 - [ ] ?
+- [ ] Dark mode with moon/sun toggle button icon
 - [ ] Automatically find picture folders
 - [ ] Ability to browse folders
 - [ ] Gallery view (i.e. folders) vs image view (i.e. all images)
