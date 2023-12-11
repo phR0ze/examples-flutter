@@ -38,7 +38,7 @@ dependencies:
   # ?
   path: ^1.8.3
 
-  # ?
+  # Native file explorer for picking paths
   file_picker: ^6.1.1
 
   # ?
@@ -52,6 +52,12 @@ dependencies:
 
   # Flutter plugin to change size of desktop window
   desktop_window: ^0.4.0
+
+  # Read and write simple key-value pairs to disk
+  shared_preferences: ^2.2.2
+
+  # Get commonly used path locations from the system
+  path_provider: ^2.1.1
 
 dev_dependencies:
   flutter_test:

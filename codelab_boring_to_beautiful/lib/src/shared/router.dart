@@ -86,8 +86,7 @@ final appRouter = GoRouter(
               key: _scaffoldKey,
               currentIndex: 1,
               child: PlaylistScreen(
-                playlist: playlistsProvider
-                    .getPlaylist(state.pathParameters['pid']!)!,
+                playlist: playlistsProvider.getPlaylist(state.pathParameters['pid']!)!,
               ),
             ),
           ),
@@ -115,8 +114,7 @@ final appRouter = GoRouter(
               key: _scaffoldKey,
               currentIndex: 2,
               child: ArtistScreen(
-                artist:
-                    artistsProvider.getArtist(state.pathParameters['aid']!)!,
+                artist: artistsProvider.getArtist(state.pathParameters['aid']!)!,
               ),
             ),
           ),

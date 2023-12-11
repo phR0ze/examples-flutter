@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
-import '../utils/log.dart';
 import '../widgets/comms.dart';
 import '../widgets/swipe_detector.dart';
 import '../const.dart';

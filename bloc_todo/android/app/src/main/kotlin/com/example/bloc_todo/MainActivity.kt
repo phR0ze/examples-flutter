@@ -1,4 +1,4 @@
-package com.example.social_media
+package com.example.bloc_todo
 
 import io.flutter.embedding.android.FlutterActivity
 

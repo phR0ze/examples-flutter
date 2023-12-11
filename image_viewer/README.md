@@ -4,10 +4,12 @@ I'm building an example image viewer to learn Flutter.
 Focus will be on ***mobile*** first then ***desktop***
 
 ## Backlog
-- [ ] ?
+- [ ] Re-architect to use BLoC pattern from codelab
 
 - [ ] **Milestone #1**
     - [ ] 1. Add folder to persisted configuration
+        * Use `path_provider` to get local storage path
+        * Use `shared_preferences` to persist configuration
     - [ ] 2. Load folder selection(s) from persisted configuration on boot
     - [ ] 3. Show all images from all folders in single grid view
     - [ ] 4. Show image view when thumbnail tapped (jpg, gif, png and txt files)
