@@ -33,22 +33,4 @@ class Todo extends Equatable {
 
   @override
   List<Object?> get props => [id, title, description, isCompleted, isCanceled];
-
-  static List<Todo> todos = [
-    const Todo(
-      id: '1',
-      title: 'Example Todo 1',
-      description: 'Description 1',
-    ),
-    const Todo(
-      id: '2',
-      title: 'Example Todo 2',
-      description: 'Description 2',
-    ),
-    const Todo(
-      id: '3',
-      title: 'Example Todo 3',
-      description: 'Description 3',
-    ),
-  ];
 }

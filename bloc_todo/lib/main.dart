@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'bloc/todos_bloc.dart';
+import 'home_page.dart';
 import 'todo.dart';
-import 'todo_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,83 +14,38 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Bloc example',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('BLoC todo example'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const AddTodoPage(),
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider<TodosBloc>(
+            create: (context) => TodosBloc()
+              ..add(const LoadTodos(todos: [
+                // Adding test data here
+                Todo(
+                  id: '1',
+                  title: 'Example Todo 1',
+                  description: 'Description 1',
                 ),
-              );
-            },
-            icon: const Icon(Icons.add),
+                Todo(
+                  id: '2',
+                  title: 'Example Todo 2',
+                  description: 'Description 2',
+                ),
+                Todo(
+                  id: '3',
+                  title: 'Example Todo 3',
+                  description: 'Description 3',
+                ),
+              ])),
           ),
         ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ListView.builder(
-                shrinkWrap: true,
-                itemCount: Todo.todos.length,
-                itemBuilder: (context, index) {
-                  return _todoCard(Todo.todos[index]);
-                })
-          ],
-        ),
-      ),
-    );
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Bloc example',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          home: const MyHomePage(),
+        ));
   }
-}
-
-Card _todoCard(Todo todo) {
-  return Card(
-    margin: const EdgeInsets.only(bottom: 8.0),
-    child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('#${todo.id}: ${todo.title}',
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Row(children: [
-              IconButton(
-                onPressed: () {
-                  //todo.toggleDone();
-                },
-                icon: const Icon(Icons.add_task),
-              ),
-              IconButton(
-                onPressed: () {
-                  //todo.delete();
-                },
-                icon: const Icon(Icons.cancel),
-              ),
-            ]),
-          ],
-        )),
-  );
 }
