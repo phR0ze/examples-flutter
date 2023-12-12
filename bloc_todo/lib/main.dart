@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'bloc/todos_bloc.dart';
 import 'home_page.dart';
-import 'todo.dart';
+import 'bloc/exports.dart';
+import 'model/exports.dart';
 
 void main() {
   runApp(const MyApp());

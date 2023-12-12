@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'bloc/todos_bloc.dart';
-import 'todo.dart';
+import 'bloc/exports.dart';
+import 'model/exports.dart';
 import 'todo_page.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -42,7 +42,7 @@ class MyHomePage extends StatelessWidget {
                       shrinkWrap: true,
                       itemCount: state.todos.length,
                       itemBuilder: (context, index) {
-                        return _todoCard(state.todos[index]);
+                        return _todoCard(context, state.todos[index]);
                       })
                 ],
               ),
@@ -56,7 +56,7 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-Card _todoCard(Todo todo) {
+Card _todoCard(BuildContext context, Todo todo) {
   return Card(
     margin: const EdgeInsets.only(bottom: 8.0),
     child: Padding(
@@ -69,13 +69,13 @@ Card _todoCard(Todo todo) {
             Row(children: [
               IconButton(
                 onPressed: () {
-                  //todo.toggleDone();
+                  context.read<TodosBloc>().add(UpdateTodo(todo: todo.copyWith(isCompleted: true)));
                 },
                 icon: const Icon(Icons.add_task),
               ),
               IconButton(
                 onPressed: () {
-                  //todo.delete();
+                  context.read<TodosBloc>().add(DeleteTodo(todo: todo));
                 },
                 icon: const Icon(Icons.cancel),
               ),
