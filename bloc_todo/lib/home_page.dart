@@ -59,8 +59,17 @@ class MyHomePage extends StatelessWidget {
     );
   }
 
-  BlocBuilder<TodosFilterBloc, TodosFilterState> _todos(String title) {
-    return BlocBuilder<TodosFilterBloc, TodosFilterState>(
+  BlocConsumer<TodosFilterBloc, TodosFilterState> _todos(String title) {
+    return BlocConsumer<TodosFilterBloc, TodosFilterState>(
+      listener: (context, state) {
+        if (state is TodosFilterLoaded) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Number of tasks: ${state.todos.length}'),
+            ),
+          );
+        }
+      },
       builder: (context, state) {
         if (state is TodosFilterLoading) {
           return const Center(child: CircularProgressIndicator());
