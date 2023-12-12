@@ -8,12 +8,10 @@ sealed class TodosFilterEvent extends Equatable {
 }
 
 class UpdateFilter extends TodosFilterEvent {
-  final TodosFilter filter;
-
-  const UpdateFilter({this.filter = TodosFilter.all});
+  const UpdateFilter();
 
   @override
-  List<Object> get props => [filter];
+  List<Object> get props => [];
 }
 
 class UpdateTodos extends TodosFilterEvent {

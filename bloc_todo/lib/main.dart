@@ -37,6 +37,11 @@ class MyApp extends StatelessWidget {
                 ),
               ])),
           ),
+          BlocProvider<TodosFilterBloc>(
+            create: (context) => TodosFilterBloc(
+              todosBloc: context.read<TodosBloc>(),
+            ),
+          ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

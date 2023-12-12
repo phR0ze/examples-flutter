@@ -10,48 +10,87 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('BLoC todo example'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const AddTodoPage(),
-                ),
-              );
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('BLoC todo example'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AddTodoPage(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.add),
+            ),
+          ],
+          bottom: TabBar(
+            onTap: (index) {
+              switch (index) {
+                case 0:
+                  context
+                      .read<TodosFilterBloc>()
+                      .add(const UpdateTodos(filter: TodosFilter.pending));
+                  break;
+                case 1:
+                  context
+                      .read<TodosFilterBloc>()
+                      .add(const UpdateTodos(filter: TodosFilter.completed));
+                  break;
+              }
             },
-            icon: const Icon(Icons.add),
+            tabs: const [
+              Tab(icon: Icon(Icons.pending)),
+              Tab(icon: Icon(Icons.add_task)),
+            ],
           ),
-        ],
+        ),
+        body: TabBarView(
+          children: [
+            _todos('Pending Todos'),
+            _todos('Completed Todos'),
+          ],
+        ),
       ),
-      body: BlocBuilder<TodosBloc, TodosState>(
-        builder: (context, state) {
-          if (state is TodosLoading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (state is TodosLoaded) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: state.todos.length,
-                      itemBuilder: (context, index) {
-                        return _todoCard(context, state.todos[index]);
-                      })
-                ],
-              ),
-            );
-          } else {
-            return const Center(child: Text('Something went wrong!'));
-          }
-        },
-      ),
+    );
+  }
+
+  BlocBuilder<TodosFilterBloc, TodosFilterState> _todos(String title) {
+    return BlocBuilder<TodosFilterBloc, TodosFilterState>(
+      builder: (context, state) {
+        if (state is TodosFilterLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (state is TodosFilterLoaded) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    title,
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: state.todos.length,
+                    itemBuilder: (context, index) {
+                      return _todoCard(context, state.todos[index]);
+                    })
+              ],
+            ),
+          );
+        } else {
+          return const Center(child: Text('Something went wrong!'));
+        }
+      },
     );
   }
 }
