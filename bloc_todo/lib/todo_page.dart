@@ -25,11 +25,11 @@ class AddTodoPage extends StatelessWidget {
               _inputField('Description', descriptionController),
               ElevatedButton(
                   onPressed: () {
-                    // var todo = Todo(
-                    //   id: idController.value.text,
-                    //   title: titleController.value.text,
-                    //   description: descriptionController.value.text,
-                    // );
+                    var todo = Todo(
+                      id: idController.value.text,
+                      title: titleController.value.text,
+                      description: descriptionController.value.text,
+                    );
                   },
                   child: const Text('Add Todo')),
             ],
