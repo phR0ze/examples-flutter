@@ -1,62 +1,126 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_todo/model/todo.dart';
+import 'todo_page.dart';
 
-// Immutable provider state
-final titleProvider = Provider((ref) => 'Riverpod counter example');
-
-// Updatable provider state
-final counterProvider = StateProvider((ref) => 0);
-
-class MyHomePage extends ConsumerWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class MyHomePage extends StatelessWidget {
+  const MyHomePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final title = ref.watch(titleProvider);
-    final count = ref.watch(counterProvider);
-
-    return Scaffold(
-        backgroundColor: Colors.lightBlue,
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
         appBar: AppBar(
-          title: Text(title),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              // Counter value
-              Text(
-                count.toString(),
-                style: const TextStyle(color: Colors.white, height: 5, fontSize: 23),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: ElevatedButton.icon(
-                      icon: const Icon(Icons.add),
-                      label: const Text('Add'),
-                      onPressed: () => ref.watch(counterProvider.notifier).state++,
-                    ),
+          title: const Text('Riverpod todo example'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AddTodoPage(),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: ElevatedButton.icon(
-                      icon: const Icon(Icons.remove),
-                      label: const Text('Minus'),
-                      onPressed: () => ref.watch(counterProvider.notifier).state--,
-                    ),
-                  ),
-                ],
-              ),
-              ElevatedButton.icon(
-                icon: const Icon(Icons.replay),
-                label: const Text('Refresh'),
-                onPressed: () => ref.watch(counterProvider.notifier).state = 0,
-              ),
+                );
+              },
+              icon: const Icon(Icons.add),
+            ),
+          ],
+          bottom: const TabBar(
+            // onTap: (index) {
+            //   switch (index) {
+            //     case 0:
+            //       context
+            //           .read<TodosFilterBloc>()
+            //           .add(const UpdateTodos(filter: TodosFilter.pending));
+            //       break;
+            //     case 1:
+            //       context
+            //           .read<TodosFilterBloc>()
+            //           .add(const UpdateTodos(filter: TodosFilter.completed));
+            //       break;
+            //   }
+            // },
+            tabs: [
+              Tab(icon: Icon(Icons.pending)),
+              Tab(icon: Icon(Icons.add_task)),
             ],
           ),
-        ));
+        ),
+        body: const TabBarView(
+          children: [
+            Todos('Pending Todos'),
+            Todos('Completed Todos'),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Todos extends StatelessWidget {
+  final String title;
+
+  const Todos(this.title, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              title,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ),
+          ListView.builder(
+              shrinkWrap: true,
+              itemCount: Todo.todos.length,
+              itemBuilder: (context, index) {
+                return TodoCard(Todo.todos[index]);
+              })
+        ],
+      ),
+    );
+  }
+}
+
+class TodoCard extends StatelessWidget {
+  final Todo todo;
+
+  const TodoCard(this.todo, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 8.0),
+      child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('#${todo.id}: ${todo.title}',
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const Row(children: [
+                // IconButton(
+                //   onPressed: () {
+                //     context.read<TodosBloc>().add(UpdateTodo(todo: todo.copyWith(isCompleted: true)));
+                //   },
+                //   icon: const Icon(Icons.add_task),
+                // ),
+                // IconButton(
+                //   onPressed: () {
+                //     context.read<TodosBloc>().add(DeleteTodo(todo: todo));
+                //   },
+                //   icon: const Icon(Icons.cancel),
+                // ),
+              ]),
+            ],
+          )),
+    );
   }
 }

@@ -26,11 +26,8 @@ class Counter extends Notifier<int> {
 
 final counterProvider = NotifierProvider<Counter, int>(Counter.new);
 
-// Updatable provider state
-// final counterProvider = StateProvider((ref) => 0);
-
 class MyHomePage extends ConsumerWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  const MyHomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -73,7 +70,7 @@ class MyHomePage extends ConsumerWidget {
               ),
               ElevatedButton.icon(
                 icon: const Icon(Icons.replay),
-                label: const Text('Refresh'),
+                label: const Text('Reset'),
                 onPressed: () => ref.watch(counterProvider.notifier).reset(),
               ),
             ],
