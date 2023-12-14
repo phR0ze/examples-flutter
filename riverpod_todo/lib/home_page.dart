@@ -11,7 +11,7 @@ class MyHomePage extends ConsumerWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final title = ref.watch(titleProvider);
     final count = ref.watch(counterProvider);
 
