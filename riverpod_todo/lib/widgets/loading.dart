@@ -5,6 +5,9 @@ class LoadingIndicator extends StatelessWidget {
     super.key,
   });
 
+  // Had to use two separate aligns to get the text to align properly in the center
+  // of the CircularProgressIndicator. Padding is used to move the entire stack up to
+  // compensat for the top tab navigation.
   @override
   Widget build(BuildContext context) {
     return const Padding(

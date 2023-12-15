@@ -88,11 +88,10 @@ class Todos extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    AsyncValue<List<Todo>> todos = ref.watch(todosProvider);
+    var asyncValue = ref.watch(todosProvider);
 
-    return todos.when(
+    return asyncValue.when(
       loading: () => const LoadingIndicator(),
-      error: (err, stack) => Text('Error: $err'),
       data: (todos) {
         return Padding(
           padding: const EdgeInsets.all(8.0),
@@ -116,6 +115,7 @@ class Todos extends ConsumerWidget {
           ),
         );
       },
+      error: (err, stack) => Text('Error: $err'),
     );
   }
 }

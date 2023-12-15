@@ -44,6 +44,7 @@ class MyHomePage extends ConsumerWidget {
             children: [
               // Counter value
               Text(
+                // Need to use watch here to rebuild the widget when the counter changes
                 ref.watch(counterProvider).toString(),
                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 48),
               ),
@@ -55,7 +56,8 @@ class MyHomePage extends ConsumerWidget {
                     child: ElevatedButton.icon(
                       icon: const Icon(Icons.add),
                       label: const Text('Add'),
-                      onPressed: () => ref.watch(counterProvider.notifier).inc(),
+                      // Using read here is find because we don't need to rebuild the widget
+                      onPressed: () => ref.read(counterProvider.notifier).inc(),
                     ),
                   ),
                   Padding(
@@ -63,7 +65,8 @@ class MyHomePage extends ConsumerWidget {
                     child: ElevatedButton.icon(
                       icon: const Icon(Icons.remove),
                       label: const Text('Minus'),
-                      onPressed: () => ref.watch(counterProvider.notifier).dec(),
+                      // Using read here is find because we don't need to rebuild the widget
+                      onPressed: () => ref.read(counterProvider.notifier).dec(),
                     ),
                   ),
                 ],
@@ -71,7 +74,8 @@ class MyHomePage extends ConsumerWidget {
               ElevatedButton.icon(
                 icon: const Icon(Icons.replay),
                 label: const Text('Reset'),
-                onPressed: () => ref.watch(counterProvider.notifier).reset(),
+                // Using read here is find because we don't need to rebuild the widget
+                onPressed: () => ref.read(counterProvider.notifier).reset(),
               ),
             ],
           ),

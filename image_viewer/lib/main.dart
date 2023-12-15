@@ -1,9 +1,9 @@
 import 'package:desktop_window/desktop_window.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:image_viewer/const.dart';
-import 'package:provider/provider.dart';
-import 'state.dart';
 import 'screens/narrow/home.dart' as narrow;
 import 'screens/wide/home.dart' as wide;
 
@@ -15,15 +15,27 @@ Future setDesktopWindow() async {
   await DesktopWindow.setWindowSize(const Size(1300, 900));
 }
 
-void main() {
+final sharedPreferencesProvider = Provider<SharedPreferences>((ref) {
+  throw UnimplementedError();
+});
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final sharedPreferences = await SharedPreferences.getInstance();
 
   // Set the window size on desktop platforms
   if (UniversalPlatform.isDesktop) {
     setDesktopWindow();
   }
 
-  runApp(const App());
+  // Wrap in Riverpod state management
+  runApp(ProviderScope(
+    overrides: [
+      // Override temporary shared preferences value with loaded value
+      sharedPreferencesProvider.overrideWithValue(sharedPreferences),
+    ],
+    child: const App(),
+  ));
 }
 
 class App extends StatelessWidget {
@@ -31,22 +43,19 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => AppState(),
-      child: MaterialApp(
-        title: Const.appName,
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-          useMaterial3: true,
-        ),
-        home: Scaffold(
-          body: LayoutBuilder(builder: (context, constraints) {
-            return constraints.maxWidth > Const.narrowThreshold
-                ? wide.HomeScreen(constraints)
-                : narrow.HomeScreen(constraints);
-          }),
-        ),
+    return MaterialApp(
+      title: Const.appName,
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        useMaterial3: true,
+      ),
+      home: Scaffold(
+        body: LayoutBuilder(builder: (context, constraints) {
+          return constraints.maxWidth > Const.narrowThreshold
+              ? wide.HomeScreen(constraints)
+              : narrow.HomeScreen(constraints);
+        }),
       ),
     );
   }
