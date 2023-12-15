@@ -1,4 +1,4 @@
-# freezed
+# pkg_freezed
 
 A new Flutter project.
 
