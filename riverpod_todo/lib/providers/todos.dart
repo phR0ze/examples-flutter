@@ -1,17 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
 import '../model/todo.dart';
 
-// part 'todos.g.dart';
+// Generated riverpod code for todosProvider
+part 'todos.g.dart';
 
-// @riverpod
-// Future<myFunction(MyFunctionRef ref) {
-//   <your logic here>
-// }
-
-// Load the todos from persistent storage
-final todosProvider = FutureProvider<List<Todo>>((ref) async {
+// Defines todosProvider
+@riverpod
+Future<List<Todo>> todos(TodosRef ref) async {
   return Future.delayed(const Duration(seconds: 2), () {
     return const [
       Todo(
@@ -31,4 +26,4 @@ final todosProvider = FutureProvider<List<Todo>>((ref) async {
       ),
     ];
   });
-});
+}
