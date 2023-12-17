@@ -1,36 +1,17 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class Todo extends Equatable {
-  final String id;
-  final String title;
-  final String description;
-  final bool? isCompleted;
-  final bool? isCanceled;
+part 'todo.freezed.dart';
+part 'todo.g.dart';
 
-  const Todo({
-    required this.id,
-    required this.title,
-    required this.description,
-    this.isCompleted = false,
-    this.isCanceled = false,
-  });
+@freezed
+class Todo with _$Todo {
+  const factory Todo({
+    required String id,
+    required String title,
+    required String description,
+    @Default(false) bool isCompleted,
+    @Default(false) bool isCanceled,
+  }) = _Todo;
 
-  Todo copyWith({
-    String? id,
-    String? title,
-    String? description,
-    bool? isCompleted,
-    bool? isCanceled,
-  }) {
-    return Todo(
-      id: id ?? this.id,
-      title: title ?? this.title,
-      description: description ?? this.description,
-      isCompleted: isCompleted ?? this.isCompleted,
-      isCanceled: isCanceled ?? this.isCanceled,
-    );
-  }
-
-  @override
-  List<Object?> get props => [id, title, description, isCompleted, isCanceled];
+  factory Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);
 }

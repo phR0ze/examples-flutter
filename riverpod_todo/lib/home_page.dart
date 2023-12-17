@@ -1,31 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_todo/model/todo.dart';
+import 'providers/todos.dart';
 import 'todo_page.dart';
 import 'widgets/loading.dart';
-
-// Load the todos from persistent storage
-final todosProvider = FutureProvider<List<Todo>>((ref) async {
-  return Future.delayed(const Duration(seconds: 2), () {
-    return const [
-      Todo(
-        id: '1',
-        title: 'Example Todo 1',
-        description: 'Description 1',
-      ),
-      Todo(
-        id: '2',
-        title: 'Example Todo 2',
-        description: 'Description 2',
-      ),
-      Todo(
-        id: '3',
-        title: 'Example Todo 3',
-        description: 'Description 3',
-      ),
-    ];
-  });
-});
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
