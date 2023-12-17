@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'model/exports.dart';
+import 'providers/todos.dart';
 
-class AddTodoPage extends StatelessWidget {
+class AddTodoPage extends ConsumerWidget {
   const AddTodoPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final idController = TextEditingController();
     final titleController = TextEditingController();
     final descriptionController = TextEditingController();
@@ -29,7 +31,7 @@ class AddTodoPage extends StatelessWidget {
                       title: titleController.value.text,
                       description: descriptionController.value.text,
                     );
-                    // context.read<TodosBloc>().add(AddTodo(todo: todo));
+                    ref.read(todosProvider.notifier).add(todo);
 
                     // Now pop the page to go back to the home page
                     Navigator.pop(context);

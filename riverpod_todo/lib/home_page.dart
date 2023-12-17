@@ -98,13 +98,13 @@ class Todos extends ConsumerWidget {
   }
 }
 
-class TodoCard extends StatelessWidget {
+class TodoCard extends ConsumerWidget {
   final Todo todo;
 
   const TodoCard(this.todo, {super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Card(
       margin: const EdgeInsets.only(bottom: 8.0),
       child: Padding(
@@ -114,19 +114,19 @@ class TodoCard extends StatelessWidget {
             children: [
               Text('#${todo.id}: ${todo.title}',
                   style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              const Row(children: [
-                // IconButton(
-                //   onPressed: () {
-                //     context.read<TodosBloc>().add(UpdateTodo(todo: todo.copyWith(isCompleted: true)));
-                //   },
-                //   icon: const Icon(Icons.add_task),
-                // ),
-                // IconButton(
-                //   onPressed: () {
-                //     context.read<TodosBloc>().add(DeleteTodo(todo: todo));
-                //   },
-                //   icon: const Icon(Icons.cancel),
-                // ),
+              Row(children: [
+                IconButton(
+                  onPressed: () {
+                    ref.read(todosProvider.notifier).replace(todo.copyWith(isCompleted: true));
+                  },
+                  icon: const Icon(Icons.add_task),
+                ),
+                IconButton(
+                  onPressed: () {
+                    ref.read(todosProvider.notifier).delete(todo);
+                  },
+                  icon: const Icon(Icons.cancel),
+                ),
               ]),
             ],
           )),

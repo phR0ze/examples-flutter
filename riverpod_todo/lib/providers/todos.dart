@@ -30,4 +30,19 @@ class Todos extends _$Todos {
       ];
     });
   }
+
+  // Add a new todo to our internal state
+  Future<void> add(Todo todo) async {
+    state = AsyncData([...state.value!, todo]);
+  }
+
+  // Replace the todo in our internal state with the new todo
+  Future<void> replace(Todo todo) async {
+    state = AsyncData(state.value!.map((x) => x.id == todo.id ? todo : x).toList());
+  }
+
+  // Delete the todo from our internal state
+  Future<void> delete(Todo todo) async {
+    state = AsyncData(state.value!.where((x) => x.id != todo.id).toList());
+  }
 }
