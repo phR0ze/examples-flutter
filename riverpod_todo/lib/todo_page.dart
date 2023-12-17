@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'model/exports.dart';
-import 'providers/todos.dart';
+import 'model/exports.dart' as model;
+import 'providers/exports.dart';
 
 class AddTodoPage extends ConsumerWidget {
   const AddTodoPage({Key? key}) : super(key: key);
@@ -26,12 +26,12 @@ class AddTodoPage extends ConsumerWidget {
               _inputField('Description', descriptionController),
               ElevatedButton(
                   onPressed: () {
-                    var todo = Todo(
+                    var todo = model.Todo(
                       id: idController.value.text,
                       title: titleController.value.text,
                       description: descriptionController.value.text,
                     );
-                    ref.read(todosProvider.notifier).add(todo);
+                    ref.read(todoProvider.notifier).add(todo);
 
                     // Now pop the page to go back to the home page
                     Navigator.pop(context);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_todo/model/todo.dart';
-import 'providers/todos.dart';
+import 'model/exports.dart' as model;
+import 'providers/exports.dart';
 import 'todo_page.dart';
 import 'widgets/loading.dart';
 
@@ -66,7 +66,7 @@ class Todos extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var asyncValue = ref.watch(todosProvider);
+    var asyncValue = ref.watch(todoProvider);
 
     return asyncValue.when(
       loading: () => const LoadingIndicator(),
@@ -99,7 +99,7 @@ class Todos extends ConsumerWidget {
 }
 
 class TodoCard extends ConsumerWidget {
-  final Todo todo;
+  final model.Todo todo;
 
   const TodoCard(this.todo, {super.key});
 
@@ -117,13 +117,13 @@ class TodoCard extends ConsumerWidget {
               Row(children: [
                 IconButton(
                   onPressed: () {
-                    ref.read(todosProvider.notifier).replace(todo.copyWith(isCompleted: true));
+                    ref.read(todoProvider.notifier).replace(todo.copyWith(isCompleted: true));
                   },
                   icon: const Icon(Icons.add_task),
                 ),
                 IconButton(
                   onPressed: () {
-                    ref.read(todosProvider.notifier).delete(todo);
+                    ref.read(todoProvider.notifier).delete(todo);
                   },
                   icon: const Icon(Icons.cancel),
                 ),
