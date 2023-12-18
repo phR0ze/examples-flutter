@@ -5,7 +5,8 @@ import '../model/exports.dart' as model;
 part 'todo.g.dart';
 
 // Defines an async `todoProvider` Notifier to manage the state of our todos
-@Riverpod(keepAlive: true)
+//@Riverpod(keepAlive: true)
+@riverpod
 class Todo extends _$Todo {
   @override
   Future<List<model.Todo>> build() async {

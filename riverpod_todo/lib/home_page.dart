@@ -62,35 +62,58 @@ class Todos extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var asyncValue = ref.watch(todoProvider);
+    // var asyncValue = ref.watch(todoProvider);
+    //var asyncValue = ref.watch(filteredTodosProvider);
+    var todos = ref.watch(todosProvider);
 
-    return asyncValue.when(
-      loading: () => const LoadingIndicator(),
-      data: (todos) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  title,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-              ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: todos.length,
-                  itemBuilder: (context, index) {
-                    return TodoCard(todos[index]);
-                  })
-            ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              title,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
           ),
-        );
-      },
-      error: (err, stack) => Text('Error: $err'),
+          ListView.builder(
+              shrinkWrap: true,
+              itemCount: todos.length,
+              itemBuilder: (context, index) {
+                return TodoCard(todos[index]);
+              })
+        ],
+      ),
     );
+    // return asyncValue.when(
+    //   loading: () => const LoadingIndicator(),
+    //   data: (todos) {
+    //     return Padding(
+    //       padding: const EdgeInsets.all(8.0),
+    //       child: Column(
+    //         crossAxisAlignment: CrossAxisAlignment.start,
+    //         children: [
+    //           Container(
+    //             padding: const EdgeInsets.all(8.0),
+    //             child: Text(
+    //               title,
+    //               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+    //             ),
+    //           ),
+    //           ListView.builder(
+    //               shrinkWrap: true,
+    //               itemCount: todos.length,
+    //               itemBuilder: (context, index) {
+    //                 return TodoCard(todos[index]);
+    //               })
+    //         ],
+    //       ),
+    //     );
+    //   },
+    //   error: (err, stack) => Text('Error: $err'),
+    // );
   }
 }
 
@@ -113,13 +136,13 @@ class TodoCard extends ConsumerWidget {
               Row(children: [
                 IconButton(
                   onPressed: () {
-                    ref.read(todoProvider.notifier).complete(todo);
+                    ref.read(todosProvider.notifier).complete(todo);
                   },
                   icon: const Icon(Icons.add_task),
                 ),
                 IconButton(
                   onPressed: () {
-                    ref.read(todoProvider.notifier).delete(todo);
+                    ref.read(todosProvider.notifier).delete(todo);
                   },
                   icon: const Icon(Icons.cancel),
                 ),

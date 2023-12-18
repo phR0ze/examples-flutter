@@ -31,7 +31,7 @@ class AddTodoPage extends ConsumerWidget {
                       title: titleController.value.text,
                       description: descriptionController.value.text,
                     );
-                    ref.read(todoProvider.notifier).add(todo);
+                    ref.read(todosProvider.notifier).add(todo);
 
                     // Now pop the page to go back to the home page
                     Navigator.pop(context);
