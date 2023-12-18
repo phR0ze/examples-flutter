@@ -1,36 +1,16 @@
-// import 'package:riverpod_annotation/riverpod_annotation.dart';
-// import '../model/todo_filter.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../model/exports.dart' as model;
 
-// // Generated riverpod code for todosProvider
-// part 'todo_filter.g.dart';
+// Generated riverpod code
+part 'todo_filter.g.dart';
 
-// // Defines todosProvider notifier to make it writable
-// @riverpod
-// class TodoFilter extends _$Todos {
-//   // Define the initial value for the provider
-//   @override
-//   Future<List<Todo>> build() async {
-//     return Future.delayed(const Duration(seconds: 2), () {
-//       return const [
-//         Todo(
-//           id: '1',
-//           title: 'Example Todo 1',
-//           description: 'Description 1',
-//         ),
-//         Todo(
-//           id: '2',
-//           title: 'Example Todo 2',
-//           description: 'Description 2',
-//         ),
-//         Todo(
-//           id: '3',
-//           title: 'Example Todo 3',
-//           description: 'Description 3',
-//         ),
-//       ];
-//     });
-//   }
+// Defines a sync `todoFilterProvider` Notifier to manage the filter state
+@riverpod
+class TodoFilter extends _$TodoFilter {
+  // Initial state
+  @override
+  model.TodoFilter build() => model.TodoFilter.all;
 
-//   // Add a new todo to our internal state
-//   Future<void> add(Todo todo) async {
-//     state = AsyncData([...state.value!, todo]);
+  // Update state
+  set(model.TodoFilter filter) => state = filter;
+}

@@ -1,25 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'todo.dart';
+part of 'todo_filter.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$todoHash() => r'c210d2c3d16892764aba783ef9d67b09ce9e62ce';
+String _$todoFilterHash() => r'864476202f9d6d533ba1d238c06c7b67d04a23bc';
 
-/// See also [Todo].
-@ProviderFor(Todo)
-final todoProvider =
-    AutoDisposeAsyncNotifierProvider<Todo, List<model.Todo>>.internal(
-  Todo.new,
-  name: r'todoProvider',
+/// See also [TodoFilter].
+@ProviderFor(TodoFilter)
+final todoFilterProvider =
+    AutoDisposeNotifierProvider<TodoFilter, model.TodoFilter>.internal(
+  TodoFilter.new,
+  name: r'todoFilterProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$todoHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$todoFilterHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$Todo = AutoDisposeAsyncNotifier<List<model.Todo>>;
+typedef _$TodoFilter = AutoDisposeNotifier<model.TodoFilter>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

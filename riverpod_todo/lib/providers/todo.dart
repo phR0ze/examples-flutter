@@ -1,13 +1,12 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../model/exports.dart' as model;
 
-// Generated riverpod code for todosProvider
+// Generated riverpod code
 part 'todo.g.dart';
 
-// Defines todosProvider notifier to make it writable
+// Defines an async `todoProvider` Notifier to manage the state of our todos
 @riverpod
 class Todo extends _$Todo {
-  // Define the initial value for the provider
   @override
   Future<List<model.Todo>> build() async {
     return Future.delayed(const Duration(seconds: 2), () {
@@ -34,6 +33,12 @@ class Todo extends _$Todo {
   // Add a new todo to our internal state
   Future<void> add(model.Todo todo) async {
     state = AsyncData([...state.value!, todo]);
+  }
+
+  // Mark the todo completed in our internal state
+  Future<void> complete(model.Todo todo) async {
+    state = AsyncData(
+        state.value!.map((x) => x.id == todo.id ? todo.copyWith(isCompleted: true) : x).toList());
   }
 
   // Replace the todo in our internal state with the new todo

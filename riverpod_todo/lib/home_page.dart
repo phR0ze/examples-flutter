@@ -5,11 +5,11 @@ import 'providers/exports.dart';
 import 'todo_page.dart';
 import 'widgets/loading.dart';
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends ConsumerWidget {
   const MyHomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -28,22 +28,18 @@ class MyHomePage extends StatelessWidget {
               icon: const Icon(Icons.add),
             ),
           ],
-          bottom: const TabBar(
-            // onTap: (index) {
-            //   switch (index) {
-            //     case 0:
-            //       context
-            //           .read<TodosFilterBloc>()
-            //           .add(const UpdateTodos(filter: TodosFilter.pending));
-            //       break;
-            //     case 1:
-            //       context
-            //           .read<TodosFilterBloc>()
-            //           .add(const UpdateTodos(filter: TodosFilter.completed));
-            //       break;
-            //   }
-            // },
-            tabs: [
+          bottom: TabBar(
+            onTap: (index) {
+              switch (index) {
+                case 0:
+                  ref.read(todoFilterProvider.notifier).set(model.TodoFilter.pending);
+                  break;
+                case 1:
+                  ref.read(todoFilterProvider.notifier).set(model.TodoFilter.completed);
+                  break;
+              }
+            },
+            tabs: const [
               Tab(icon: Icon(Icons.pending)),
               Tab(icon: Icon(Icons.add_task)),
             ],
@@ -117,7 +113,7 @@ class TodoCard extends ConsumerWidget {
               Row(children: [
                 IconButton(
                   onPressed: () {
-                    ref.read(todoProvider.notifier).replace(todo.copyWith(isCompleted: true));
+                    ref.read(todoProvider.notifier).complete(todo);
                   },
                   icon: const Icon(Icons.add_task),
                 ),
