@@ -24,7 +24,6 @@ mixin _$Todo {
   String get title => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   bool get isCompleted => throw _privateConstructorUsedError;
-  bool get isCanceled => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,12 +35,7 @@ abstract class $TodoCopyWith<$Res> {
   factory $TodoCopyWith(Todo value, $Res Function(Todo) then) =
       _$TodoCopyWithImpl<$Res, Todo>;
   @useResult
-  $Res call(
-      {String id,
-      String title,
-      String description,
-      bool isCompleted,
-      bool isCanceled});
+  $Res call({String id, String title, String description, bool isCompleted});
 }
 
 /// @nodoc
@@ -61,7 +55,6 @@ class _$TodoCopyWithImpl<$Res, $Val extends Todo>
     Object? title = null,
     Object? description = null,
     Object? isCompleted = null,
-    Object? isCanceled = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -80,10 +73,6 @@ class _$TodoCopyWithImpl<$Res, $Val extends Todo>
           ? _value.isCompleted
           : isCompleted // ignore: cast_nullable_to_non_nullable
               as bool,
-      isCanceled: null == isCanceled
-          ? _value.isCanceled
-          : isCanceled // ignore: cast_nullable_to_non_nullable
-              as bool,
     ) as $Val);
   }
 }
@@ -95,12 +84,7 @@ abstract class _$$TodoImplCopyWith<$Res> implements $TodoCopyWith<$Res> {
       __$$TodoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String title,
-      String description,
-      bool isCompleted,
-      bool isCanceled});
+  $Res call({String id, String title, String description, bool isCompleted});
 }
 
 /// @nodoc
@@ -117,7 +101,6 @@ class __$$TodoImplCopyWithImpl<$Res>
     Object? title = null,
     Object? description = null,
     Object? isCompleted = null,
-    Object? isCanceled = null,
   }) {
     return _then(_$TodoImpl(
       id: null == id
@@ -136,10 +119,6 @@ class __$$TodoImplCopyWithImpl<$Res>
           ? _value.isCompleted
           : isCompleted // ignore: cast_nullable_to_non_nullable
               as bool,
-      isCanceled: null == isCanceled
-          ? _value.isCanceled
-          : isCanceled // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -151,8 +130,7 @@ class _$TodoImpl implements _Todo {
       {required this.id,
       required this.title,
       required this.description,
-      this.isCompleted = false,
-      this.isCanceled = false});
+      this.isCompleted = false});
 
   factory _$TodoImpl.fromJson(Map<String, dynamic> json) =>
       _$$TodoImplFromJson(json);
@@ -166,13 +144,10 @@ class _$TodoImpl implements _Todo {
   @override
   @JsonKey()
   final bool isCompleted;
-  @override
-  @JsonKey()
-  final bool isCanceled;
 
   @override
   String toString() {
-    return 'Todo(id: $id, title: $title, description: $description, isCompleted: $isCompleted, isCanceled: $isCanceled)';
+    return 'Todo(id: $id, title: $title, description: $description, isCompleted: $isCompleted)';
   }
 
   @override
@@ -185,15 +160,13 @@ class _$TodoImpl implements _Todo {
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.isCompleted, isCompleted) ||
-                other.isCompleted == isCompleted) &&
-            (identical(other.isCanceled, isCanceled) ||
-                other.isCanceled == isCanceled));
+                other.isCompleted == isCompleted));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, title, description, isCompleted, isCanceled);
+      Object.hash(runtimeType, id, title, description, isCompleted);
 
   @JsonKey(ignore: true)
   @override
@@ -214,8 +187,7 @@ abstract class _Todo implements Todo {
       {required final String id,
       required final String title,
       required final String description,
-      final bool isCompleted,
-      final bool isCanceled}) = _$TodoImpl;
+      final bool isCompleted}) = _$TodoImpl;
 
   factory _Todo.fromJson(Map<String, dynamic> json) = _$TodoImpl.fromJson;
 
@@ -227,8 +199,6 @@ abstract class _Todo implements Todo {
   String get description;
   @override
   bool get isCompleted;
-  @override
-  bool get isCanceled;
   @override
   @JsonKey(ignore: true)
   _$$TodoImplCopyWith<_$TodoImpl> get copyWith =>

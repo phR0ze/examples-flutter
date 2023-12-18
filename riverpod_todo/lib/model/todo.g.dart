@@ -11,7 +11,6 @@ _$TodoImpl _$$TodoImplFromJson(Map<String, dynamic> json) => _$TodoImpl(
       title: json['title'] as String,
       description: json['description'] as String,
       isCompleted: json['isCompleted'] as bool? ?? false,
-      isCanceled: json['isCanceled'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$TodoImplToJson(_$TodoImpl instance) =>
@@ -20,5 +19,4 @@ Map<String, dynamic> _$$TodoImplToJson(_$TodoImpl instance) =>
       'title': instance.title,
       'description': instance.description,
       'isCompleted': instance.isCompleted,
-      'isCanceled': instance.isCanceled,
     };
