@@ -6,12 +6,12 @@ part of 'todo_filter.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$todoFilterHash() => r'7cbf3d951c41e343a97a3a91f996e9500a9e04ff';
+String _$todoFilterHash() => r'0e822b505d1f611efb103fc78c2aadcb931633a5';
 
 /// See also [TodoFilter].
 @ProviderFor(TodoFilter)
 final todoFilterProvider =
-    AutoDisposeNotifierProvider<TodoFilter, model.TodoFilter>.internal(
+    NotifierProvider<TodoFilter, model.TodoFilter>.internal(
   TodoFilter.new,
   name: r'todoFilterProvider',
   debugGetCreateSourceHash:
@@ -20,6 +20,6 @@ final todoFilterProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$TodoFilter = AutoDisposeNotifier<model.TodoFilter>;
+typedef _$TodoFilter = Notifier<model.TodoFilter>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

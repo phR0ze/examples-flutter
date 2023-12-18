@@ -9,7 +9,7 @@ class Todo with _$Todo {
     required String id,
     required String title,
     required String description,
-    @Default(false) bool isCompleted,
+    @Default(false) bool completed,
   }) = _Todo;
 
   factory Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);

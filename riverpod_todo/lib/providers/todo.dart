@@ -5,10 +5,11 @@ import '../model/exports.dart' as model;
 part 'todo.g.dart';
 
 // Defines an async `todoProvider` Notifier to manage the state of our todos
-@riverpod
+@Riverpod(keepAlive: true)
 class Todo extends _$Todo {
   @override
   Future<List<model.Todo>> build() async {
+    // Simulates loading from disk
     return Future.delayed(const Duration(seconds: 2), () {
       return const [
         model.Todo(
@@ -38,7 +39,7 @@ class Todo extends _$Todo {
   // Mark the todo completed in our internal state
   Future<void> complete(model.Todo todo) async {
     state = AsyncData(
-        state.value!.map((x) => x.id == todo.id ? todo.copyWith(isCompleted: true) : x).toList());
+        state.value!.map((x) => x.id == todo.id ? todo.copyWith(completed: true) : x).toList());
   }
 
   // Replace the todo in our internal state with the new todo

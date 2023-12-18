@@ -5,7 +5,7 @@ import '../model/exports.dart' as model;
 part 'todo_filter.g.dart';
 
 // Defines a sync `todoFilterProvider` Notifier to manage the filter state
-@riverpod
+@Riverpod(keepAlive: true)
 class TodoFilter extends _$TodoFilter {
   // Initial state
   @override
