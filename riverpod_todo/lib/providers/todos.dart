@@ -1,14 +1,12 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../model/exports.dart' as model;
-import 'todo.dart';
 import 'todo_filter.dart';
 
 // Generated riverpod code
 part 'todos.g.dart';
 
 // Defines an async `todosProvider` Notifier to manage the state of our todos
-//@Riverpod(keepAlive: true)
-@riverpod
+@Riverpod(keepAlive: true)
 class Todos extends _$Todos {
   @override
   List<model.Todo> build() => const [
@@ -50,19 +48,19 @@ class Todos extends _$Todos {
   }
 }
 
-// // Helper provider to filter todos based on the current filter.
-// // Filter will be cached until the filter is changed or the todos list
-// // is changed at which point it will be re-evaluted.
-// final filteredTodosProvider = Provider<List<model.Todo>>((ref) {
-//   final todos = ref.watch(todosRepoProvider);
-//   final filter = ref.watch(todoFilterProvider);
+// Helper provider to filter todos based on the current filter.
+// Filter will be cached until the filter is changed or the todos list
+// is changed at which point it will be re-evaluted.
+final filteredTodosProvider = Provider<List<model.Todo>>((ref) {
+  final todos = ref.watch(todosProvider);
+  final filter = ref.watch(todoFilterProvider);
 
-//   switch (filter) {
-//     case model.TodoFilter.completed:
-//       return todos.where((todo) => todo.completed).toList();
-//     case TodoListFilter.active:
-//       return todos.where((todo) => !todo.completed).toList();
-//     case TodoListFilter.all:
-//       return todos;
-//   }
-// });
+  switch (filter) {
+    case model.TodoFilter.completed:
+      return todos.where((todo) => todo.completed).toList();
+    case model.TodoFilter.pending:
+      return todos.where((todo) => todo.pending).toList();
+    case model.TodoFilter.all:
+      return todos;
+  }
+});
