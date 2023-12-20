@@ -1,32 +1,51 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import '../data/models/tab_selection.dart' as models;
 import '../providers/tab_selection.dart';
+import '../data/models/exports.dart' as models;
+import 'favorites_page.dart';
+import 'now_playing_page.dart';
+import 'users_page.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Home Page'),
+    var tabSelection = ref.watch(tabSelectionProvider);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Riverpod Demo'),
       ),
-      bottomNavigationBar: BottomNavigation(),
+      body: () {
+        // initializing: () => const Center(child: CircularProgressIndicator()),
+        // needsProfile: () => ProfileSelectionPage(),
+        switch (tabSelection) {
+          case models.TabSelection.favorites:
+            return const FavoritesPage();
+          case models.TabSelection.nowPlaying:
+            return const NowPlayingPage();
+          case models.TabSelection.users:
+            return const UsersPage();
+        }
+      }(),
+      bottomNavigationBar: const BottomNavigation(),
     );
   }
 }
 
+/// BottomNavigation will display the current tab selection and rebuild when the tab
+/// selection changes using a riverpod dependency injected NotifierProvider.
 class BottomNavigation extends ConsumerWidget {
   const BottomNavigation({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var tab = ref.watch(tabSelectionProvider);
+    var tabSelection = ref.watch(tabSelectionProvider);
 
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
-      currentIndex: tab.index,
+      currentIndex: tabSelection.index,
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.movie),

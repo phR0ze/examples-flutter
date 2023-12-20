@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'providers/locator.dart';
-import 'views/startup_page.dart';
+import 'views/home_page.dart';
 
 Future<void> main() async {
   // Initialize the GetIt service locator
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Riverpod Demo',
-      home: StartupPage(),
+      home: HomePage(),
     );
   }
 }
