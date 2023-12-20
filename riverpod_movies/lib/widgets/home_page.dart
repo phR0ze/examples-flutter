@@ -6,6 +6,8 @@ import 'favorites_page.dart';
 import 'now_playing_page.dart';
 import 'users_page.dart';
 
+/// Automatically selects the right page based on the current tab selection as stored
+/// in the tabSelectionProvider.
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'providers/locator.dart';
-import 'views/home_page.dart';
+import 'widgets/home_page.dart';
 
 Future<void> main() async {
   // Initialize the GetIt service locator
