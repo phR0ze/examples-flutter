@@ -12,5 +12,5 @@ class TabSelection extends _$TabSelection {
   models.TabSelection build() => models.TabSelection.nowPlaying;
 
   // Update tab selection state
-  set(models.TabSelection selection) => state = selection;
+  set(int index) => state = models.TabSelection.values[index];
 }

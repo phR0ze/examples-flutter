@@ -1,18 +1,47 @@
-// import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/material.dart';
+import '../data/models/tab_selection.dart' as models;
+import '../providers/tab_selection.dart';
 
-// class HomePage extends StatelessWidget {
-//   const HomePage({super.key});
+class HomePage extends ConsumerWidget {
+  const HomePage({super.key});
 
-//   TabItem _currentTab = TabItem.nowPlaying;
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return const Scaffold(
+      body: Center(
+        child: Text('Home Page'),
+      ),
+      bottomNavigationBar: BottomNavigation(),
+    );
+  }
+}
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: widget.builder(context, _currentTab),
-//       bottomNavigationBar: BottomNavigation(
-//         currentTab: _currentTab,
-//         onSelectTab: (tab) => setState(() => _currentTab = tab),
-//       ),
-//     );
-//   }
-// }
+class BottomNavigation extends ConsumerWidget {
+  const BottomNavigation({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    var tab = ref.watch(tabSelectionProvider);
+
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      currentIndex: tab.index,
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.movie),
+          label: 'Now Playing',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.favorite),
+          label: 'Favourites',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: 'Profiles',
+        ),
+      ],
+      onTap: (index) => ref.read(tabSelectionProvider.notifier).set(index),
+    );
+  }
+}
