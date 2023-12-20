@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_movies/data/repos/locator.dart';
+import 'providers/locator.dart';
+import 'views/startup_page.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  // Initialize the GetIt service locator
   initLocator();
+
+  // Ensure that the WidgetsBinding has been set up before creating the app
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Wrap the app in a Riverpod ProviderScope to make providers accessible to the app
   runApp(const ProviderScope(
     child: MyApp(),
   ));
@@ -17,38 +23,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends ConsumerWidget {
-  const MyHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('TMDB movie demo app'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              locate<Vars>().tmdbKey,
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {}, //_incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+      title: 'Riverpod Demo',
+      home: StartupPage(),
     );
   }
 }
