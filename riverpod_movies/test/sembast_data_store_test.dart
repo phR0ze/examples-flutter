@@ -1,10 +1,30 @@
-import 'package:riverpod_movies/data/models/profile.dart';
+import 'package:riverpod_movies/data/models/exports.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_memory.dart';
 import 'package:test/test.dart';
 
 void main() {
   disableSembastCooperator();
+
+  test('Test configs read/write', () async {
+    // In memory factory for unit test
+    var factory = newDatabaseFactoryMemory();
+    var db = await factory.openDatabase('test.db');
+
+    // Define the configs data store in the main store
+    var configStore = StoreRef<String, Map<String, Object?>>.main();
+
+    // Write config to data store
+    var configs = const Configs(currentProfileId: 'profile1');
+    var record = configStore.record('configs');
+    record.put(db, configs.toJson());
+
+    // Read back and check
+    expect(await record.get(db), configs.toJson());
+
+    // Close the database
+    await db.close();
+  });
 
   test('Test profiles read/write', () async {
     // In memory factory for unit test

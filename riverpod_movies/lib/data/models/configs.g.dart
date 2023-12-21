@@ -8,12 +8,10 @@ part of 'configs.dart';
 
 _$ConfigsImpl _$$ConfigsImplFromJson(Map<String, dynamic> json) =>
     _$ConfigsImpl(
-      id: json['id'] as String,
-      name: json['name'] as String,
+      currentProfileId: json['currentProfileId'] as String,
     );
 
 Map<String, dynamic> _$$ConfigsImplToJson(_$ConfigsImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
+      'currentProfileId': instance.currentProfileId,
     };

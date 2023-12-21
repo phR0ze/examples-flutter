@@ -6,8 +6,7 @@ part 'configs.g.dart';
 @freezed
 class Configs with _$Configs {
   const factory Configs({
-    required String id,
-    required String name,
+    required String currentProfileId,
   }) = _Configs;
 
   // Provides JSON code generation for toMap and fromMap methods

@@ -20,8 +20,7 @@ Configs _$ConfigsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Configs {
-  String get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
+  String get currentProfileId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,7 +32,7 @@ abstract class $ConfigsCopyWith<$Res> {
   factory $ConfigsCopyWith(Configs value, $Res Function(Configs) then) =
       _$ConfigsCopyWithImpl<$Res, Configs>;
   @useResult
-  $Res call({String id, String name});
+  $Res call({String currentProfileId});
 }
 
 /// @nodoc
@@ -49,17 +48,12 @@ class _$ConfigsCopyWithImpl<$Res, $Val extends Configs>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? name = null,
+    Object? currentProfileId = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      currentProfileId: null == currentProfileId
+          ? _value.currentProfileId
+          : currentProfileId // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -72,7 +66,7 @@ abstract class _$$ConfigsImplCopyWith<$Res> implements $ConfigsCopyWith<$Res> {
       __$$ConfigsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name});
+  $Res call({String currentProfileId});
 }
 
 /// @nodoc
@@ -86,17 +80,12 @@ class __$$ConfigsImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? name = null,
+    Object? currentProfileId = null,
   }) {
     return _then(_$ConfigsImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      currentProfileId: null == currentProfileId
+          ? _value.currentProfileId
+          : currentProfileId // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -105,19 +94,17 @@ class __$$ConfigsImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ConfigsImpl implements _Configs {
-  const _$ConfigsImpl({required this.id, required this.name});
+  const _$ConfigsImpl({required this.currentProfileId});
 
   factory _$ConfigsImpl.fromJson(Map<String, dynamic> json) =>
       _$$ConfigsImplFromJson(json);
 
   @override
-  final String id;
-  @override
-  final String name;
+  final String currentProfileId;
 
   @override
   String toString() {
-    return 'Configs(id: $id, name: $name)';
+    return 'Configs(currentProfileId: $currentProfileId)';
   }
 
   @override
@@ -125,13 +112,13 @@ class _$ConfigsImpl implements _Configs {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ConfigsImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name));
+            (identical(other.currentProfileId, currentProfileId) ||
+                other.currentProfileId == currentProfileId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name);
+  int get hashCode => Object.hash(runtimeType, currentProfileId);
 
   @JsonKey(ignore: true)
   @override
@@ -148,15 +135,13 @@ class _$ConfigsImpl implements _Configs {
 }
 
 abstract class _Configs implements Configs {
-  const factory _Configs(
-      {required final String id, required final String name}) = _$ConfigsImpl;
+  const factory _Configs({required final String currentProfileId}) =
+      _$ConfigsImpl;
 
   factory _Configs.fromJson(Map<String, dynamic> json) = _$ConfigsImpl.fromJson;
 
   @override
-  String get id;
-  @override
-  String get name;
+  String get currentProfileId;
   @override
   @JsonKey(ignore: true)
   _$$ConfigsImplCopyWith<_$ConfigsImpl> get copyWith =>

@@ -4,6 +4,12 @@ abstract class DataStore {
   /// Stores a profile's changes or creates it if needed using the profile's id
   Future<void> putProfile(Profile profile);
 
+  /// Get the profile by id from the data store
+  Future<Profile> getProfile(String id);
+
+  /// Get all profiles from the data store
+  Future<List<Profile>> getProfiles();
+
   //Future<bool> profileExists(String name);
   //Future<void> setSelectedProfile(Profile profile);
 

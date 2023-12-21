@@ -22,7 +22,6 @@ class SembastDataStore implements DataStore {
   SembastDataStore(this.db);
   final Database db;
 
-  // final configs = StoreRef<String, String>(StorePath.configs);
   final profiles = stringMapStoreFactory.store(StorePath.profiles);
 
   // Open the data store, creating if necessary
@@ -38,6 +37,23 @@ class SembastDataStore implements DataStore {
   @override
   Future<void> putProfile(Profile profile) async {
     await profiles.record(profile.id).put(db, profile.toJson());
+  }
+
+  /// Get the profile by id from the data store
+  @override
+  Future<Profile> getProfile(String id) async {
+    final record = await profiles.record(id).get(db);
+    if (record != null) {
+      return Profile.fromJson(record);
+    }
+    throw StateError('Profile $id does not exist');
+  }
+
+  /// Get all profiles from the data store
+  @override
+  Future<List<Profile>> getProfiles() async {
+    final records = await profiles.find(db);
+    return records.map((x) => Profile.fromJson(x.value)).toList();
   }
 
   @override
