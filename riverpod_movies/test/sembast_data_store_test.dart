@@ -1,4 +1,5 @@
 import 'package:riverpod_movies/data/models/exports.dart';
+import 'package:riverpod_movies/data/repos/data_store.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_memory.dart';
 import 'package:test/test.dart';
@@ -7,46 +8,32 @@ void main() {
   disableSembastCooperator();
 
   test('Test configs read/write', () async {
-    // In memory factory for unit test
-    var factory = newDatabaseFactoryMemory();
-    var db = await factory.openDatabase('test.db');
+    var db = await DataStore.init(newDatabaseFactoryMemory());
 
-    // Define the configs data store in the main store
-    var configStore = StoreRef<String, Map<String, Object?>>.main();
-
-    // Write config to data store
     var configs = const Configs(currentProfileId: 'profile1');
-    var record = configStore.record('configs');
-    record.put(db, configs.toJson());
+    await db.saveConfigs(configs);
 
     // Read back and check
-    expect(await record.get(db), configs.toJson());
+    expect(await db.getConfigs(), configs);
 
     // Close the database
     await db.close();
   });
 
   test('Test profiles read/write', () async {
-    // In memory factory for unit test
-    var factory = newDatabaseFactoryMemory();
-    var db = await factory.openDatabase('test.db');
+    var db = await DataStore.init(newDatabaseFactoryMemory());
 
-    // Define the profiles data store
-    var profileStore = stringMapStoreFactory.store('profiles');
-
-    // Write some records
+    // Write some profiles
     var profile1 = const Profile(id: 'id1', name: 'profile1');
-    var record1 = profileStore.record(profile1.name);
-    await record1.put(db, profile1.toJson());
-    expect(await record1.get(db), profile1.toJson());
+    await db.putProfile(profile1);
+    expect(await db.getProfile(profile1.id), profile1);
 
     var profile2 = const Profile(id: 'id2', name: 'profile2');
-    var record2 = profileStore.record(profile2.name);
-    await record2.put(db, profile2.toJson());
-    expect(await record2.get(db), profile2.toJson());
+    await db.putProfile(profile2);
+    expect(await db.getProfile(profile2.id), profile2);
 
     // Read all records
-    profileStore.find(db).then((records) {
+    db.getProfiles().then((records) {
       expect(records.length, 2);
       records.sort((a, b) => a.key.compareTo(b.key));
       expect(records[0].key, 'profile1');
