@@ -33,13 +33,10 @@ void main() {
     expect(await db.getProfile(profile2.id), profile2);
 
     // Read all records
-    db.getProfiles().then((records) {
-      expect(records.length, 2);
-      records.sort((a, b) => a.key.compareTo(b.key));
-      expect(records[0].key, 'profile1');
-      expect(records[0].value, profile1.toJson());
-      expect(records[1].key, 'profile2');
-      expect(records[1].value, profile2.toJson());
+    db.getProfiles().then((profiles) {
+      expect(profiles.length, 2);
+      expect(profiles[0], profile1);
+      expect(profiles[1], profile2);
     });
 
     // Close the database

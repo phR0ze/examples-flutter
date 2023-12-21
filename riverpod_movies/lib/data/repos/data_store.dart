@@ -62,7 +62,8 @@ class DataStore {
 
   /// Get all profiles from the data store
   Future<List<Profile>> getProfiles() async {
-    final records = await profileStore.find(db);
+    var finder = Finder(sortOrders: [SortOrder(Field.key, true)]);
+    final records = await profileStore.find(db, finder: finder);
     return records.map((x) => Profile.fromJson(x.value)).toList();
   }
 
