@@ -1,10 +1,11 @@
 import '../models/exports.dart';
 
 abstract class DataStore {
-  /// Profiles
-  Future<bool> profileExists(String name);
-  Future<void> createProfile(Profile profile);
-  Future<void> setSelectedProfile(Profile profile);
+  /// Stores a profile's changes or creates it if needed using the profile's id
+  Future<void> putProfile(Profile profile);
+
+  //Future<bool> profileExists(String name);
+  //Future<void> setSelectedProfile(Profile profile);
 
   // Stream<Profiles> watchProfiles();
   // Future<Profiles> profiles();

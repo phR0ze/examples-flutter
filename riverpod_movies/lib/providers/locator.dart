@@ -1,11 +1,18 @@
 import 'dart:io';
 import 'package:get_it/get_it.dart';
+import '../data/repos/sembast_data_store.dart';
 
 final locate = GetIt.instance;
 
-/// Initialize the service locator
-initLocator() {
+initServicesAndRegisterWithServiceLocator() {
+  // Register the enviornment variables
   locate.registerLazySingleton<Vars>(() => Env());
+
+  // Initialize the data store once at app startup and keeping it open throughout the app's
+  // lifetime as this is an expensive operation; recommended by the Sembast author.
+  locate.registerSingletonAsync<SembastDataStore>(() async {
+    return await SembastDataStore.init();
+  });
 }
 
 // Abstract class to allow for alternate implementations

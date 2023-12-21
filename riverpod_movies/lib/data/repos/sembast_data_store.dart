@@ -1,3 +1,4 @@
+import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
@@ -6,30 +7,38 @@ import 'data_store.dart';
 
 /// Setup data store paths for easy access
 class StorePath {
+  static const configs = 'configs';
   static const profiles = 'profiles';
-  static const movies = 'movies';
-  static String favoriteMovie(String profileId, int movieId) =>
-      'favorites/$profileId/movie/$movieId';
-  static String favoriteMovies(String profileId) => 'favorites/$profileId';
+
+  // static const movies = 'movies';
+  // static String favoriteMovie(String profileId, int movieId) =>
+  //     'favorites/$profileId/movie/$movieId';
+  // static String favoriteMovies(String profileId) => 'favorites/$profileId';
 }
 
 /// Data store implementation using Sembast (local NoSQL database)
 class SembastDataStore implements DataStore {
-  static DatabaseFactory dbFactory = databaseFactoryIo;
-
+  static DatabaseFactory factory = databaseFactoryIo;
   SembastDataStore(this.db);
   final Database db;
-  final store = StoreRef.main();
+
+  final configs = StoreFactory<int, String>(StorePath.configs);
+  final profiles = stringMapStoreFactory.store(StorePath.profiles);
 
   // Open the data store, creating if necessary
   static Future<SembastDataStore> init() async {
     final appDocDir = await getApplicationDocumentsDirectory();
+    await appDocDir.create(recursive: true);
     return SembastDataStore(
-      await dbFactory.openDatabase('${appDocDir.path}/default.db'),
+      await factory.openDatabase(p.join(appDocDir.path, 'default.db')),
     );
   }
 
-  /// Profile methods
+  /// Stores a profile's changes or creates it if needed using the profile's id
+  @override
+  Future<void> putProfile(Profile profile) async {
+    await profiles.record(profile.id).put(db, profile.toJson());
+  }
 
   @override
   Future<bool> profileExists(String name) async {
@@ -37,20 +46,6 @@ class SembastDataStore implements DataStore {
     // final allNames = profiles.profiles.values.map((profile) => profile.name).toList();
     // return allNames.contains(name);
     throw UnimplementedError();
-  }
-
-  @override
-  Future<void> createProfile(Profile profile) async {
-    final profileJson = await store.record(StorePath.profiles).get(db) as String?;
-    if (profileJson != null) {
-      // final profilesData = Profiles.fromJson(profilesJson);
-      // profilesData.profiles[profile.id] = profile;
-      // final newProfiles = profilesData.copyWith(selectedId: profile.id);
-      // await store.record(recordName).put(db, newProfiles.toJson());
-    } else {
-      // final profileData = Profile(profiles: {profile.id: profile}, selectedId: profile.id);
-      // await store.record(recordName).put(db, profilesData.toJson());
-    }
   }
 
   @override

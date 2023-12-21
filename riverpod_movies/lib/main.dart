@@ -4,8 +4,7 @@ import 'providers/locator.dart';
 import 'ui/home_page.dart';
 
 Future<void> main() async {
-  // Initialize the GetIt service locator
-  initLocator();
+  initServicesAndRegisterWithServiceLocator();
 
   // Ensure that the WidgetsBinding has been set up before creating the app
   WidgetsFlutterBinding.ensureInitialized();
