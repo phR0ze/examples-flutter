@@ -2,9 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import '../providers/tab_selection.dart';
 import '../data/models/exports.dart' as models;
-import 'favorites_page.dart';
-import 'now_playing_page.dart';
-import 'profiles_page.dart';
+import 'favorites/favorites_page.dart';
+import 'now_playing/now_playing_page.dart';
+import 'profiles/profiles_page.dart';
 
 /// Automatically selects the right page based on the current tab selection as stored
 /// in the tabSelectionProvider.
@@ -16,9 +16,6 @@ class HomePage extends ConsumerWidget {
     var tabSelection = ref.watch(tabSelectionProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Riverpod Demo'),
-      ),
       body: () {
         // initializing: () => const Center(child: CircularProgressIndicator()),
         // needsProfile: () => ProfileSelectionPage(),
