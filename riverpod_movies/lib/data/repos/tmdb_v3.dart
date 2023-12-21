@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import '../dtos/tmdb_movies.dart';
-import '../../providers/locator.dart';
+import '../../providers/services.dart';
 
 enum PosterSize {
   w92,

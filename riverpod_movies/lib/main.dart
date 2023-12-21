@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'providers/locator.dart';
+import 'package:sembast/sembast_io.dart';
+import 'data/repos/data_store.dart';
+import 'providers/services.dart';
 import 'ui/home_page.dart';
 
 Future<void> main() async {
-  initServicesAndRegisterWithServiceLocator();
+  initServices();
 
   // Ensure that the WidgetsBinding has been set up before creating the app
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Initialize the data store once at app startup and keeping it open throughout the app's
+  // lifetime as this is an expensive operation; recommended by the Sembast author.
+  final dataStore = await DataStore.init(databaseFactoryIo);
+
   // Wrap the app in a Riverpod ProviderScope to make providers accessible to the app
-  runApp(const ProviderScope(
-    child: MyApp(),
+  runApp(ProviderScope(
+    overrides: [
+      // Override the dataStoreProvider with the initialized data store
+      dataStoreProvider.overrideWithValue(dataStore),
+    ],
+    child: const MyApp(),
   ));
 }
 

@@ -8,7 +8,7 @@ class ProfilesPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile page'),
+        title: const Text('Profile selection'),
       ),
       // body: ProfilesGrid(
       //   profilesData: profilesData,
