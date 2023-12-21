@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import '../widgets/movie_scroller.dart';
+import 'movie_scroller.dart';
 
 class NowPlayingPage extends ConsumerWidget {
   const NowPlayingPage({super.key});

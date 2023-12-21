@@ -6,7 +6,7 @@ part of 'tab_selection.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tabSelectionHash() => r'd158e2d3e6706d41abd0d1e771d38bf6c34ad513';
+String _$tabSelectionHash() => r'cbc5e61f2930ed04a897da6d6ff1e30a7b759637';
 
 /// See also [TabSelection].
 @ProviderFor(TabSelection)
