@@ -4,7 +4,7 @@ import '../providers/tab_selection.dart';
 import '../data/models/exports.dart' as models;
 import 'favorites_page.dart';
 import 'now_playing_page.dart';
-import 'users_page.dart';
+import 'profiles_page.dart';
 
 /// Automatically selects the right page based on the current tab selection as stored
 /// in the tabSelectionProvider.
@@ -27,8 +27,8 @@ class HomePage extends ConsumerWidget {
             return const FavoritesPage();
           case models.TabSelection.nowPlaying:
             return const NowPlayingPage();
-          case models.TabSelection.users:
-            return const UsersPage();
+          case models.TabSelection.profiles:
+            return const ProfilesPage();
         }
       }(),
       bottomNavigationBar: const BottomNavigation(),

@@ -1,1 +1,1 @@
-enum TabSelection { nowPlaying, favorites, users }
+enum TabSelection { nowPlaying, favorites, profiles }

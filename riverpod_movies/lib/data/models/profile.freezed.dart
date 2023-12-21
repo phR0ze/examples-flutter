@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'user.dart';
+part of 'profile.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,32 +14,32 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-User _$UserFromJson(Map<String, dynamic> json) {
-  return _User.fromJson(json);
+Profile _$ProfileFromJson(Map<String, dynamic> json) {
+  return _Profile.fromJson(json);
 }
 
 /// @nodoc
-mixin _$User {
+mixin _$Profile {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
+  $ProfileCopyWith<Profile> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $UserCopyWith<$Res> {
-  factory $UserCopyWith(User value, $Res Function(User) then) =
-      _$UserCopyWithImpl<$Res, User>;
+abstract class $ProfileCopyWith<$Res> {
+  factory $ProfileCopyWith(Profile value, $Res Function(Profile) then) =
+      _$ProfileCopyWithImpl<$Res, Profile>;
   @useResult
   $Res call({String id, String name});
 }
 
 /// @nodoc
-class _$UserCopyWithImpl<$Res, $Val extends User>
-    implements $UserCopyWith<$Res> {
-  _$UserCopyWithImpl(this._value, this._then);
+class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
+    implements $ProfileCopyWith<$Res> {
+  _$ProfileCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -66,20 +66,21 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
 }
 
 /// @nodoc
-abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
-  factory _$$UserImplCopyWith(
-          _$UserImpl value, $Res Function(_$UserImpl) then) =
-      __$$UserImplCopyWithImpl<$Res>;
+abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
+  factory _$$ProfileImplCopyWith(
+          _$ProfileImpl value, $Res Function(_$ProfileImpl) then) =
+      __$$ProfileImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String id, String name});
 }
 
 /// @nodoc
-class __$$UserImplCopyWithImpl<$Res>
-    extends _$UserCopyWithImpl<$Res, _$UserImpl>
-    implements _$$UserImplCopyWith<$Res> {
-  __$$UserImplCopyWithImpl(_$UserImpl _value, $Res Function(_$UserImpl) _then)
+class __$$ProfileImplCopyWithImpl<$Res>
+    extends _$ProfileCopyWithImpl<$Res, _$ProfileImpl>
+    implements _$$ProfileImplCopyWith<$Res> {
+  __$$ProfileImplCopyWithImpl(
+      _$ProfileImpl _value, $Res Function(_$ProfileImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -88,7 +89,7 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
   }) {
-    return _then(_$UserImpl(
+    return _then(_$ProfileImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -103,11 +104,11 @@ class __$$UserImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$UserImpl implements _User {
-  const _$UserImpl({required this.id, required this.name});
+class _$ProfileImpl implements _Profile {
+  const _$ProfileImpl({required this.id, required this.name});
 
-  factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
-      _$$UserImplFromJson(json);
+  factory _$ProfileImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ProfileImplFromJson(json);
 
   @override
   final String id;
@@ -116,14 +117,14 @@ class _$UserImpl implements _User {
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name)';
+    return 'Profile(id: $id, name: $name)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserImpl &&
+            other is _$ProfileImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name));
   }
@@ -135,22 +136,22 @@ class _$UserImpl implements _User {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$UserImplCopyWith<_$UserImpl> get copyWith =>
-      __$$UserImplCopyWithImpl<_$UserImpl>(this, _$identity);
+  _$$ProfileImplCopyWith<_$ProfileImpl> get copyWith =>
+      __$$ProfileImplCopyWithImpl<_$ProfileImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$UserImplToJson(
+    return _$$ProfileImplToJson(
       this,
     );
   }
 }
 
-abstract class _User implements User {
-  const factory _User({required final String id, required final String name}) =
-      _$UserImpl;
+abstract class _Profile implements Profile {
+  const factory _Profile(
+      {required final String id, required final String name}) = _$ProfileImpl;
 
-  factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
+  factory _Profile.fromJson(Map<String, dynamic> json) = _$ProfileImpl.fromJson;
 
   @override
   String get id;
@@ -158,6 +159,6 @@ abstract class _User implements User {
   String get name;
   @override
   @JsonKey(ignore: true)
-  _$$UserImplCopyWith<_$UserImpl> get copyWith =>
+  _$$ProfileImplCopyWith<_$ProfileImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
