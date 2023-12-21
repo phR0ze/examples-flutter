@@ -22,7 +22,7 @@ class SembastDataStore implements DataStore {
   SembastDataStore(this.db);
   final Database db;
 
-  final configs = StoreFactory<int, String>(StorePath.configs);
+  // final configs = StoreRef<String, String>(StorePath.configs);
   final profiles = stringMapStoreFactory.store(StorePath.profiles);
 
   // Open the data store, creating if necessary
