@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sembast/sembast_io.dart';
+import 'const.dart';
 import 'data/repos/data_store.dart';
 import 'providers/services.dart';
 import 'ui/home_page.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Riverpod Demo',
+      title: Const.appName,
       home: HomePage(),
     );
   }
