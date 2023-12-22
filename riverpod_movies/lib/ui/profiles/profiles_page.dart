@@ -4,6 +4,7 @@ import '../../providers/exports.dart';
 import '../../data/models/exports.dart' as models;
 import '../async_value.dart';
 import 'add_profile_button.dart';
+import 'add_profile_page.dart';
 import 'profile_tile.dart';
 
 class ProfilesPage extends ConsumerWidget {
@@ -51,7 +52,10 @@ class ProfilesPage extends ConsumerWidget {
                 }
                 // For the last item, return an AddProfileButton
                 return AddProfileButton(
-                  onPressed: () => const Placeholder(),
+                  onPressed: () {
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (context) => const AddProfilePage()));
+                  },
                 );
               },
             ),
