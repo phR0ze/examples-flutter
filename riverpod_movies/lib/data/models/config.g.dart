@@ -1,17 +1,16 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'configs.dart';
+part of 'config.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ConfigsImpl _$$ConfigsImplFromJson(Map<String, dynamic> json) =>
-    _$ConfigsImpl(
+_$ConfigImpl _$$ConfigImplFromJson(Map<String, dynamic> json) => _$ConfigImpl(
       currentProfileId: json['currentProfileId'] as String,
     );
 
-Map<String, dynamic> _$$ConfigsImplToJson(_$ConfigsImpl instance) =>
+Map<String, dynamic> _$$ConfigImplToJson(_$ConfigImpl instance) =>
     <String, dynamic>{
       'currentProfileId': instance.currentProfileId,
     };

@@ -5,7 +5,7 @@ import '../models/exports.dart';
 
 /// Setup data store paths for easy access
 class StorePath {
-  static const configs = 'configs';
+  static const config = 'config';
   static const profiles = 'profiles';
 }
 
@@ -30,15 +30,15 @@ class DataStore {
     return DataStore._(await factory.openDatabase(dbFilePath));
   }
 
-  /// Get global configs from the data store
-  Future<Configs> getConfigs() async {
-    final record = await _configStore.record(StorePath.configs).get(_db);
-    return record != null ? Configs.fromJson(record) : Configs.defaults();
+  /// Get global config from the data store
+  Future<Config> getConfig() async {
+    final record = await _configStore.record(StorePath.config).get(_db);
+    return record != null ? Config.fromJson(record) : Config.defaults();
   }
 
   /// Save global configs to the data store
-  Future<void> saveConfigs(Configs configs) async {
-    await _configStore.record(StorePath.configs).put(_db, configs.toJson());
+  Future<void> saveConfig(Config config) async {
+    await _configStore.record(StorePath.config).put(_db, config.toJson());
   }
 
   /// Stores a profile's changes or creates it if needed using the profile's id

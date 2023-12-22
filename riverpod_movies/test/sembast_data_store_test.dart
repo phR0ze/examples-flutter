@@ -7,14 +7,14 @@ import 'package:test/test.dart';
 void main() {
   disableSembastCooperator();
 
-  test('Test configs read/write', () async {
+  test('Test config read/write', () async {
     var db = await DataStore.init(newDatabaseFactoryMemory());
 
-    var configs = const Configs(currentProfileId: 'profile1');
-    await db.saveConfigs(configs);
+    var config = const Config(currentProfileId: 'profile1');
+    await db.saveConfig(config);
 
     // Read back and check
-    expect(await db.getConfigs(), configs);
+    expect(await db.getConfig(), config);
 
     // Close the database
     await db.close();

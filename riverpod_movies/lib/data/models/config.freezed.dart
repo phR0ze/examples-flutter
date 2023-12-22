@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'configs.dart';
+part of 'config.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,31 +14,31 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-Configs _$ConfigsFromJson(Map<String, dynamic> json) {
-  return _Configs.fromJson(json);
+Config _$ConfigFromJson(Map<String, dynamic> json) {
+  return _Config.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Configs {
+mixin _$Config {
   String get currentProfileId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ConfigsCopyWith<Configs> get copyWith => throw _privateConstructorUsedError;
+  $ConfigCopyWith<Config> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ConfigsCopyWith<$Res> {
-  factory $ConfigsCopyWith(Configs value, $Res Function(Configs) then) =
-      _$ConfigsCopyWithImpl<$Res, Configs>;
+abstract class $ConfigCopyWith<$Res> {
+  factory $ConfigCopyWith(Config value, $Res Function(Config) then) =
+      _$ConfigCopyWithImpl<$Res, Config>;
   @useResult
   $Res call({String currentProfileId});
 }
 
 /// @nodoc
-class _$ConfigsCopyWithImpl<$Res, $Val extends Configs>
-    implements $ConfigsCopyWith<$Res> {
-  _$ConfigsCopyWithImpl(this._value, this._then);
+class _$ConfigCopyWithImpl<$Res, $Val extends Config>
+    implements $ConfigCopyWith<$Res> {
+  _$ConfigCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -60,21 +60,21 @@ class _$ConfigsCopyWithImpl<$Res, $Val extends Configs>
 }
 
 /// @nodoc
-abstract class _$$ConfigsImplCopyWith<$Res> implements $ConfigsCopyWith<$Res> {
-  factory _$$ConfigsImplCopyWith(
-          _$ConfigsImpl value, $Res Function(_$ConfigsImpl) then) =
-      __$$ConfigsImplCopyWithImpl<$Res>;
+abstract class _$$ConfigImplCopyWith<$Res> implements $ConfigCopyWith<$Res> {
+  factory _$$ConfigImplCopyWith(
+          _$ConfigImpl value, $Res Function(_$ConfigImpl) then) =
+      __$$ConfigImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String currentProfileId});
 }
 
 /// @nodoc
-class __$$ConfigsImplCopyWithImpl<$Res>
-    extends _$ConfigsCopyWithImpl<$Res, _$ConfigsImpl>
-    implements _$$ConfigsImplCopyWith<$Res> {
-  __$$ConfigsImplCopyWithImpl(
-      _$ConfigsImpl _value, $Res Function(_$ConfigsImpl) _then)
+class __$$ConfigImplCopyWithImpl<$Res>
+    extends _$ConfigCopyWithImpl<$Res, _$ConfigImpl>
+    implements _$$ConfigImplCopyWith<$Res> {
+  __$$ConfigImplCopyWithImpl(
+      _$ConfigImpl _value, $Res Function(_$ConfigImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -82,7 +82,7 @@ class __$$ConfigsImplCopyWithImpl<$Res>
   $Res call({
     Object? currentProfileId = null,
   }) {
-    return _then(_$ConfigsImpl(
+    return _then(_$ConfigImpl(
       currentProfileId: null == currentProfileId
           ? _value.currentProfileId
           : currentProfileId // ignore: cast_nullable_to_non_nullable
@@ -93,25 +93,25 @@ class __$$ConfigsImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ConfigsImpl implements _Configs {
-  const _$ConfigsImpl({required this.currentProfileId});
+class _$ConfigImpl implements _Config {
+  const _$ConfigImpl({required this.currentProfileId});
 
-  factory _$ConfigsImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ConfigsImplFromJson(json);
+  factory _$ConfigImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ConfigImplFromJson(json);
 
   @override
   final String currentProfileId;
 
   @override
   String toString() {
-    return 'Configs(currentProfileId: $currentProfileId)';
+    return 'Config(currentProfileId: $currentProfileId)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ConfigsImpl &&
+            other is _$ConfigImpl &&
             (identical(other.currentProfileId, currentProfileId) ||
                 other.currentProfileId == currentProfileId));
   }
@@ -123,27 +123,27 @@ class _$ConfigsImpl implements _Configs {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ConfigsImplCopyWith<_$ConfigsImpl> get copyWith =>
-      __$$ConfigsImplCopyWithImpl<_$ConfigsImpl>(this, _$identity);
+  _$$ConfigImplCopyWith<_$ConfigImpl> get copyWith =>
+      __$$ConfigImplCopyWithImpl<_$ConfigImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ConfigsImplToJson(
+    return _$$ConfigImplToJson(
       this,
     );
   }
 }
 
-abstract class _Configs implements Configs {
-  const factory _Configs({required final String currentProfileId}) =
-      _$ConfigsImpl;
+abstract class _Config implements Config {
+  const factory _Config({required final String currentProfileId}) =
+      _$ConfigImpl;
 
-  factory _Configs.fromJson(Map<String, dynamic> json) = _$ConfigsImpl.fromJson;
+  factory _Config.fromJson(Map<String, dynamic> json) = _$ConfigImpl.fromJson;
 
   @override
   String get currentProfileId;
   @override
   @JsonKey(ignore: true)
-  _$$ConfigsImplCopyWith<_$ConfigsImpl> get copyWith =>
+  _$$ConfigImplCopyWith<_$ConfigImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

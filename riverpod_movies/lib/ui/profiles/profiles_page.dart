@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import '../../providers/configs.dart';
+import '../../providers/config.dart';
 import '../../data/models/exports.dart' as models;
 import 'add_profile_button.dart';
 import 'profile_tile.dart';
@@ -10,7 +10,7 @@ class ProfilesPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final configState = ref.watch(configsProvider);
+    final configState = ref.watch(configProvider);
     //final profiles = ref.read(configsProvider);
     final screenSize = MediaQuery.of(context).size;
     final profiles = [
@@ -49,8 +49,11 @@ class ProfilesPage extends ConsumerWidget {
             crossAxisSpacing: 10.0,
             childAspectRatio: 0.75,
           ),
+
+          // Profiles plus the add button at the end
           itemCount: profiles.length + 1,
           itemBuilder: (context, index) {
+            // For actual profiles, return a ProfileTile
             if (index < profiles.length) {
               final profile = profiles[index];
               return ProfileTile(
@@ -61,6 +64,7 @@ class ProfilesPage extends ConsumerWidget {
                 },
               );
             }
+            // For the last item, return an AddProfileButton
             return AddProfileButton(
               onPressed: () => const Placeholder(),
             );

@@ -1,4 +1,4 @@
-export 'configs.dart';
+export 'config.dart';
 export 'movie.dart';
 export 'profile.dart';
 export 'profiles.dart';

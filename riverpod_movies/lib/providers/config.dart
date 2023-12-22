@@ -1,21 +1,21 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../data/models/configs.dart' as models;
+import '../data/models/config.dart' as models;
 import 'services.dart';
 
 // Generated riverpod code
-part 'configs.g.dart';
+part 'config.g.dart';
 
-// Defines a sync `configsProvider` Notifier for mutable state
+// Defines a sync `configProvider` Notifier for mutable state
 @riverpod
-class Configs extends _$Configs {
+class Config extends _$Config {
   // Initial state
   @override
-  Future<models.Configs> build() async {
+  Future<models.Config> build() async {
     // One time read from db to primte the provider cache
     // final dataStore = ref.read(dataStoreProvider);
     // state = const AsyncLoading();
     // return await dataStore.getConfigs();
-    return models.Configs.defaults();
+    return models.Config.defaults();
   }
 
   /// Save the current profile selection to the database
@@ -25,6 +25,6 @@ class Configs extends _$Configs {
 
     // Aysyncronously save the change to the database
     final dataStore = ref.read(dataStoreProvider);
-    await dataStore.saveConfigs(state.value!);
+    await dataStore.saveConfig(state.value!);
   }
 }
