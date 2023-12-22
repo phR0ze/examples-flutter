@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_movies/data/models/profile.dart';
 import 'package:sembast/sembast_io.dart';
+import 'package:sembast/sembast_memory.dart';
 import 'const.dart';
 import 'data/repos/data_store.dart';
 import 'providers/services.dart';
@@ -14,7 +16,12 @@ Future<void> main() async {
 
   // Initialize the data store once at app startup and keeping it open throughout the app's
   // lifetime as this is an expensive operation; recommended by the Sembast author.
-  final dataStore = await DataStore.init(databaseFactoryIo);
+  //final dataStore = await DataStore.init(databaseFactoryIo);
+
+  // Test data
+  final dataStore = await DataStore.init(databaseFactoryMemory);
+  await dataStore.putProfile(const Profile(id: 'profile1', name: 'profile1'));
+  await dataStore.putProfile(const Profile(id: 'profile2', name: 'profile2'));
 
   // Wrap the app in a Riverpod ProviderScope to make providers accessible to the app
   runApp(ProviderScope(
