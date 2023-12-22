@@ -12,8 +12,19 @@ class Configs extends _$Configs {
   @override
   Future<models.Configs> build() async {
     // One time read from db to primte the provider cache
+    // final dataStore = ref.read(dataStoreProvider);
+    // state = const AsyncLoading();
+    // return await dataStore.getConfigs();
+    return models.Configs.defaults();
+  }
+
+  /// Save the current profile selection to the database
+  Future<void> saveCurrentProfile(String profileId) async {
+    // Immediately update the state to reflect the change
+    state = AsyncData(state.value!.copyWith(currentProfileId: profileId));
+
+    // Aysyncronously save the change to the database
     final dataStore = ref.read(dataStoreProvider);
-    state = const AsyncLoading();
-    return await dataStore.getConfigs();
+    await dataStore.saveConfigs(state.value!);
   }
 }

@@ -10,7 +10,7 @@ class Configs with _$Configs {
   }) = _Configs;
 
   /// Provides a default constructor
-  static defaults() => const Configs(currentProfileId: '');
+  static defaults() => const Configs(currentProfileId: 'Unknown');
 
   // Provides JSON code generation for toMap and fromMap methods
   factory Configs.fromJson(Map<String, Object?> json) => _$ConfigsFromJson(json);
