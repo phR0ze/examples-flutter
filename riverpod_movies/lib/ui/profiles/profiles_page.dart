@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import '../../providers/exports.dart';
 import '../../data/models/exports.dart' as models;
+import '../async_value.dart';
 import 'add_profile_button.dart';
 import 'profile_tile.dart';
 
@@ -18,11 +19,9 @@ class ProfilesPage extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Profile selection'),
       ),
-      body: profileState.when(
-        loading: () => const Center(
-          child: CircularProgressIndicator(),
-        ),
-        data: (profiles) {
+      body: AsyncValueWidget<List<models.Profile>>(
+        value: profileState,
+        builder: (profiles) {
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: GridView.builder(
@@ -56,9 +55,6 @@ class ProfilesPage extends ConsumerWidget {
             ),
           );
         },
-        error: (error, stackTrace) => Center(
-          child: Text('Error: $error'),
-        ),
       ),
     );
   }

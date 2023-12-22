@@ -12,12 +12,10 @@ class Config extends _$Config {
   // Initial state
   @override
   Future<models.Config> build() async {
-    // Todo
     // One time read from db to prime the provider cache
-    // final dataStore = ref.read(dataStoreProvider);
-    // state = const AsyncLoading();
-    // return await dataStore.getConfigs();
-    return models.Config.defaults();
+    final dataStore = ref.read(dataStoreProvider);
+    state = const AsyncLoading();
+    return await dataStore.getConfig();
   }
 
   /// Save the current profile selection to the database

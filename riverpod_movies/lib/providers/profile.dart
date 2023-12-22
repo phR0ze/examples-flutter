@@ -12,16 +12,10 @@ class Profile extends _$Profile {
   // Initial state
   @override
   Future<List<models.Profile>> build() async {
-    // Todo
     // One time read from db to prime the provider cache
-    // final dataStore = ref.read(dataStoreProvider);
-    // state = const AsyncLoading();
-    // return await dataStore.getConfigs();
-    return const [
-      models.Profile(id: '1', name: 'Bob Marley'),
-      models.Profile(id: '2', name: 'Children'),
-      models.Profile(id: '3', name: 'Rubarb'),
-    ];
+    final dataStore = ref.read(dataStoreProvider);
+    state = const AsyncLoading();
+    return await dataStore.getProfiles();
   }
 
   /// Save the current profile selection to the database
