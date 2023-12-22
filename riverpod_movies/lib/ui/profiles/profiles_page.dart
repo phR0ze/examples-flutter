@@ -41,7 +41,9 @@ class ProfilesPage extends ConsumerWidget {
 
                   return ProfileTile(
                     profile: profile,
-                    selected: false, //config.currentProfileId == profile.id,
+                    selected: configAsyncValue.value != null
+                        ? configAsyncValue.value!.currentProfileId == profile.id
+                        : false,
                     onPressed: () {
                       ref.read(configProvider.notifier).updateCurrentProfileId(profile.id);
                     },
