@@ -14,14 +14,14 @@ class ProfilesPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final screenSize = MediaQuery.of(context).size;
     final configAsyncValue = ref.watch(configProvider);
-    final profileAsyncValue = ref.watch(profileProvider);
+    final profilesAsyncValue = ref.watch(profilesProvider);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile selection'),
       ),
       body: AsyncValueWidget<List<models.Profile>>(
-        asyncValue: profileAsyncValue,
+        asyncValue: profilesAsyncValue,
         builder: (profiles) {
           return Padding(
             padding: const EdgeInsets.all(16.0),

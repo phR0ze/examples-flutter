@@ -3,12 +3,12 @@ import '../data/models/profile.dart' as models;
 import 'services.dart';
 
 // Generated riverpod code
-part 'profile.g.dart';
+part 'profiles.g.dart';
 
-// Defines an async `profileProvider` Notifier for mutable state
+// Defines an async `profilesProvider` Notifier for mutable state
 // KeepAlive means that the provider will not be disposed when we switch pages
 @Riverpod(keepAlive: true)
-class Profile extends _$Profile {
+class Profiles extends _$Profiles {
   // Initial state
   @override
   Future<List<models.Profile>> build() async {

@@ -1,2 +1,2 @@
 export 'config.dart';
-export 'profile.dart';
+export 'profiles.dart';
