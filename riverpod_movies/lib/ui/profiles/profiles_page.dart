@@ -23,51 +23,47 @@ class ProfilesPage extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Profile selection'),
       ),
+      body: configState.when(
+        loading: () => const Center(
+          child: CircularProgressIndicator(),
+        ),
+        data: (config) {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: (screenSize.width - 32.0) / 3,
+                mainAxisSpacing: 10.0,
+                crossAxisSpacing: 10.0,
+                childAspectRatio: 0.75,
+              ),
 
-      // body: state.when(
-      //   loading: () => const Center(
-      //     child: CircularProgressIndicator(),
-      //   ),
-      //   data: (configs) {
-      //     return Center(
-      //       child: Text(configs.currentProfileId == ''
-      //           ? 'No profile selected'
-      //           : 'Selected profile: ${configs.currentProfileId}'),
-      //     );
-      //   },
-      //   error: (error, stackTrace) => Center(
-      //     child: Text('Error: $error'),
-      //   ),
-      // ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: (screenSize.width - 32.0) / 3,
-            mainAxisSpacing: 10.0,
-            crossAxisSpacing: 10.0,
-            childAspectRatio: 0.75,
-          ),
+              // Profiles plus the add button at the end
+              itemCount: profiles.length + 1,
+              itemBuilder: (context, index) {
+                // For actual profiles, return a ProfileTile
+                if (index < profiles.length) {
+                  final profile = profiles[index];
 
-          // Profiles plus the add button at the end
-          itemCount: profiles.length + 1,
-          itemBuilder: (context, index) {
-            // For actual profiles, return a ProfileTile
-            if (index < profiles.length) {
-              final profile = profiles[index];
-              return ProfileTile(
-                profile: profile,
-                selected: true,
-                onPressed: () {
-                  print('profile tile pressed');
-                },
-              );
-            }
-            // For the last item, return an AddProfileButton
-            return AddProfileButton(
-              onPressed: () => const Placeholder(),
-            );
-          },
+                  return ProfileTile(
+                    profile: profile,
+                    selected: config.currentProfileId == profile.id,
+                    onPressed: () {
+                      ref.read(configProvider.notifier).updateCurrentProfileId(profile.id);
+                      print('profile tile pressed');
+                    },
+                  );
+                }
+                // For the last item, return an AddProfileButton
+                return AddProfileButton(
+                  onPressed: () => const Placeholder(),
+                );
+              },
+            ),
+          );
+        },
+        error: (error, stackTrace) => Center(
+          child: Text('Error: $error'),
         ),
       ),
     );

@@ -19,7 +19,7 @@ class Config extends _$Config {
   }
 
   /// Save the current profile selection to the database
-  Future<void> saveCurrentProfile(String profileId) async {
+  Future<void> updateCurrentProfileId(String profileId) async {
     // Immediately update the state to reflect the change
     state = AsyncData(state.value!.copyWith(currentProfileId: profileId));
 
