@@ -79,7 +79,8 @@ class FaceOutlinePainter extends CustomPainter {
       fillPaint,
     );
 
-    final strokePaint = Paint()
+    // Configure pait brush
+    var strokePaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 4.0
       ..color = Colors.white;
@@ -95,7 +96,9 @@ class FaceOutlinePainter extends CustomPainter {
 
     canvas.drawPath(mouth, strokePaint);
 
+    // Draw a border around the face
     if (selected) {
+      strokePaint.color = Colors.blue;
       canvas.drawRect(Rect.fromLTWH(2, 2, size.width - 4, size.height - 4), strokePaint);
     }
   }

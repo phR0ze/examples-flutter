@@ -24,7 +24,6 @@ class ProfilesPage extends ConsumerWidget {
         title: const Text('Profile selection'),
       ),
 
-      // Ignore config until it is loaded then use to select the correct profile on the page
       // body: state.when(
       //   loading: () => const Center(
       //     child: CircularProgressIndicator(),
@@ -58,7 +57,7 @@ class ProfilesPage extends ConsumerWidget {
               final profile = profiles[index];
               return ProfileTile(
                 profile: profile,
-                selected: false,
+                selected: true,
                 onPressed: () {
                   print('profile tile pressed');
                 },
