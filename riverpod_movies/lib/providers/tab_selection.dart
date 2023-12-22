@@ -9,7 +9,9 @@ part 'tab_selection.g.dart';
 class TabSelection extends _$TabSelection {
   // Initial state
   @override
-  models.TabSelection build() => models.TabSelection.nowPlaying;
+  // Todo - change to nowPlaying?
+  //models.TabSelection build() => models.TabSelection.nowPlaying;
+  models.TabSelection build() => models.TabSelection.profiles;
 
   // Update tab selection state
   set(int index) => state = models.TabSelection.values[index];
