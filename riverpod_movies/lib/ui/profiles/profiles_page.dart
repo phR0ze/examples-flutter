@@ -1,14 +1,32 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import '../../providers/configs.dart';
 
 class ProfilesPage extends ConsumerWidget {
   const ProfilesPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(configsProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile selection'),
+      ),
+      body: state.when(
+        loading: () => const Center(
+          child: CircularProgressIndicator(),
+        ),
+        data: (configs) {
+          return Center(
+            child: Text(configs.currentProfileId == ''
+                ? 'No profile selected'
+                : 'Selected profile: ${configs.currentProfileId}'),
+          );
+        },
+        error: (error, stackTrace) => Center(
+          child: Text('Error: $error'),
+        ),
       ),
       // body: ProfilesGrid(
       //   profilesData: profilesData,
