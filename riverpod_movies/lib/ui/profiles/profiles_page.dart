@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import '../../providers/config.dart';
+import '../../providers/exports.dart';
 import '../../data/models/exports.dart' as models;
 import 'add_profile_button.dart';
 import 'profile_tile.dart';
@@ -10,24 +10,19 @@ class ProfilesPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final configState = ref.watch(configProvider);
-    //final profiles = ref.read(configsProvider);
     final screenSize = MediaQuery.of(context).size;
-    final profiles = [
-      const models.Profile(id: '1', name: 'Bob Marley'),
-      const models.Profile(id: '2', name: 'Children'),
-      const models.Profile(id: '3', name: 'Rubarb'),
-    ];
+    final configState = ref.watch(configProvider);
+    final profileState = ref.watch(profileProvider);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile selection'),
       ),
-      body: configState.when(
+      body: profileState.when(
         loading: () => const Center(
           child: CircularProgressIndicator(),
         ),
-        data: (config) {
+        data: (profiles) {
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: GridView.builder(
@@ -47,10 +42,9 @@ class ProfilesPage extends ConsumerWidget {
 
                   return ProfileTile(
                     profile: profile,
-                    selected: config.currentProfileId == profile.id,
+                    selected: false, //config.currentProfileId == profile.id,
                     onPressed: () {
                       ref.read(configProvider.notifier).updateCurrentProfileId(profile.id);
-                      print('profile tile pressed');
                     },
                   );
                 }

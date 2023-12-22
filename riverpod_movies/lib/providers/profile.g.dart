@@ -1,24 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'config.dart';
+part of 'profile.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$configHash() => r'44c1302fcc8f2d09356445172622398d5429e193';
+String _$profileHash() => r'ca29b28fae5858b0ecd5b6a85683fe4e49485e0c';
 
-/// See also [Config].
-@ProviderFor(Config)
-final configProvider = AsyncNotifierProvider<Config, models.Config>.internal(
-  Config.new,
-  name: r'configProvider',
+/// See also [Profile].
+@ProviderFor(Profile)
+final profileProvider =
+    AsyncNotifierProvider<Profile, List<models.Profile>>.internal(
+  Profile.new,
+  name: r'profileProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$configHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$profileHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$Config = AsyncNotifier<models.Config>;
+typedef _$Profile = AsyncNotifier<List<models.Profile>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

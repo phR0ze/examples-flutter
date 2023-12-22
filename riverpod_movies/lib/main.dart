@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_movies/data/models/profile.dart';
-import 'package:riverpod_movies/providers/tab_selection.dart';
 import 'package:sembast/sembast_io.dart';
 import 'package:sembast/sembast_memory.dart';
 import 'const.dart';
@@ -21,8 +19,6 @@ Future<void> main() async {
 
   // Test data
   final dataStore = await DataStore.init(databaseFactoryMemory);
-  await dataStore.putProfile(const Profile(id: 'profile1', name: 'profile1'));
-  await dataStore.putProfile(const Profile(id: 'profile2', name: 'profile2'));
 
   // Wrap the app in a Riverpod ProviderScope to make providers accessible to the app
   runApp(ProviderScope(
