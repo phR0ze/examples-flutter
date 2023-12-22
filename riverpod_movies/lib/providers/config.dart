@@ -5,13 +5,15 @@ import 'services.dart';
 // Generated riverpod code
 part 'config.g.dart';
 
-// Defines a sync `configProvider` Notifier for mutable state
-@riverpod
+// Defines an async `configProvider` Notifier for mutable state
+// KeepAlive means that the provider will not be disposed when we switch pages
+@Riverpod(keepAlive: true)
 class Config extends _$Config {
   // Initial state
   @override
   Future<models.Config> build() async {
-    // One time read from db to primte the provider cache
+    // Todo
+    // One time read from db to prime the provider cache
     // final dataStore = ref.read(dataStoreProvider);
     // state = const AsyncLoading();
     // return await dataStore.getConfigs();
