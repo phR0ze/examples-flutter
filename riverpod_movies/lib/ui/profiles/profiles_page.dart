@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import '../../providers/exports.dart';
 import '../../data/models/exports.dart' as models;
-import '../async_value.dart';
+import '../common/async_value.dart';
 import 'add_profile_button.dart';
 import 'add_profile_page.dart';
 import 'profile_tile.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
-import '../data/repos/tmdb_v3.dart';
+import '../../data/repos/tmdb_v3.dart';
 
 class PosterTile extends StatelessWidget {
   const PosterTile({

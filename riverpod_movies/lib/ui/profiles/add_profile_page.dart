@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/models/exports.dart' as models;
 import '../../providers/profiles.dart';
-import '../async_value.dart';
+import '../common/async_value.dart';
 
 class AddProfilePage extends ConsumerStatefulWidget {
   const AddProfilePage({super.key});
