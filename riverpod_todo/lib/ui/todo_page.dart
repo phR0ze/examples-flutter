@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'model/exports.dart' as model;
-import 'providers/exports.dart';
+import '../model/exports.dart' as model;
+import '../providers/exports.dart';
 
 class AddTodoPage extends ConsumerWidget {
   const AddTodoPage({Key? key}) : super(key: key);

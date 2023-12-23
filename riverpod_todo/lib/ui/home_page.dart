@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'model/exports.dart' as model;
-import 'providers/exports.dart';
+import '../model/exports.dart' as model;
+import '../providers/exports.dart';
 import 'todo_page.dart';
-import 'widgets/loading.dart';
+import 'loading.dart';
 
 class MyHomePage extends ConsumerWidget {
   const MyHomePage({super.key});

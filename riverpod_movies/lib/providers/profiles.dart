@@ -18,6 +18,16 @@ class Profiles extends _$Profiles {
     return await dataStore.getProfiles();
   }
 
+  /// Check if the profile with the given name already exists.
+  /// Assumes that profiles will always be loaded at this point in time as the consumer
+  /// would have used an AsyncValueWidget to wait for the profiles to load.
+  bool profileExists(String name) {
+    if (state.value != null) {
+      return state.value!.any((profile) => profile.name == name);
+    }
+    return false;
+  }
+
   /// Save the current profile selection to the database
   // Future<void> updateCurrentProfileId(String profileId) async {
   //   // Immediately update the state to reflect the change

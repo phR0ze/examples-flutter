@@ -55,12 +55,13 @@ final filteredTodosProvider = Provider<List<model.Todo>>((ref) {
   final todos = ref.watch(todosProvider);
   final filter = ref.watch(todoFilterProvider);
 
-  switch (filter) {
-    case model.TodoFilter.completed:
-      return todos.where((todo) => todo.completed).toList();
-    case model.TodoFilter.pending:
-      return todos.where((todo) => todo.pending).toList();
-    case model.TodoFilter.all:
-      return todos;
-  }
+  // switch (filter) {
+  //   case model.TodoFilter.completed:
+  //     return todos.where((todo) => todo.completed).toList();
+  //   case model.TodoFilter.pending:
+  //     return todos.where((todo) => todo.pending).toList();
+  //   case model.TodoFilter.all:
+  //     return todos;
+  // }
+  return todos;
 });
