@@ -11,7 +11,7 @@ class TabSelection extends _$TabSelection {
   @override
   // Todo - change to nowPlaying?
   //models.TabSelection build() => models.TabSelection.nowPlaying;
-  models.TabSelection build() => models.TabSelection.profiles;
+  models.TabSelection build() => models.TabSelection.nowPlaying;
 
   // Update tab selection state
   set(int index) => state = models.TabSelection.values[index];

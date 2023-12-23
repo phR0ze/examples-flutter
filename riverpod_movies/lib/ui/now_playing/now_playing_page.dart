@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:riverpod_movies/providers/services.dart';
+import '../../data/repos/tmdb_api.dart';
 import '../common/movie_scroller.dart';
 
 class NowPlayingPage extends ConsumerWidget {
@@ -7,6 +11,8 @@ class NowPlayingPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // locate<TMDB>().getNowPlayingMovies(page: 1);
+
     return Scaffold(
       body: MovieScroller(
           title: 'Now Playing',

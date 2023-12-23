@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
+import '../data/repos/tmdb_api.dart';
 import '../data/repos/data_store.dart';
 
 // Only making use of Riverpod here for global access and making this available
@@ -12,6 +13,7 @@ final locate = GetIt.instance;
 initServices() {
   // Register the enviornment variables
   locate.registerLazySingleton<Vars>(() => Env());
+  locate.registerLazySingleton<TMDB>(() => TMDB());
 }
 
 // Abstract class to allow for alternate implementations
