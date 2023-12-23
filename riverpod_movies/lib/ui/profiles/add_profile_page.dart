@@ -30,12 +30,15 @@ class _AddProfilePageState extends ConsumerState<AddProfilePage> {
             actions: [
               TextButton(
                 onPressed: () {
-                  if (ref.read(profilesProvider.notifier).profileExists(controller.value.text)) {
+                  var profileName = controller.value.text;
+                  if (ref.read(profilesProvider.notifier).profileExists(profileName)) {
                     setState(() {
-                      errorText = 'Profile already exists';
+                      errorText = 'Profile "$profileName" already exists';
                     });
                   } else {
-                    //Navigator.pop(context, controller.value.text);
+                    var profile = models.Profile(id: profileName, name: profileName);
+                    ref.read(profilesProvider.notifier).putProfile(profile);
+                    Navigator.pop(context);
                   }
                 },
                 child: const Text(
@@ -49,6 +52,7 @@ class _AddProfilePageState extends ConsumerState<AddProfilePage> {
             padding: const EdgeInsets.all(32.0),
             alignment: Alignment.center,
             child: TextField(
+              autofocus: true,
               controller: controller,
               decoration: InputDecoration(
                 labelText: 'Profile Name',

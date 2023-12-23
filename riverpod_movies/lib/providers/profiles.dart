@@ -12,10 +12,7 @@ class Profiles extends _$Profiles {
   // Initial state
   @override
   Future<List<models.Profile>> build() async {
-    // One time read from db to prime the provider cache
-    final dataStore = ref.read(dataStoreProvider);
-    state = const AsyncLoading();
-    return await dataStore.getProfiles();
+    return await _load();
   }
 
   /// Check if the profile with the given name already exists.
@@ -28,13 +25,18 @@ class Profiles extends _$Profiles {
     return false;
   }
 
-  /// Save the current profile selection to the database
-  // Future<void> updateCurrentProfileId(String profileId) async {
-  //   // Immediately update the state to reflect the change
-  //   state = AsyncData(state.value!.copyWith(currentProfileId: profileId));
+  /// Add or update a profile
+  Future<void> putProfile(models.Profile profile) async {
+    final dataStore = ref.read(dataStoreProvider);
+    await dataStore.putProfile(profile);
+    state = AsyncData(await _load());
+  }
 
-  //   // Aysyncronously save the change to the database
-  //   final dataStore = ref.read(dataStoreProvider);
-  //   await dataStore.saveConfig(state.value!);
-  // }
+  // Internal refresh once we have updated the profiles
+  Future<List<models.Profile>> _load() async {
+    final dataStore = ref.read(dataStoreProvider);
+    state = const AsyncLoading();
+    var profiles = await dataStore.getProfiles();
+    return profiles;
+  }
 }
