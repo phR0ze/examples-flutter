@@ -16,6 +16,8 @@ class _AddProfilePageState extends ConsumerState<AddProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Reading the profiles and handling the async value here allows
+    // for the ref.read down below to not worry about data being loaded yet
     final profilesAsyncValue = ref.watch(profilesProvider);
     final controller = TextEditingController();
 

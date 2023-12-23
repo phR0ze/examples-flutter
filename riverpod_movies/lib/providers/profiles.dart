@@ -23,7 +23,7 @@ class Profiles extends _$Profiles {
   /// would have used an AsyncValueWidget to wait for the profiles to load.
   bool profileExists(String name) {
     if (state.value != null) {
-      return state.value!.any((profile) => profile.name == name);
+      return state.value!.any((profile) => profile.name.toLowerCase() == name.toLowerCase());
     }
     return false;
   }
