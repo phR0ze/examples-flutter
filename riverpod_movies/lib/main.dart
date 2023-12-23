@@ -16,14 +16,14 @@ Future<void> main() async {
 
   // Initialize the data store once at app startup and keeping it open throughout the app's
   // lifetime as this is an expensive operation; recommended by the Sembast author.
-  //final dataStore = await DataStore.init(databaseFactoryIo);
+  final dataStore = await DataStore.init(databaseFactoryIo);
 
   // Test data
-  final dataStore = await DataStore.init(databaseFactoryMemory);
-  await dataStore.putProfile(const models.Profile(id: '1', name: 'Bob Marley'));
-  await dataStore.putProfile(const models.Profile(id: '2', name: 'Children'));
-  await dataStore.putProfile(const models.Profile(id: '3', name: 'Rubarb One'));
-  await dataStore.saveConfig(const models.Config(currentProfileId: '3'));
+  // final dataStore = await DataStore.init(databaseFactoryMemory);
+  // await dataStore.putProfile(const models.Profile(id: '1', name: 'Bob Marley'));
+  // await dataStore.putProfile(const models.Profile(id: '2', name: 'Children'));
+  // await dataStore.putProfile(const models.Profile(id: '3', name: 'Rubarb One'));
+  // await dataStore.saveConfig(const models.Config(currentProfileId: '3'));
 
   // Wrap the app in a Riverpod ProviderScope to make providers accessible to the app
   runApp(ProviderScope(

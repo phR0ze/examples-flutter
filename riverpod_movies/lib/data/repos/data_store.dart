@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
@@ -20,10 +22,11 @@ class DataStore {
 
   // Initialize the data store reading into memory
   // Needs the type of factory to use (IO or memory) for the database.
+  // - Support directory: /home/<user>/.local/share/<project name>
   static Future<DataStore> init(DatabaseFactory factory) async {
     var dbFilePath = 'default.db';
     if (factory.hasStorage) {
-      final appDocDir = await getApplicationDocumentsDirectory();
+      final appDocDir = await getApplicationSupportDirectory();
       await appDocDir.create(recursive: true);
       dbFilePath = p.join(appDocDir.path, dbFilePath);
     }
@@ -57,6 +60,7 @@ class DataStore {
 
   /// Get all profiles from the data store sorted by profile name
   Future<List<Profile>> getProfiles() async {
+    // Nested sorting also works e.g. 'name.first' or 'name.last' for nested fields
     var finder = Finder(sortOrders: [SortOrder('name')]);
     final records = await _profileStore.find(_db, finder: finder);
     var profiles = records.map((x) => Profile.fromJson(x.value)).toList();
