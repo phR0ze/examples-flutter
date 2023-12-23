@@ -55,11 +55,12 @@ class DataStore {
     throw StateError('Profile $id does not exist');
   }
 
-  /// Get all profiles from the data store
+  /// Get all profiles from the data store sorted by profile name
   Future<List<Profile>> getProfiles() async {
-    var finder = Finder(sortOrders: [SortOrder(Field.key, true)]);
+    var finder = Finder(sortOrders: [SortOrder('name')]);
     final records = await _profileStore.find(_db, finder: finder);
-    return records.map((x) => Profile.fromJson(x.value)).toList();
+    var profiles = records.map((x) => Profile.fromJson(x.value)).toList();
+    return profiles;
   }
 
   /// Close the database

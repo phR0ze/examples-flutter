@@ -9,10 +9,10 @@ part 'profiles.g.dart';
 // KeepAlive means that the provider will not be disposed when we switch pages
 @Riverpod(keepAlive: true)
 class Profiles extends _$Profiles {
-  // Initial state
+  // Initial state that Riverpod will create the cache from
   @override
   Future<List<models.Profile>> build() async {
-    return await _load();
+    return await _reload();
   }
 
   /// Check if the profile with the given name already exists.
@@ -29,11 +29,11 @@ class Profiles extends _$Profiles {
   Future<void> putProfile(models.Profile profile) async {
     final dataStore = ref.read(dataStoreProvider);
     await dataStore.putProfile(profile);
-    state = AsyncData(await _load());
+    state = AsyncData(await _reload());
   }
 
   // Internal refresh once we have updated the profiles
-  Future<List<models.Profile>> _load() async {
+  Future<List<models.Profile>> _reload() async {
     final dataStore = ref.read(dataStoreProvider);
     state = const AsyncLoading();
     var profiles = await dataStore.getProfiles();
