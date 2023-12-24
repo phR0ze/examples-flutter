@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../const.dart';
 import '../data/models/config.dart' as models;
 import 'services.dart';
 
@@ -16,13 +17,25 @@ class Config extends _$Config {
     return await ref.read(dataStoreProvider).getConfig();
   }
 
-  /// Save the media image size to the database
-  Future<void> updateMediaImageSize(double size) async {
-    // Immediately update the state to reflect the change
-    state = AsyncData(state.value!.copyWith(mediaImageSize: size));
+  /// Zoom in on the media image and save it to the database
+  Future<void> zoomInMediaImage() async {
+    if (state.value != null) {
+      var size = state.value!.mediaImageSize + Const.imageSizeInc;
+      state = AsyncData(state.value!.copyWith(mediaImageSize: size));
+      ref.read(dataStoreProvider).saveConfig(state.value!);
+    }
+  }
 
-    // Aysyncronously save the change to the database
-    return ref.read(dataStoreProvider).saveConfig(state.value!);
+  /// Zoom out on the media image and save it to the database
+  Future<void> zoomOutMediaImage() async {
+    if (state.value != null) {
+      var size = state.value!.mediaImageSize;
+      if (size - Const.imageSizeInc > Const.imageSizeMin) {
+        size = size - Const.imageSizeInc;
+        state = AsyncData(state.value!.copyWith(mediaImageSize: size));
+        ref.read(dataStoreProvider).saveConfig(state.value!);
+      }
+    }
   }
 
   /// Save the current profile selection to the database

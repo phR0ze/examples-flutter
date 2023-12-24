@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import '../../const.dart';
 import '../../data/models/exports.dart' as models;
-import '../../providers/now_playing.dart';
+import '../../providers/exports.dart';
 import '../common/async_value.dart';
 import 'media_scroller.dart';
 import 'media_tile.dart';
@@ -12,6 +12,7 @@ class NowPlayingPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final configs = ref.watch(configProvider);
     final moviesAsyncValue = ref.watch(nowPlayingProvider);
 
     return Scaffold(
@@ -28,7 +29,7 @@ class NowPlayingPage extends ConsumerWidget {
           // Zoom in the thumbnail images
           IconButton(
             onPressed: () {
-              // state.zoomInImage();
+              ref.read(configProvider.notifier).zoomInMediaImage();
             },
             icon: Padding(
               padding: const EdgeInsets.fromLTRB(0, 2.0, 0, 0),
@@ -42,7 +43,7 @@ class NowPlayingPage extends ConsumerWidget {
           // Zoom out the thumbnail images
           IconButton(
             onPressed: () {
-              // state.zoomOutImage();
+              ref.read(configProvider.notifier).zoomOutMediaImage();
             },
             icon: Padding(
               padding: const EdgeInsets.fromLTRB(0, 2.0, 5, 0),
@@ -63,8 +64,10 @@ class NowPlayingPage extends ConsumerWidget {
           return Padding(
             padding: const EdgeInsets.all(Const.spacingDefault),
             child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: Const.imageSizeDefault,
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: configs.value != null
+                      ? configs.value!.mediaImageSize
+                      : Const.imageSizeDefault,
                   mainAxisSpacing: Const.spacingDefault,
                   crossAxisSpacing: Const.spacingDefault,
                   // Make the standard poster image aspect ratio 3:4

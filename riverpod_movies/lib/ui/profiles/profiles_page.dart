@@ -13,7 +13,7 @@ class ProfilesPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final screenSize = MediaQuery.of(context).size;
-    final configAsyncValue = ref.watch(configProvider);
+    final configs = ref.watch(configProvider);
     final profilesAsyncValue = ref.watch(profilesProvider);
 
     return Scaffold(
@@ -42,8 +42,8 @@ class ProfilesPage extends ConsumerWidget {
 
                   return ProfileTile(
                     profile: profile,
-                    selected: configAsyncValue.value != null
-                        ? configAsyncValue.value!.currentProfileId == profile.id
+                    selected: configs.value != null
+                        ? configs.value!.currentProfileId == profile.id
                         : false,
                     onPressed: () {
                       ref.read(configProvider.notifier).updateCurrentProfileId(profile.id);
