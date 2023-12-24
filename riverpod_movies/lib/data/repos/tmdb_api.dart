@@ -1,9 +1,6 @@
 import 'package:dio/dio.dart';
-import 'dart:convert';
 import '../dtos/tmdb_movies.dart';
 import '../../providers/services.dart';
-
-enum HttpMethod { get, post, delete, put }
 
 enum PosterSize {
   w92,
@@ -82,6 +79,7 @@ class TMDB {
     ]);
 
     // Pretty print JSON
+    // import 'dart:convert';
     //var encoder = const JsonEncoder.withIndent('  ');
     //print(encoder.convert(response));
 
