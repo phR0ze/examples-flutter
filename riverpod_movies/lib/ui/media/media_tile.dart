@@ -19,6 +19,7 @@ class MediaTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Stack the poster image => top gradient => favourite badge.
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -44,6 +45,8 @@ class MediaTile extends StatelessWidget {
   }
 }
 
+/// Media top gradient allows for a subtle fade out of the poster image so that
+/// overlay badges are more visible.
 class TopGradient extends StatelessWidget {
   const TopGradient({super.key});
 

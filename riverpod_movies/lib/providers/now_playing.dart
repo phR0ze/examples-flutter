@@ -30,9 +30,8 @@ class NowPlaying extends _$NowPlaying {
     }
 
     // Fetch the next page
-    final tmdb = locate<TMDB>();
     state = const AsyncLoading();
-    var dto = await tmdb.getNowPlayingMovies(page: _currentPage++);
+    var dto = await locate<TMDB>().getNowPlayingMovies(page: ++_currentPage);
 
     // Update the page and result counts if reset
     if (_totalPages == -1) {

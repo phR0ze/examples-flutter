@@ -17,7 +17,7 @@ class AsyncValueWidget<T> extends StatelessWidget {
       error: (error, stackTrace) => Center(
         child: Text(
           error.toString(),
-          style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: Colors.red),
+          style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.red),
         ),
       ),
     );

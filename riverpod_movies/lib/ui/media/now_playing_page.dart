@@ -32,10 +32,8 @@ class NowPlayingPage extends ConsumerWidget {
               ),
               itemCount: movies.length,
               itemBuilder: (context, index) {
-                final movie = movies[index];
-
                 return MediaTile(
-                  movie: movie,
+                  movie: movies[index],
                 );
               },
             ),
