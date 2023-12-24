@@ -20,6 +20,7 @@ Config _$ConfigFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Config {
+  double get mediaImageSize => throw _privateConstructorUsedError;
   String get currentProfileId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -32,7 +33,7 @@ abstract class $ConfigCopyWith<$Res> {
   factory $ConfigCopyWith(Config value, $Res Function(Config) then) =
       _$ConfigCopyWithImpl<$Res, Config>;
   @useResult
-  $Res call({String currentProfileId});
+  $Res call({double mediaImageSize, String currentProfileId});
 }
 
 /// @nodoc
@@ -48,9 +49,14 @@ class _$ConfigCopyWithImpl<$Res, $Val extends Config>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? mediaImageSize = null,
     Object? currentProfileId = null,
   }) {
     return _then(_value.copyWith(
+      mediaImageSize: null == mediaImageSize
+          ? _value.mediaImageSize
+          : mediaImageSize // ignore: cast_nullable_to_non_nullable
+              as double,
       currentProfileId: null == currentProfileId
           ? _value.currentProfileId
           : currentProfileId // ignore: cast_nullable_to_non_nullable
@@ -66,7 +72,7 @@ abstract class _$$ConfigImplCopyWith<$Res> implements $ConfigCopyWith<$Res> {
       __$$ConfigImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String currentProfileId});
+  $Res call({double mediaImageSize, String currentProfileId});
 }
 
 /// @nodoc
@@ -80,9 +86,14 @@ class __$$ConfigImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? mediaImageSize = null,
     Object? currentProfileId = null,
   }) {
     return _then(_$ConfigImpl(
+      mediaImageSize: null == mediaImageSize
+          ? _value.mediaImageSize
+          : mediaImageSize // ignore: cast_nullable_to_non_nullable
+              as double,
       currentProfileId: null == currentProfileId
           ? _value.currentProfileId
           : currentProfileId // ignore: cast_nullable_to_non_nullable
@@ -94,17 +105,20 @@ class __$$ConfigImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ConfigImpl implements _Config {
-  const _$ConfigImpl({required this.currentProfileId});
+  const _$ConfigImpl(
+      {required this.mediaImageSize, required this.currentProfileId});
 
   factory _$ConfigImpl.fromJson(Map<String, dynamic> json) =>
       _$$ConfigImplFromJson(json);
 
   @override
+  final double mediaImageSize;
+  @override
   final String currentProfileId;
 
   @override
   String toString() {
-    return 'Config(currentProfileId: $currentProfileId)';
+    return 'Config(mediaImageSize: $mediaImageSize, currentProfileId: $currentProfileId)';
   }
 
   @override
@@ -112,13 +126,16 @@ class _$ConfigImpl implements _Config {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ConfigImpl &&
+            (identical(other.mediaImageSize, mediaImageSize) ||
+                other.mediaImageSize == mediaImageSize) &&
             (identical(other.currentProfileId, currentProfileId) ||
                 other.currentProfileId == currentProfileId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, currentProfileId);
+  int get hashCode =>
+      Object.hash(runtimeType, mediaImageSize, currentProfileId);
 
   @JsonKey(ignore: true)
   @override
@@ -135,11 +152,14 @@ class _$ConfigImpl implements _Config {
 }
 
 abstract class _Config implements Config {
-  const factory _Config({required final String currentProfileId}) =
-      _$ConfigImpl;
+  const factory _Config(
+      {required final double mediaImageSize,
+      required final String currentProfileId}) = _$ConfigImpl;
 
   factory _Config.fromJson(Map<String, dynamic> json) = _$ConfigImpl.fromJson;
 
+  @override
+  double get mediaImageSize;
   @override
   String get currentProfileId;
   @override

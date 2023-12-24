@@ -16,16 +16,46 @@ class NowPlayingPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            'Now Playing',
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall!
-                .copyWith(color: Colors.white, fontWeight: FontWeight.w500),
-          ),
-        ),
         backgroundColor: Colors.black87,
+        title: Text(
+          'Now Playing',
+          style: Theme.of(context)
+              .textTheme
+              .headlineSmall!
+              .copyWith(color: Colors.white, fontWeight: FontWeight.w500),
+        ),
+        actions: [
+          // Zoom in the thumbnail images
+          IconButton(
+            onPressed: () {
+              // state.zoomInImage();
+            },
+            icon: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 2.0, 0, 0),
+              child: Transform.scale(
+                scale: 1.3,
+                child: const Icon(Icons.zoom_in, color: Colors.white70),
+              ),
+            ),
+          ),
+
+          // Zoom out the thumbnail images
+          IconButton(
+            onPressed: () {
+              // state.zoomOutImage();
+            },
+            icon: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 2.0, 5, 0),
+              child: Transform.scale(
+                scale: 1.3,
+                child: const Icon(
+                  Icons.zoom_out,
+                  color: Colors.white70,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       body: AsyncValueWidget<List<models.Movie>>(
         asyncValue: moviesAsyncValue,
@@ -34,8 +64,6 @@ class NowPlayingPage extends ConsumerWidget {
             padding: const EdgeInsets.all(Const.spacingDefault),
             child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  // TODO: Make image size configurable with +/- buttons
-                  // Move this to the configs
                   maxCrossAxisExtent: Const.imageSizeDefault,
                   mainAxisSpacing: Const.spacingDefault,
                   crossAxisSpacing: Const.spacingDefault,

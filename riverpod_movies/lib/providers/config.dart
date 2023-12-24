@@ -16,6 +16,15 @@ class Config extends _$Config {
     return await ref.read(dataStoreProvider).getConfig();
   }
 
+  /// Save the media image size to the database
+  Future<void> updateMediaImageSize(double size) async {
+    // Immediately update the state to reflect the change
+    state = AsyncData(state.value!.copyWith(mediaImageSize: size));
+
+    // Aysyncronously save the change to the database
+    return ref.read(dataStoreProvider).saveConfig(state.value!);
+  }
+
   /// Save the current profile selection to the database
   Future<void> updateCurrentProfileId(String profileId) async {
     // Immediately update the state to reflect the change
