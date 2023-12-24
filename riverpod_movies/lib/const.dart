@@ -8,6 +8,7 @@ class Const {
 
   // App configuration
   static const imageSizeDefault = 100.0;
-  static const imageGridSpacing = 2.0;
+  static const imageAspectRatioDefault = 0.75;
+  static const spacingDefault = 2.0;
   static const imageCacheQuality = 400;
 }

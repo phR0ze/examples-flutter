@@ -23,7 +23,7 @@ class MediaTile extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        _Poster(imagePath: imagePath),
+        _Poster(imagePath: movie.posterPath),
         const TopGradient(),
         if (debugIndex != null)
           Positioned(
