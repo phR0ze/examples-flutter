@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
+import '../../data/models/movie.dart';
 import '../../data/repos/tmdb_api.dart';
 
-class PosterTile extends StatelessWidget {
-  const PosterTile({
+class MediaTile extends StatelessWidget {
+  const MediaTile({
     super.key,
+    required this.movie,
     this.imagePath,
     this.debugIndex, // debugging hint to show the tile index
     this.favouriteBuilder,
   });
 
+  final Movie movie;
   final String? imagePath;
   final int? debugIndex;
   final WidgetBuilder? favouriteBuilder;

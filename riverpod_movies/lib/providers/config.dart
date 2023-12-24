@@ -13,9 +13,7 @@ class Config extends _$Config {
   @override
   Future<models.Config> build() async {
     // One time read from db to prime the provider cache
-    final dataStore = ref.read(dataStoreProvider);
-    state = const AsyncLoading();
-    return await dataStore.getConfig();
+    return await ref.read(dataStoreProvider).getConfig();
   }
 
   /// Save the current profile selection to the database
@@ -24,7 +22,6 @@ class Config extends _$Config {
     state = AsyncData(state.value!.copyWith(currentProfileId: profileId));
 
     // Aysyncronously save the change to the database
-    final dataStore = ref.read(dataStoreProvider);
-    await dataStore.saveConfig(state.value!);
+    return ref.read(dataStoreProvider).saveConfig(state.value!);
   }
 }

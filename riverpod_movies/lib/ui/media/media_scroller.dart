@@ -1,8 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api
 import 'package:flutter/material.dart';
 
-class MovieScroller extends StatefulWidget {
-  const MovieScroller(
+class MediaScroller extends StatefulWidget {
+  const MediaScroller(
       {Key? key, required this.title, required this.builder, this.onNextPageRequested})
       : super(key: key);
   final String title;
@@ -10,10 +10,10 @@ class MovieScroller extends StatefulWidget {
   final VoidCallback? onNextPageRequested;
 
   @override
-  _MovieScrollerState createState() => _MovieScrollerState();
+  _MediaScrollerState createState() => _MediaScrollerState();
 }
 
-class _MovieScrollerState extends State<MovieScroller> {
+class _MediaScrollerState extends State<MediaScroller> {
   final _scrollController = ScrollController();
   final _scrollThreshold = 200.0;
 

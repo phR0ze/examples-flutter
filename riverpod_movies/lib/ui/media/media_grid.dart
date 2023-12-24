@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../data/models/movie.dart' as models;
-import 'poster_tile.dart';
+import 'media_tile.dart';
 
-class MovieGrid extends StatelessWidget {
-  const MovieGrid({super.key, required this.movies, required this.controller});
+class MediaGrid extends StatelessWidget {
+  const MediaGrid({super.key, required this.movies, required this.controller});
   final List<models.Movie> movies;
   final ScrollController controller;
 
@@ -20,8 +20,8 @@ class MovieGrid extends StatelessWidget {
       itemCount: movies.length,
       itemBuilder: (context, index) {
         final movie = movies[index];
-        return PosterTile(
-          imagePath: movie.posterPath,
+        return MediaTile(
+          movie: movie,
           //debugIndex: index,
           // favouriteBuilder:
           //     favouriteBuilder != null ? (context) => favouriteBuilder!.call(context, movie) : null,

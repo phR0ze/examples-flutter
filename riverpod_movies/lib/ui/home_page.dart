@@ -2,8 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import '../providers/tab_selection.dart';
 import '../data/models/exports.dart' as models;
-import 'favorites/favorites_page.dart';
-import 'now_playing/now_playing_page.dart';
+import 'media/favorites_page.dart';
+import 'media/now_playing_page.dart';
 import 'profiles/profiles_page.dart';
 
 /// Automatically selects the right page based on the current tab selection as stored
