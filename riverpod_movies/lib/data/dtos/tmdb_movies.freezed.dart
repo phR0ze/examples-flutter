@@ -22,10 +22,10 @@ TMDBMovies _$TMDBMoviesFromJson(Map<String, dynamic> json) {
 mixin _$TMDBMovies {
   int get page => throw _privateConstructorUsedError;
   List<TMDBMovie> get results => throw _privateConstructorUsedError;
-  @JsonKey(name: 'total_results')
-  int get totalResults => throw _privateConstructorUsedError;
   @JsonKey(name: 'total_pages')
   int get totalPages => throw _privateConstructorUsedError;
+  @JsonKey(name: 'total_results')
+  int get totalResults => throw _privateConstructorUsedError;
   List<String> get errors => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -43,8 +43,8 @@ abstract class $TMDBMoviesCopyWith<$Res> {
   $Res call(
       {int page,
       List<TMDBMovie> results,
-      @JsonKey(name: 'total_results') int totalResults,
       @JsonKey(name: 'total_pages') int totalPages,
+      @JsonKey(name: 'total_results') int totalResults,
       List<String> errors});
 }
 
@@ -63,8 +63,8 @@ class _$TMDBMoviesCopyWithImpl<$Res, $Val extends TMDBMovies>
   $Res call({
     Object? page = null,
     Object? results = null,
-    Object? totalResults = null,
     Object? totalPages = null,
+    Object? totalResults = null,
     Object? errors = null,
   }) {
     return _then(_value.copyWith(
@@ -76,13 +76,13 @@ class _$TMDBMoviesCopyWithImpl<$Res, $Val extends TMDBMovies>
           ? _value.results
           : results // ignore: cast_nullable_to_non_nullable
               as List<TMDBMovie>,
-      totalResults: null == totalResults
-          ? _value.totalResults
-          : totalResults // ignore: cast_nullable_to_non_nullable
-              as int,
       totalPages: null == totalPages
           ? _value.totalPages
           : totalPages // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalResults: null == totalResults
+          ? _value.totalResults
+          : totalResults // ignore: cast_nullable_to_non_nullable
               as int,
       errors: null == errors
           ? _value.errors
@@ -103,8 +103,8 @@ abstract class _$$TMDBMoviesImplCopyWith<$Res>
   $Res call(
       {int page,
       List<TMDBMovie> results,
-      @JsonKey(name: 'total_results') int totalResults,
       @JsonKey(name: 'total_pages') int totalPages,
+      @JsonKey(name: 'total_results') int totalResults,
       List<String> errors});
 }
 
@@ -121,8 +121,8 @@ class __$$TMDBMoviesImplCopyWithImpl<$Res>
   $Res call({
     Object? page = null,
     Object? results = null,
-    Object? totalResults = null,
     Object? totalPages = null,
+    Object? totalResults = null,
     Object? errors = null,
   }) {
     return _then(_$TMDBMoviesImpl(
@@ -134,13 +134,13 @@ class __$$TMDBMoviesImplCopyWithImpl<$Res>
           ? _value._results
           : results // ignore: cast_nullable_to_non_nullable
               as List<TMDBMovie>,
-      totalResults: null == totalResults
-          ? _value.totalResults
-          : totalResults // ignore: cast_nullable_to_non_nullable
-              as int,
       totalPages: null == totalPages
           ? _value.totalPages
           : totalPages // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalResults: null == totalResults
+          ? _value.totalResults
+          : totalResults // ignore: cast_nullable_to_non_nullable
               as int,
       errors: null == errors
           ? _value._errors
@@ -156,8 +156,8 @@ class _$TMDBMoviesImpl implements _TMDBMovies {
   _$TMDBMoviesImpl(
       {required this.page,
       required final List<TMDBMovie> results,
-      @JsonKey(name: 'total_results') required this.totalResults,
       @JsonKey(name: 'total_pages') required this.totalPages,
+      @JsonKey(name: 'total_results') required this.totalResults,
       final List<String> errors = const []})
       : _results = results,
         _errors = errors;
@@ -176,11 +176,11 @@ class _$TMDBMoviesImpl implements _TMDBMovies {
   }
 
   @override
-  @JsonKey(name: 'total_results')
-  final int totalResults;
-  @override
   @JsonKey(name: 'total_pages')
   final int totalPages;
+  @override
+  @JsonKey(name: 'total_results')
+  final int totalResults;
   final List<String> _errors;
   @override
   @JsonKey()
@@ -192,7 +192,7 @@ class _$TMDBMoviesImpl implements _TMDBMovies {
 
   @override
   String toString() {
-    return 'TMDBMovies(page: $page, results: $results, totalResults: $totalResults, totalPages: $totalPages, errors: $errors)';
+    return 'TMDBMovies(page: $page, results: $results, totalPages: $totalPages, totalResults: $totalResults, errors: $errors)';
   }
 
   @override
@@ -202,10 +202,10 @@ class _$TMDBMoviesImpl implements _TMDBMovies {
             other is _$TMDBMoviesImpl &&
             (identical(other.page, page) || other.page == page) &&
             const DeepCollectionEquality().equals(other._results, _results) &&
-            (identical(other.totalResults, totalResults) ||
-                other.totalResults == totalResults) &&
             (identical(other.totalPages, totalPages) ||
                 other.totalPages == totalPages) &&
+            (identical(other.totalResults, totalResults) ||
+                other.totalResults == totalResults) &&
             const DeepCollectionEquality().equals(other._errors, _errors));
   }
 
@@ -215,8 +215,8 @@ class _$TMDBMoviesImpl implements _TMDBMovies {
       runtimeType,
       page,
       const DeepCollectionEquality().hash(_results),
-      totalResults,
       totalPages,
+      totalResults,
       const DeepCollectionEquality().hash(_errors));
 
   @JsonKey(ignore: true)
@@ -237,8 +237,8 @@ abstract class _TMDBMovies implements TMDBMovies {
   factory _TMDBMovies(
       {required final int page,
       required final List<TMDBMovie> results,
-      @JsonKey(name: 'total_results') required final int totalResults,
       @JsonKey(name: 'total_pages') required final int totalPages,
+      @JsonKey(name: 'total_results') required final int totalResults,
       final List<String> errors}) = _$TMDBMoviesImpl;
 
   factory _TMDBMovies.fromJson(Map<String, dynamic> json) =
@@ -249,11 +249,11 @@ abstract class _TMDBMovies implements TMDBMovies {
   @override
   List<TMDBMovie> get results;
   @override
-  @JsonKey(name: 'total_results')
-  int get totalResults;
-  @override
   @JsonKey(name: 'total_pages')
   int get totalPages;
+  @override
+  @JsonKey(name: 'total_results')
+  int get totalResults;
   @override
   List<String> get errors;
   @override

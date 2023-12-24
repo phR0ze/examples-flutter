@@ -1,25 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'profiles.dart';
+part of 'now_playing.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$profilesHash() => r'507dc8883af71f01af85d5275a71f7b1469afea0';
+String _$nowPlayingHash() => r'8ebbcefc2f59af05b4aca3608aa10ec92d01cff8';
 
-/// See also [Profiles].
-@ProviderFor(Profiles)
-final profilesProvider =
-    AsyncNotifierProvider<Profiles, List<models.Profile>>.internal(
-  Profiles.new,
-  name: r'profilesProvider',
+/// See also [NowPlaying].
+@ProviderFor(NowPlaying)
+final nowPlayingProvider =
+    AsyncNotifierProvider<NowPlaying, models.Movie>.internal(
+  NowPlaying.new,
+  name: r'nowPlayingProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$profilesHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$nowPlayingHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$Profiles = AsyncNotifier<List<models.Profile>>;
+typedef _$NowPlaying = AsyncNotifier<models.Movie>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
