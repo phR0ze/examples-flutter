@@ -74,7 +74,7 @@ class TMDB {
   Future<TMDBMovies> getNowPlayingMovies({required int page}) async {
     if (page < 1 || page > 1000) throw Exception('Invalid page number');
 
-    log.red("TMDB API call invoked: getNowPlayingMovies");
+    log.red("TMDB API call invoked: getNowPlayingMovies(page: $page)");
     final response = await _query('movie/now_playing', optionalQueries: [
       'include_adult=false',
       'page=$page',
