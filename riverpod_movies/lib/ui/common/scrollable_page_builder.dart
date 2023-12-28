@@ -5,9 +5,14 @@ import '../../providers/exports.dart';
 import '../common/async_value.dart';
 import '../media/media_tile.dart';
 
-/// Build out media pages to reduce code duplication
-class PageBuilder<T extends List> extends ConsumerStatefulWidget {
-  const PageBuilder(
+/// Build out media pages to reduce code duplication.
+///
+/// ### Supports
+/// * zooming in and out on the tile size
+/// * async content handling with loading and error states
+/// * retrieving additional pages of content upon request
+class ScrollablePageBuilder<T extends List> extends ConsumerStatefulWidget {
+  const ScrollablePageBuilder(
       {super.key,
       required this.title,
       required this.asyncValue,
@@ -17,10 +22,10 @@ class PageBuilder<T extends List> extends ConsumerStatefulWidget {
   final VoidCallback? onNextPageRequested;
 
   @override
-  ConsumerState<PageBuilder<T>> createState() => _PageBuilderState<T>();
+  ConsumerState<ScrollablePageBuilder<T>> createState() => _PageBuilderState<T>();
 }
 
-class _PageBuilderState<T extends List> extends ConsumerState<PageBuilder<T>> {
+class _PageBuilderState<T extends List> extends ConsumerState<ScrollablePageBuilder<T>> {
   @override
   Widget build(BuildContext context) {
     final configs = ref.watch(configProvider);
