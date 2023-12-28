@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../const.dart';
@@ -7,9 +9,14 @@ import '../media/media_tile.dart';
 
 /// Build out media pages to reduce code duplication
 class PageBuilder<T extends List> extends ConsumerWidget {
-  const PageBuilder({super.key, required this.title, required this.asyncValue});
+  const PageBuilder(
+      {super.key,
+      required this.title,
+      required this.asyncValue,
+      required this.onNextPageRequested});
   final String title;
   final AsyncValue<T> asyncValue;
+  final VoidCallback? onNextPageRequested;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,7 +33,7 @@ class PageBuilder<T extends List> extends ConsumerWidget {
               .copyWith(color: Colors.white, fontWeight: FontWeight.w500),
         ),
         actions: [
-          // Zoom in the thumbnail images
+          // Zoom in on the tile
           IconButton(
             onPressed: () {
               ref.read(configProvider.notifier).zoomInTile();
@@ -40,7 +47,7 @@ class PageBuilder<T extends List> extends ConsumerWidget {
             ),
           ),
 
-          // Zoom out the thumbnail images
+          // Zoom out on the tile
           IconButton(
             onPressed: () {
               ref.read(configProvider.notifier).zoomOutTile();

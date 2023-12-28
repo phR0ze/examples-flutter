@@ -23,6 +23,7 @@ class NowPlaying extends _$NowPlaying {
     return state.value!;
   }
 
+  /// Get the next page of movies for the current endpoint
   Future<void> fetchNextPage() async {
     // If we've reached the page limit then were done
     if (_totalPages != -1 && _currentPage >= _totalPages) {

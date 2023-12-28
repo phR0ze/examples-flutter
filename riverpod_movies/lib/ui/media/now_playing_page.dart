@@ -14,6 +14,10 @@ class NowPlayingPage extends ConsumerWidget {
     return PageBuilder<List<models.Movie>>(
       title: 'Now Playing',
       asyncValue: moviesAsyncValue,
+      onNextPageRequested: () {
+        final nowPlaying = ref.read(nowPlayingProvider.notifier);
+        nowPlaying.fetchNextPage();
+      },
     );
   }
 }
