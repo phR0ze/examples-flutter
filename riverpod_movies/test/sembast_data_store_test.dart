@@ -10,7 +10,7 @@ void main() {
   test('Test config read/write', () async {
     var db = await DataStore.init(newDatabaseFactoryMemory());
 
-    var config = const Config(mediaImageSize: 100.0, currentProfileId: 'profile1');
+    var config = const Config(tileSize: 100.0, currentProfileId: 'profile1');
     await db.saveConfig(config);
 
     // Read back and check

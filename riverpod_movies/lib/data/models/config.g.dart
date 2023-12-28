@@ -7,12 +7,12 @@ part of 'config.dart';
 // **************************************************************************
 
 _$ConfigImpl _$$ConfigImplFromJson(Map<String, dynamic> json) => _$ConfigImpl(
-      mediaImageSize: (json['mediaImageSize'] as num).toDouble(),
+      tileSize: (json['tileSize'] as num).toDouble(),
       currentProfileId: json['currentProfileId'] as String,
     );
 
 Map<String, dynamic> _$$ConfigImplToJson(_$ConfigImpl instance) =>
     <String, dynamic>{
-      'mediaImageSize': instance.mediaImageSize,
+      'tileSize': instance.tileSize,
       'currentProfileId': instance.currentProfileId,
     };

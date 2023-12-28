@@ -7,13 +7,12 @@ part 'config.g.dart';
 @freezed
 class Config with _$Config {
   const factory Config({
-    required double mediaImageSize,
+    required double tileSize,
     required String currentProfileId,
   }) = _Config;
 
   /// Provides a default constructor
-  static defaults() =>
-      const Config(mediaImageSize: Const.imageSizeDefault, currentProfileId: 'Unknown');
+  static defaults() => const Config(tileSize: Const.tileSizeDefault, currentProfileId: 'Unknown');
 
   // Provides JSON code generation for toMap and fromMap methods
   factory Config.fromJson(Map<String, Object?> json) => _$ConfigFromJson(json);

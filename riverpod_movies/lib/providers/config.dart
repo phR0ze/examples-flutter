@@ -17,22 +17,22 @@ class Config extends _$Config {
     return await ref.read(dataStoreProvider).getConfig();
   }
 
-  /// Zoom in on the media image and save it to the database
-  Future<void> zoomInMediaImage() async {
+  /// Zoom in on the tile size and save it to the database
+  Future<void> zoomInTile() async {
     if (state.value != null) {
-      var size = state.value!.mediaImageSize + Const.imageSizeInc;
-      state = AsyncData(state.value!.copyWith(mediaImageSize: size));
+      var size = state.value!.tileSize + Const.tileSizeInc;
+      state = AsyncData(state.value!.copyWith(tileSize: size));
       ref.read(dataStoreProvider).saveConfig(state.value!);
     }
   }
 
-  /// Zoom out on the media image and save it to the database
-  Future<void> zoomOutMediaImage() async {
+  /// Zoom out on the tile size and save it to the database
+  Future<void> zoomOutTile() async {
     if (state.value != null) {
-      var size = state.value!.mediaImageSize;
-      if (size - Const.imageSizeInc > Const.imageSizeMin) {
-        size = size - Const.imageSizeInc;
-        state = AsyncData(state.value!.copyWith(mediaImageSize: size));
+      var size = state.value!.tileSize;
+      if (size - Const.tileSizeInc > Const.tileSizeMin) {
+        size = size - Const.tileSizeInc;
+        state = AsyncData(state.value!.copyWith(tileSize: size));
         ref.read(dataStoreProvider).saveConfig(state.value!);
       }
     }

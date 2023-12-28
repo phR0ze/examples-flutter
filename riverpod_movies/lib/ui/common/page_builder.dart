@@ -29,7 +29,7 @@ class PageBuilder<T extends List> extends ConsumerWidget {
           // Zoom in the thumbnail images
           IconButton(
             onPressed: () {
-              ref.read(configProvider.notifier).zoomInMediaImage();
+              ref.read(configProvider.notifier).zoomInTile();
             },
             icon: Padding(
               padding: const EdgeInsets.fromLTRB(0, 2.0, 0, 0),
@@ -43,7 +43,7 @@ class PageBuilder<T extends List> extends ConsumerWidget {
           // Zoom out the thumbnail images
           IconButton(
             onPressed: () {
-              ref.read(configProvider.notifier).zoomOutMediaImage();
+              ref.read(configProvider.notifier).zoomOutTile();
             },
             icon: Padding(
               padding: const EdgeInsets.fromLTRB(0, 2.0, 5, 0),
@@ -65,9 +65,8 @@ class PageBuilder<T extends List> extends ConsumerWidget {
             padding: const EdgeInsets.all(Const.spacingDefault),
             child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: configs.value != null
-                        ? configs.value!.mediaImageSize
-                        : Const.imageSizeDefault,
+                    maxCrossAxisExtent:
+                        configs.value != null ? configs.value!.tileSize : Const.tileSizeDefault,
                     mainAxisSpacing: Const.spacingDefault,
                     crossAxisSpacing: Const.spacingDefault,
                     // Make the standard poster image aspect ratio 3:4
