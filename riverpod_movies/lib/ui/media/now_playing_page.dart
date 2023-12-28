@@ -14,12 +14,6 @@ class NowPlayingPage extends ConsumerWidget {
     return PageBuilder<List<models.Movie>>(
       title: 'Now Playing',
       asyncValue: moviesAsyncValue,
-      onZoomIn: () {
-        ref.read(configProvider.notifier).zoomInMediaImage();
-      },
-      onZoomOut: () {
-        ref.read(configProvider.notifier).zoomOutMediaImage();
-      },
     );
   }
 }
