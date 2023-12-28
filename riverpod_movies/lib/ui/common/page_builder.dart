@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../const.dart';
@@ -8,7 +6,7 @@ import '../common/async_value.dart';
 import '../media/media_tile.dart';
 
 /// Build out media pages to reduce code duplication
-class PageBuilder<T extends List> extends ConsumerWidget {
+class PageBuilder<T extends List> extends ConsumerStatefulWidget {
   const PageBuilder(
       {super.key,
       required this.title,
@@ -19,14 +17,19 @@ class PageBuilder<T extends List> extends ConsumerWidget {
   final VoidCallback? onNextPageRequested;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<PageBuilder<T>> createState() => _PageBuilderState<T>();
+}
+
+class _PageBuilderState<T extends List> extends ConsumerState<PageBuilder<T>> {
+  @override
+  Widget build(BuildContext context) {
     final configs = ref.watch(configProvider);
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black87,
         title: Text(
-          title,
+          widget.title,
           style: Theme.of(context)
               .textTheme
               .headlineSmall!
@@ -66,7 +69,7 @@ class PageBuilder<T extends List> extends ConsumerWidget {
         ],
       ),
       body: AsyncValueWidget<T>(
-        asyncValue: asyncValue,
+        asyncValue: widget.asyncValue,
         builder: (T media) {
           return Padding(
             padding: const EdgeInsets.all(Const.spacingDefault),
