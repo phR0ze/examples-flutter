@@ -1,19 +1,18 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart';
-
 import '../model/post.dart';
 import '../post_item.dart';
 
-class PostPage extends StatefulWidget {
+class PostPage extends ConsumerStatefulWidget {
   const PostPage({super.key});
 
   @override
-  State<PostPage> createState() => _PostPageState();
+  ConsumerState<PostPage> createState() => _PostPageState();
 }
 
-class _PostPageState extends State<PostPage> {
+class _PostPageState extends ConsumerState<PostPage> {
   late bool _isLastPage;
   late int _pageNumber;
   late bool _error;
@@ -36,6 +35,8 @@ class _PostPageState extends State<PostPage> {
   }
 
   Future<void> fetchData() async {
+    print('external call');
+
     try {
       final response = await get(Uri.parse(
           "https://jsonplaceholder.typicode.com/posts?_page=$_pageNumber&_limit=$_numberOfPostsPerRequest"));
@@ -91,7 +92,10 @@ class _PostPageState extends State<PostPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Inifinite Scrolling Example"),
+        title: const Text(
+          "Inifinite Scrolling Example",
+          style: TextStyle(fontSize: 20, color: Colors.purpleAccent),
+        ),
         centerTitle: true,
       ),
       body: buildPostsView(),
