@@ -24,7 +24,9 @@ class PostPage extends ConsumerWidget {
         asyncValue: posts,
         builder: (posts) {
           return ListView.builder(
-              itemCount: posts.length,
+              // By allowing for an extra item in the list we can show a loading indicator
+              // if we hit the bottom before more content is loaded. We'd want to
+              itemCount: posts.length + 1,
               itemBuilder: (context, index) {
                 // Trigger in advance to avoid havint to wait for content to load
                 if (index == posts.length - 3) {
@@ -37,6 +39,7 @@ class PostPage extends ConsumerWidget {
                 // If we get to the end before there is new data loaded then show
                 // a loading indicator
                 if (index == posts.length) {
+                  print('here');
                   return const Center(
                       child: Padding(
                     padding: EdgeInsets.all(8),

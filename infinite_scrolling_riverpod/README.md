@@ -1,4 +1,4 @@
-# riverpod_infinite_scrolling
+# infinite_scrolling_riverpod
 
 A new Flutter project.
 
