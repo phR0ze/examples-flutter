@@ -47,7 +47,6 @@ class _PostPageState extends State<PostPage> {
         _posts.addAll(postList);
       });
     } catch (e) {
-      print("error --> $e");
       setState(() {
         _loading = false;
         _error = true;
@@ -55,14 +54,80 @@ class _PostPageState extends State<PostPage> {
     }
   }
 
+  Widget errorDialog({required double size}) {
+    return SizedBox(
+      height: 180,
+      width: 200,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'An error occurred when fetching the posts.',
+            style: TextStyle(fontSize: size, fontWeight: FontWeight.w500, color: Colors.black),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  _loading = true;
+                  _error = false;
+                  fetchData();
+                });
+              },
+              child: const Text(
+                "Retry",
+                style: TextStyle(fontSize: 20, color: Colors.purpleAccent),
+              )),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    // show container
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Infinite Scroll"),
+        title: const Text("Inifinite Scrolling Example"),
+        centerTitle: true,
       ),
-      body: const Center(child: Text('Demo')),
+      body: buildPostsView(),
     );
+  }
+
+  Widget buildPostsView() {
+    if (_posts.isEmpty) {
+      if (_loading) {
+        return const Center(
+            child: Padding(
+          padding: EdgeInsets.all(8),
+          child: CircularProgressIndicator(),
+        ));
+      } else if (_error) {
+        return Center(child: errorDialog(size: 20));
+      }
+    }
+    return ListView.builder(
+        itemCount: _posts.length + (_isLastPage ? 0 : 1),
+        itemBuilder: (context, index) {
+          if (index == _posts.length - _nextPageTrigger) {
+            fetchData();
+          }
+          if (index == _posts.length) {
+            if (_error) {
+              return Center(child: errorDialog(size: 15));
+            } else {
+              return const Center(
+                  child: Padding(
+                padding: EdgeInsets.all(8),
+                child: CircularProgressIndicator(),
+              ));
+            }
+          }
+          final Post post = _posts[index];
+          return Padding(
+              padding: const EdgeInsets.all(15.0), child: PostItem(post.title, post.body));
+        });
   }
 }
