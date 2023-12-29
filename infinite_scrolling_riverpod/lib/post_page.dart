@@ -18,13 +18,6 @@ class PostsPage extends ConsumerWidget {
         title: const Text("Infinite scrolling Riverpod"),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-
-      // I was excited about the AsyncValueWidget refactor as it cleaned up this code abit
-      // but now I realize that the current content will be cleared and a loading indicator
-      // or error will replace it in either condition which is not a great user experience.
-      // I'd rather the original implementation which allowed for the existing loaded content
-      // to remain while indicating that more content is being loaded or an error had occurred.
-      // and allowing for a retry to be attempted.
       body: AsyncValueWidget<List<Post>>(
         asyncValue: posts,
         builder: (posts) {
@@ -44,7 +37,6 @@ class PostsPage extends ConsumerWidget {
                 // If we get to the end before there is new data loaded then show
                 // a loading indicator
                 if (index == posts.length) {
-                  print('here');
                   return const Center(
                       child: Padding(
                     padding: EdgeInsets.all(8),

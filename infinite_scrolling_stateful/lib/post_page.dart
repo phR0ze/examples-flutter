@@ -31,6 +31,8 @@ class _PostsPageState extends State<PostsPage> {
     fetchData();
   }
 
+  // Because of the dependency on updating state using the `setState` pattern we have no options
+  // refactoring this out of the widget into a separate class.
   Future<void> fetchData() async {
     try {
       final response = await get(Uri.parse(
@@ -46,7 +48,6 @@ class _PostsPageState extends State<PostsPage> {
         _posts.addAll(postList);
       });
     } catch (e) {
-      print("error --> $e");
       setState(() {
         _loading = false;
         _error = true;
@@ -89,7 +90,7 @@ class _PostsPageState extends State<PostsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Blog App"),
+        title: const Text("Infinite scrolling Stateful"),
         centerTitle: true,
       ),
       body: buildPostsView(),
@@ -109,6 +110,8 @@ class _PostsPageState extends State<PostsPage> {
       }
     }
     return ListView.builder(
+        // The additional item allows for another slot to display the error or loading indicator
+        // if there is more pages to load.
         itemCount: _posts.length + (_isLastPage ? 0 : 1),
         itemBuilder: (context, index) {
           if (index == _posts.length - _nextPageTrigger) {
