@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../model/post.dart';
-import '../post_item.dart';
+import 'package:infinite_scrolling_riverpod/ui/common/loading.dart';
+import '../../model/post.dart';
+import 'post_item.dart';
 import 'async_value.dart';
-import 'providers/posts.dart';
+import '../providers/posts.dart';
 
 class PostsPage extends ConsumerWidget {
   const PostsPage({super.key});
@@ -37,11 +38,7 @@ class PostsPage extends ConsumerWidget {
                 // If we get to the end before there is new data loaded then show
                 // a loading indicator
                 if (index == posts.length) {
-                  return const Center(
-                      child: Padding(
-                    padding: EdgeInsets.all(8),
-                    child: CircularProgressIndicator(),
-                  ));
+                  return const LoadingIndicator();
                 }
 
                 // Otherwise show the post

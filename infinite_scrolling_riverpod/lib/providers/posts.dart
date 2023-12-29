@@ -21,10 +21,10 @@ class Posts extends _$Posts {
   }
 
   Future<void> fetchNextPage({int postsPerPage = 10}) async {
-    // Show on page 2 what is looks like to wait for data
-    if (_page == 2) {
-      print('Purposefully not fetching data so a loading indicator can be seen');
+    // Delay page 1 to allow for the loading indicator to be seen
+    if (_page == 1) {
       return;
+      //await Future.delayed(const Duration(seconds: 50));
     }
     // By not changing the state to a loading we can skip rebuilding the UI in a default
     // state in between pages being loaded. Originally I was emitting this state which
