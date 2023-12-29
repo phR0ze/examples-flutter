@@ -23,6 +23,7 @@ class Posts extends _$Posts {
   Future<void> fetchNextPage({int postsPerPage = 10}) async {
     // Show on page 2 what is looks like to wait for data
     if (_page == 2) {
+      print('Purposefully not fetching data so a loading indicator can be seen');
       return;
     }
     // By not changing the state to a loading we can skip rebuilding the UI in a default

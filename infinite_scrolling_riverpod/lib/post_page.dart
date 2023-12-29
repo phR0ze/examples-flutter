@@ -5,8 +5,8 @@ import '../post_item.dart';
 import 'async_value.dart';
 import 'providers/posts.dart';
 
-class PostPage extends ConsumerWidget {
-  const PostPage({super.key});
+class PostsPage extends ConsumerWidget {
+  const PostsPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -14,12 +14,17 @@ class PostPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Infinite Scrolling Example",
-          style: TextStyle(fontSize: 20, color: Colors.purpleAccent),
-        ),
         centerTitle: true,
+        title: const Text("Infinite scrolling Riverpod"),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
+
+      // I was excited about the AsyncValueWidget refactor as it cleaned up this code abit
+      // but now I realize that the current content will be cleared and a loading indicator
+      // or error will replace it in either condition which is not a great user experience.
+      // I'd rather the original implementation which allowed for the existing loaded content
+      // to remain while indicating that more content is being loaded or an error had occurred.
+      // and allowing for a retry to be attempted.
       body: AsyncValueWidget<List<Post>>(
         asyncValue: posts,
         builder: (posts) {
