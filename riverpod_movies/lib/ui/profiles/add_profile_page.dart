@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../data/models/exports.dart' as models;
+import '../../data/model/exports.dart' as model;
 import '../../providers/profiles.dart';
 import '../common/async_value.dart';
 
@@ -21,7 +21,7 @@ class _AddProfilePageState extends ConsumerState<AddProfilePage> {
     final profilesAsyncValue = ref.watch(profilesProvider);
     final controller = TextEditingController();
 
-    return AsyncValueWidget<List<models.Profile>>(
+    return AsyncValueWidget<List<model.Profile>>(
       asyncValue: profilesAsyncValue,
       builder: (profiles) {
         return Scaffold(
@@ -36,7 +36,7 @@ class _AddProfilePageState extends ConsumerState<AddProfilePage> {
                       errorText = 'Profile "$profileName" already exists';
                     });
                   } else {
-                    var profile = models.Profile(id: profileName, name: profileName);
+                    var profile = model.Profile(id: profileName, name: profileName);
                     ref.read(profilesProvider.notifier).putProfile(profile);
                     Navigator.pop(context);
                   }

@@ -4,7 +4,7 @@ import 'package:sembast/sembast_io.dart';
 import 'package:sembast/sembast_memory.dart';
 import 'const.dart';
 import 'data/repos/data_store.dart';
-import 'data/models/exports.dart' as models;
+import 'data/model/exports.dart' as model;
 import 'providers/services.dart';
 import 'ui/home_page.dart';
 

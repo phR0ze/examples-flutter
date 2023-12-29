@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../const.dart';
-import '../data/models/config.dart' as models;
+import '../data/model/config.dart' as model;
 import 'services.dart';
 
 // Generated riverpod code
@@ -12,7 +12,7 @@ part 'config.g.dart';
 class Config extends _$Config {
   // Initial state
   @override
-  Future<models.Config> build() async {
+  Future<model.Config> build() async {
     // One time read from db to prime the provider cache
     return await ref.read(dataStoreProvider).getConfig();
   }

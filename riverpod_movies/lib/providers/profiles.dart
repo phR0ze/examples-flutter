@@ -1,5 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../data/models/profile.dart' as models;
+import '../data/model/profile.dart' as model;
 import 'services.dart';
 
 // Generated riverpod code
@@ -11,7 +11,7 @@ part 'profiles.g.dart';
 class Profiles extends _$Profiles {
   // Initial state that Riverpod will create the cache from
   @override
-  Future<List<models.Profile>> build() async {
+  Future<List<model.Profile>> build() async {
     return await _reload();
   }
 
@@ -26,14 +26,14 @@ class Profiles extends _$Profiles {
   }
 
   /// Add or update a profile
-  Future<void> putProfile(models.Profile profile) async {
+  Future<void> putProfile(model.Profile profile) async {
     final dataStore = ref.read(dataStoreProvider);
     await dataStore.putProfile(profile);
     state = AsyncData(await _reload());
   }
 
   // Internal refresh once we have updated the profiles
-  Future<List<models.Profile>> _reload() async {
+  Future<List<model.Profile>> _reload() async {
     final dataStore = ref.read(dataStoreProvider);
     state = const AsyncLoading();
     var profiles = await dataStore.getProfiles();

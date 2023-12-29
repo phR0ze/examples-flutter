@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../data/models/exports.dart';
+import '../../data/model/exports.dart';
 
 class ProfileTile extends StatelessWidget {
   final Profile profile;

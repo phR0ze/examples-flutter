@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import '../providers/tab_selection.dart';
-import '../data/models/exports.dart' as models;
+import '../data/model/exports.dart' as model;
 import 'media/favorites_page.dart';
 import 'media/now_playing_page.dart';
 import 'profiles/profiles_page.dart';
@@ -20,11 +20,11 @@ class HomePage extends ConsumerWidget {
         // initializing: () => const Center(child: CircularProgressIndicator()),
         // needsProfile: () => ProfileSelectionPage(),
         switch (tabSelection) {
-          case models.TabSelection.favorites:
+          case model.TabSelection.favorites:
             return const FavoritesPage();
-          case models.TabSelection.nowPlaying:
+          case model.TabSelection.nowPlaying:
             return const NowPlayingPage();
-          case models.TabSelection.profiles:
+          case model.TabSelection.profiles:
             return const ProfilesPage();
         }
       }(),

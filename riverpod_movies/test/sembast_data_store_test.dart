@@ -1,4 +1,4 @@
-import 'package:riverpod_movies/data/models/exports.dart';
+import 'package:riverpod_movies/data/model/exports.dart';
 import 'package:riverpod_movies/data/repos/data_store.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_memory.dart';

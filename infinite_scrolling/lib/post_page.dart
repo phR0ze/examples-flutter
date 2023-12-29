@@ -30,6 +30,8 @@ class _PostPageState extends State<PostPage> {
     _isLastPage = false;
     _loading = true;
     _error = false;
+
+    // Initial data fetch for page 0
     fetchData();
   }
 

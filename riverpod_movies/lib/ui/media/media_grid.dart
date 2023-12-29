@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../data/models/movie.dart' as models;
+import '../../data/model/movie.dart' as model;
 import 'media_tile.dart';
 
 class MediaGrid extends StatelessWidget {
   const MediaGrid({super.key, required this.movies, required this.controller});
-  final List<models.Movie> movies;
+  final List<model.Movie> movies;
   final ScrollController controller;
 
   @override

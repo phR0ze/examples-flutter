@@ -1,5 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../data/models/exports.dart' as models;
+import '../data/model/exports.dart' as model;
 import '../data/repos/tmdb_api.dart';
 import 'services.dart';
 
@@ -15,7 +15,7 @@ class NowPlaying extends _$NowPlaying {
 
   // Initial state
   @override
-  Future<List<models.Movie>> build() async {
+  Future<List<model.Movie>> build() async {
     _currentPage = 0;
     _totalPages = -1;
 
@@ -41,7 +41,7 @@ class NowPlaying extends _$NowPlaying {
 
     // Convert to movies and set the state
     var movies = state.value ?? [];
-    movies = movies + dto.results.map((x) => models.Movie.fromJson(x.toJson())).toList();
+    movies = movies + dto.results.map((x) => model.Movie.fromJson(x.toJson())).toList();
     state = AsyncData(movies);
   }
 }

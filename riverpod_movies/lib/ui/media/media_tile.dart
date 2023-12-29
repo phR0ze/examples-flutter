@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
-import '../../data/models/movie.dart';
+import '../../data/model/movie.dart';
 import '../../data/repos/tmdb_api.dart';
 
 class MediaTile extends StatelessWidget {

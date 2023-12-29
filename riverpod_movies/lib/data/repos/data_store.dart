@@ -1,9 +1,7 @@
-import 'dart:io';
-
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
-import '../models/exports.dart';
+import '../model/exports.dart';
 
 /// Setup data store paths for easy access
 class StorePath {

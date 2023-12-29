@@ -10,8 +10,7 @@ String _$tabSelectionHash() => r'cbc5e61f2930ed04a897da6d6ff1e30a7b759637';
 
 /// See also [TabSelection].
 @ProviderFor(TabSelection)
-final tabSelectionProvider =
-    AutoDisposeNotifierProvider<TabSelection, models.TabSelection>.internal(
+final tabSelectionProvider = AutoDisposeNotifierProvider<TabSelection, model.TabSelection>.internal(
   TabSelection.new,
   name: r'tabSelectionProvider',
   debugGetCreateSourceHash:
@@ -20,6 +19,6 @@ final tabSelectionProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$TabSelection = AutoDisposeNotifier<models.TabSelection>;
+typedef _$TabSelection = AutoDisposeNotifier<model.TabSelection>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
