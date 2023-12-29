@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class PostItem extends StatelessWidget {
   final String title;
   final String body;
+  final int index;
 
-  const PostItem(this.title, this.body, {super.key});
+  const PostItem(this.title, this.body, this.index, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class PostItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text(
-              title,
+              '$index: $title',
               style:
                   const TextStyle(color: Colors.purple, fontSize: 20, fontWeight: FontWeight.bold),
             ),
