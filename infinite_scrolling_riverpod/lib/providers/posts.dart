@@ -32,6 +32,9 @@ class Posts extends _$Posts {
     if (!_retry && _page == 1) {
       _retry = true;
       print('Simulating page error');
+      // Returning this won't be seen as i've set 'skipError: true' thus the old values
+      // will be used and the next call through will trigger the same page to be fetched.
+      //state = AsyncValue.error('error', StackTrace.current);
       return;
     }
 

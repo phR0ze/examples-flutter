@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinite_scrolling_riverpod/ui/common/error.dart';
 import 'package:infinite_scrolling_riverpod/ui/common/loading.dart';
+import 'common/async_value.dart';
 import 'common/end.dart';
 import 'post_item.dart';
 import '../providers/posts.dart';
@@ -19,11 +20,9 @@ class PostsPage extends ConsumerWidget {
         title: const Text("Infinite scrolling Riverpod"),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: posts.when(
-        // uses the previous values if an error is received
-        skipError: true,
-        loading: () => const LoadingIndicator(),
-        data: (posts) {
+      body: AsyncValueWidget(
+        asyncValue: posts,
+        builder: (posts) {
           return ListView.builder(
               // By allowing for an extra item in the list we can show a loading indicator
               // if we hit the bottom before more content is loaded.
@@ -60,11 +59,6 @@ class PostsPage extends ConsumerWidget {
                     child: PostItem(post.title, post.body, index));
               });
         },
-        error: (error, stackTrace) => ErrorRetry(
-          onRetry: () {
-            ref.read(postsProvider.notifier).fetchNextPage();
-          },
-        ),
       ),
     );
   }

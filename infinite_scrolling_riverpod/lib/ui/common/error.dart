@@ -3,12 +3,9 @@ import 'package:flutter/material.dart';
 class ErrorRetry extends StatelessWidget {
   final double size;
   final String msg;
-  final VoidCallback onRetry;
+  final VoidCallback? onRetry;
   const ErrorRetry(
-      {super.key,
-      this.size = 80,
-      this.msg = 'an error occurred while loading data',
-      required this.onRetry});
+      {super.key, this.size = 80, this.msg = 'an error occurred while loading data', this.onRetry});
 
   @override
   Widget build(BuildContext context) {
