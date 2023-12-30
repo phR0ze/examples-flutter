@@ -101,7 +101,7 @@ class _PageBuilderState<T extends List> extends ConsumerState<PageBuilder<T>> {
                             if (index == media.length - 5) {
                               widget.onNextPageRequested?.call();
                             }
-                            return MediaTile(movie: media[index]);
+                            return MediaTile(movie: media[index], debugIndex: index);
                           },
                           childCount: media.length,
                         ));

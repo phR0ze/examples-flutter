@@ -44,6 +44,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: Const.appName,
       theme: ThemeData(
+        scaffoldBackgroundColor: const Color.fromRGBO(28, 40, 55, 1),
         primarySwatch: Colors.blue,
         scrollbarTheme: ScrollbarThemeData(
           thickness: MaterialStateProperty.all(10.0),
