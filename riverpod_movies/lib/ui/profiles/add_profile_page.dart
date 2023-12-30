@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/model/exports.dart' as model;
 import '../../providers/profiles.dart';
-import '../common/async_value.dart';
+import '../common/async_builder.dart';
 
 class AddProfilePage extends ConsumerStatefulWidget {
   const AddProfilePage({super.key});
@@ -21,8 +21,8 @@ class _AddProfilePageState extends ConsumerState<AddProfilePage> {
     final profilesAsyncValue = ref.watch(profilesProvider);
     final controller = TextEditingController();
 
-    return AsyncValueWidget<List<model.Profile>>(
-      asyncValue: profilesAsyncValue,
+    return AsyncBuilder<List<model.Profile>>(
+      data: profilesAsyncValue,
       builder: (profiles) {
         return Scaffold(
           appBar: AppBar(

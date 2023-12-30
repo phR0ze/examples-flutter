@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import '../../providers/exports.dart';
 import '../../data/model/exports.dart' as model;
-import '../common/async_value.dart';
+import '../common/async_builder.dart';
 import 'add_profile_button.dart';
 import 'add_profile_page.dart';
 import 'profile_tile.dart';
@@ -20,8 +20,8 @@ class ProfilesPage extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Profile selection'),
       ),
-      body: AsyncValueWidget<List<model.Profile>>(
-        asyncValue: profilesAsyncValue,
+      body: AsyncBuilder<List<model.Profile>>(
+        data: profilesAsyncValue,
         builder: (profiles) {
           return Padding(
             padding: const EdgeInsets.all(16.0),

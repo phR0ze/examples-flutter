@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../const.dart';
 import '../../providers/exports.dart';
-import '../common/async_value.dart';
+import 'async_builder.dart';
 import '../media/media_tile.dart';
 
 /// Build out media pages to reduce code duplication.
@@ -26,57 +26,62 @@ class PageBuilder<T extends List> extends ConsumerStatefulWidget {
 }
 
 class _PageBuilderState<T extends List> extends ConsumerState<PageBuilder<T>> {
+  // final _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     final configs = ref.watch(configProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black87,
-        title: Text(
-          widget.title,
-          style: Theme.of(context)
-              .textTheme
-              .headlineSmall!
-              .copyWith(color: Colors.white, fontWeight: FontWeight.w500),
-        ),
-        actions: [
-          // Zoom in on the tile
-          IconButton(
-            onPressed: () {
-              ref.read(configProvider.notifier).zoomInTile();
-            },
-            icon: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 2.0, 0, 0),
-              child: Transform.scale(
-                scale: 1.3,
-                child: const Icon(Icons.zoom_in, color: Colors.white70),
-              ),
-            ),
-          ),
-
-          // Zoom out on the tile
-          IconButton(
-            onPressed: () {
-              ref.read(configProvider.notifier).zoomOutTile();
-            },
-            icon: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 2.0, 5, 0),
-              child: Transform.scale(
-                scale: 1.3,
-                child: const Icon(
-                  Icons.zoom_out,
-                  color: Colors.white70,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-      body: AsyncValueWidget<T>(
-        asyncValue: widget.asyncValue,
+      body: AsyncBuilder<T>(
+        data: widget.asyncValue,
         builder: (T media) {
           return CustomScrollView(slivers: [
+            SliverAppBar(
+              // Float the app bar and snap it back into view on any scrollback
+              snap: true,
+              floating: true,
+              backgroundColor: Colors.black87,
+              title: Text(
+                widget.title,
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall!
+                    .copyWith(color: Colors.white, fontWeight: FontWeight.w500),
+              ),
+              actions: [
+                // Zoom in on the tile
+                IconButton(
+                  onPressed: () {
+                    ref.read(configProvider.notifier).zoomInTile();
+                  },
+                  icon: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 2.0, 0, 0),
+                    child: Transform.scale(
+                      scale: 1.3,
+                      child: const Icon(Icons.zoom_in, color: Colors.white70),
+                    ),
+                  ),
+                ),
+
+                // Zoom out on the tile
+                IconButton(
+                  onPressed: () {
+                    ref.read(configProvider.notifier).zoomOutTile();
+                  },
+                  icon: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 2.0, 5, 0),
+                    child: Transform.scale(
+                      scale: 1.3,
+                      child: const Icon(
+                        Icons.zoom_out,
+                        color: Colors.white70,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             SliverPadding(
                 padding: const EdgeInsets.all(Const.spacingDefault),
                 sliver: SliverGrid(
