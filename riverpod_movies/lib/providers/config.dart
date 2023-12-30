@@ -30,7 +30,7 @@ class Config extends _$Config {
   Future<void> zoomOutTile() async {
     if (state.value != null) {
       var size = state.value!.tileSize;
-      if (size - Const.tileSizeInc > Const.tileSizeMin) {
+      if (size - Const.tileSizeInc > Const.tileWidthMin) {
         size = size - Const.tileSizeInc;
         state = AsyncData(state.value!.copyWith(tileSize: size));
         ref.read(dataStoreProvider).saveConfig(state.value!);

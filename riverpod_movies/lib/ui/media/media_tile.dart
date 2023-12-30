@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
+import '../../const.dart';
 import '../../data/model/movie.dart';
 import '../../data/repos/tmdb_api.dart';
 
 class MediaTile extends StatelessWidget {
+  final Movie movie;
+  final String? imagePath;
+  final double tileWidth;
+  final int? debugIndex;
+  final WidgetBuilder? favouriteBuilder;
+
   const MediaTile({
     super.key,
     required this.movie,
     this.imagePath,
+    this.tileWidth = Const.tileWidthDefault,
     this.debugIndex, // debugging hint to show the tile index
     this.favouriteBuilder,
   });
-
-  final Movie movie;
-  final String? imagePath;
-  final int? debugIndex;
-  final WidgetBuilder? favouriteBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +26,25 @@ class MediaTile extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        _Poster(imagePath: movie.posterPath),
+        // Show the poster image full tile size
+        //Positioned(left: 0, top: 0, child: MediaBackgroundImage(movie.posterPath)),
+        MediaBackgroundImage(movie.posterPath, imageWidth: tileWidth),
+
+        // Gradient to fade out the top of the poster image so overlay badges are more visible
         const TopGradient(),
+
+        // Show the index of the tile for debugging purposes
         if (debugIndex != null)
           Positioned(
-            left: 10,
-            top: 10,
+            left: 5,
+            top: 5,
             child: Text(
               '$debugIndex',
               style: const TextStyle(color: Colors.white, fontSize: 14),
             ),
           ),
+
+        // Show the favourite badge if provided
         if (favouriteBuilder != null)
           Positioned(
             right: 0,
@@ -69,16 +80,17 @@ class TopGradient extends StatelessWidget {
   }
 }
 
-class _Poster extends StatelessWidget {
-  const _Poster({this.imagePath});
+class MediaBackgroundImage extends StatelessWidget {
   final String? imagePath;
+  final double imageWidth;
+  const MediaBackgroundImage(this.imagePath, {this.imageWidth = 154, super.key});
 
   @override
   Widget build(BuildContext context) {
     if (imagePath != null) {
       return FadeInImage.memoryNetwork(
         placeholder: kTransparentImage,
-        image: TMDB.imageUrl(imagePath!, PosterSize.w154),
+        image: TMDB.imageUrl(imagePath!, selectPosterSize(imageWidth)),
         fit: BoxFit.fitWidth,
       );
     }

@@ -23,6 +23,16 @@ Map<PosterSize, String> _posterSizes = {
   PosterSize.original: "original",
 };
 
+PosterSize selectPosterSize(double width) {
+  if (width <= 92) return PosterSize.w92;
+  if (width <= 154) return PosterSize.w154;
+  if (width <= 185) return PosterSize.w185;
+  if (width <= 342) return PosterSize.w342;
+  if (width <= 500) return PosterSize.w500;
+  if (width <= 780) return PosterSize.w780;
+  return PosterSize.original;
+}
+
 /// The Movie Database (TMDB) API client
 class TMDB {
   final Dio dio;

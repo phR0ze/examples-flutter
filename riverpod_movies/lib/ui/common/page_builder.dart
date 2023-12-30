@@ -83,25 +83,27 @@ class _PageBuilderState<T extends List> extends ConsumerState<PageBuilder<T>> {
             ],
           ),
           SliverPadding(
-              padding: const EdgeInsets.all(Const.spacingDefault),
+              // Page content external padding
+              padding: const EdgeInsets.all(Const.pageOutsidePadding),
               sliver: SliverAsyncBuilder<T>(
                   data: widget.asyncValue,
                   builder: (T media) {
+                    final tileWidth =
+                        configs.value != null ? configs.value!.tileSize : Const.tileWidthDefault;
                     return SliverGrid(
                         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: configs.value != null
-                                ? configs.value!.tileSize
-                                : Const.tileSizeDefault,
-                            mainAxisSpacing: Const.spacingDefault,
-                            crossAxisSpacing: Const.spacingDefault,
+                            maxCrossAxisExtent: tileWidth,
+                            mainAxisSpacing: Const.pageGridPadding,
+                            crossAxisSpacing: Const.pageGridPadding,
                             // Make the standard poster image aspect ratio 3:4
-                            childAspectRatio: Const.imageAspectRatioDefault),
+                            childAspectRatio: Const.tileAspectRatio),
                         delegate: SliverChildBuilderDelegate(
                           (context, index) {
                             if (index == media.length - 5) {
                               widget.onNextPageRequested?.call();
                             }
-                            return MediaTile(movie: media[index], debugIndex: index);
+                            return MediaTile(
+                                movie: media[index], tileWidth: tileWidth, debugIndex: index);
                           },
                           childCount: media.length,
                         ));

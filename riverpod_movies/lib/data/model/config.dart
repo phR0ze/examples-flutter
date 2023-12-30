@@ -12,7 +12,7 @@ class Config with _$Config {
   }) = _Config;
 
   /// Provides a default constructor
-  static defaults() => const Config(tileSize: Const.tileSizeDefault, currentProfileId: 'Unknown');
+  static defaults() => const Config(tileSize: Const.tileWidthDefault, currentProfileId: 'Unknown');
 
   // Provides JSON code generation for toMap and fromMap methods
   factory Config.fromJson(Map<String, Object?> json) => _$ConfigFromJson(json);
