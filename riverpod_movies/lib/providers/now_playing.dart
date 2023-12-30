@@ -10,13 +10,13 @@ part 'now_playing.g.dart';
 // KeepAlive means that the provider will not be disposed when we switch pages
 @Riverpod(keepAlive: true)
 class NowPlaying extends _$NowPlaying {
-  int _currentPage = 0;
+  int _currentPage = 1;
   int _totalPages = -1;
 
   // Initial state
   @override
   Future<List<model.Movie>> build() async {
-    _currentPage = 0;
+    _currentPage = 1;
     _totalPages = -1;
 
     await fetchNextPage();
@@ -30,18 +30,20 @@ class NowPlaying extends _$NowPlaying {
       return;
     }
 
-    // Fetch the next page
-    state = const AsyncLoading();
-    var dto = await locate<TMDB>().getNowPlayingMovies(page: ++_currentPage);
+    // Fetch the next page and specifically not setting loading state to avoid resetting
+    // the scroll position for infite scrolling.
+    // state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      final dto = await locate<TMDB>().getNowPlayingMovies(page: _currentPage++);
 
-    // Update the page and result counts if reset
-    if (_totalPages == -1) {
-      _totalPages = dto.totalPages;
-    }
+      // Update the page and result counts if reset
+      if (_totalPages == -1) {
+        _totalPages = dto.totalPages;
+      }
 
-    // Convert to movies and set the state
-    var movies = state.value ?? [];
-    movies = movies + dto.results.map((x) => model.Movie.fromJson(x.toJson())).toList();
-    state = AsyncData(movies);
+      // Convert to movies and set the state
+      final movies = state.value ?? [];
+      return movies + dto.results.map((x) => model.Movie.fromJson(x.toJson())).toList();
+    });
   }
 }
