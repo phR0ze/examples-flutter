@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../const.dart';
 import '../../providers/exports.dart';
-import 'async_builder.dart';
+import 'sliver_async_builder.dart';
 import '../media/media_tile.dart';
 
 /// Build out media pages to reduce code duplication.

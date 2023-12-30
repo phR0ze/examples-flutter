@@ -1,6 +1,12 @@
 # riverpod_movies
 Working on understanding Riverpod by re-implementing the fantastic project here https://github.com/bizz84/movie_app_state_management_flutter
 
+## Features
+* Riverpod infinite scrolling
+* Riverpod configuration saved to disk
+* CustomScrollView example
+* Async builder example
+
 ## TMDB
 All the video content data is coming from [TMDB](https://www.themoviedb.org/about)
 
