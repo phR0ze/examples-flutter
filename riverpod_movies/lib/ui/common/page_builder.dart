@@ -76,23 +76,27 @@ class _PageBuilderState<T extends List> extends ConsumerState<PageBuilder<T>> {
       body: AsyncValueWidget<T>(
         asyncValue: widget.asyncValue,
         builder: (T media) {
-          return GridView.builder(
-            padding: const EdgeInsets.all(Const.spacingDefault),
-            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent:
-                    configs.value != null ? configs.value!.tileSize : Const.tileSizeDefault,
-                mainAxisSpacing: Const.spacingDefault,
-                crossAxisSpacing: Const.spacingDefault,
-                // Make the standard poster image aspect ratio 3:4
-                childAspectRatio: Const.imageAspectRatioDefault),
-            itemCount: media.length,
-            itemBuilder: (context, index) {
-              if (index == media.length - 5) {
-                widget.onNextPageRequested?.call();
-              }
-              return MediaTile(movie: media[index]);
-            },
-          );
+          return CustomScrollView(slivers: [
+            SliverPadding(
+                padding: const EdgeInsets.all(Const.spacingDefault),
+                sliver: SliverGrid(
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent:
+                            configs.value != null ? configs.value!.tileSize : Const.tileSizeDefault,
+                        mainAxisSpacing: Const.spacingDefault,
+                        crossAxisSpacing: Const.spacingDefault,
+                        // Make the standard poster image aspect ratio 3:4
+                        childAspectRatio: Const.imageAspectRatioDefault),
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        if (index == media.length - 5) {
+                          widget.onNextPageRequested?.call();
+                        }
+                        return MediaTile(movie: media[index]);
+                      },
+                      childCount: media.length,
+                    ))),
+          ]);
         },
       ),
     );
