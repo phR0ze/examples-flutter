@@ -44,6 +44,7 @@ class TMDB {
   }) async {
     // Construct the query params including any optional queries
     var query = 'api_key=${locate<Vars>().tmdbKey}';
+
     if (optionalQueries != null && optionalQueries.isNotEmpty) {
       query += '&${optionalQueries.join('&')}';
     }

@@ -12,17 +12,16 @@ class SliverAsyncBuilder<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return data.when(
-      skipError: true,
-      data: builder,
-      loading: () => const SliverToBoxAdapter(child: Center(child: CircularProgressIndicator())),
-      error: (error, stackTrace) => SliverToBoxAdapter(
-        child: Center(
-          child: Text(
-            error.toString(),
-            style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.red),
-          ),
-        ),
-      ),
-    );
+        skipError: true,
+        data: builder,
+        loading: () => const SliverToBoxAdapter(child: Center(child: CircularProgressIndicator())),
+        error: (error, stackTrace) => SliverToBoxAdapter(
+              child: Center(
+                child: Text(
+                  error.toString(),
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.red),
+                ),
+              ),
+            ));
   }
 }

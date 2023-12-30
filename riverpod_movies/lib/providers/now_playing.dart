@@ -20,6 +20,8 @@ class NowPlaying extends _$NowPlaying {
     _totalPages = -1;
 
     await fetchNextPage();
+
+    // Won't be any data here if fetch fails
     return state.value!;
   }
 
