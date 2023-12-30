@@ -9,11 +9,13 @@ part 'posts.g.dart';
 @Riverpod(keepAlive: true)
 class Posts extends _$Posts {
   int _page = 0;
+  bool _retry = false;
   bool _isLastPage = false;
 
   @override
   Future<List<model.Post>> build() async {
     _page = 0;
+    _retry = false;
     _isLastPage = false;
 
     await fetchNextPage();
@@ -21,11 +23,25 @@ class Posts extends _$Posts {
   }
 
   Future<void> fetchNextPage({int postsPerPage = 10}) async {
-    // Delay page 1 to allow for the loading indicator to be seen
-    if (_page == 1) {
+    if (_isLastPage) {
+      print('last page hit');
       return;
-      //await Future.delayed(const Duration(seconds: 50));
     }
+
+    // Simulate an error on the first page
+    if (!_retry && _page == 1) {
+      _retry = true;
+      print('Simulating page error');
+      return;
+    }
+
+    // Simulate page loading
+    if (_page == 2) {
+      _retry = true;
+      print('Simulating page loading');
+      await Future.delayed(const Duration(seconds: 10));
+    }
+
     // By not changing the state to a loading we can skip rebuilding the UI in a default
     // state in between pages being loaded. Originally I was emitting this state which
     // caused the UI to rebuild and show a loading indicator between pages but was so fast
@@ -39,6 +55,11 @@ class Posts extends _$Posts {
       List responseList = json.decode(response.body);
       List<model.Post> posts =
           responseList.map((data) => model.Post(data['title'], data['body'])).toList();
+
+      // Check for last page
+      if (posts.length < postsPerPage) {
+        _isLastPage = true;
+      }
 
       // Add the newly retrieved posts to the existing posts list
       if (state.value != null) {
