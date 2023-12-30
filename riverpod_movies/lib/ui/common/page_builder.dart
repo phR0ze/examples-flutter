@@ -26,14 +26,17 @@ class PageBuilder<T extends List> extends ConsumerStatefulWidget {
 }
 
 class _PageBuilderState<T extends List> extends ConsumerState<PageBuilder<T>> {
+  final _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     final configs = ref.watch(configProvider);
 
     return Scaffold(
-      // Scrollbar only seems to be visible on mobile
+      // Scrollbar's default color is so light it's hard to see
       body: Scrollbar(
-        child: CustomScrollView(slivers: [
+        controller: _scrollController,
+        child: CustomScrollView(controller: _scrollController, slivers: [
           SliverAppBar(
             // Float the app bar and snap it back into view on any scrollback
             snap: true,
