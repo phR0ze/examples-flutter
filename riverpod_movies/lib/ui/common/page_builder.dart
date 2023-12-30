@@ -81,7 +81,7 @@ class _PageBuilderState<T extends List> extends ConsumerState<PageBuilder<T>> {
         ),
         SliverPadding(
             padding: const EdgeInsets.all(Const.spacingDefault),
-            sliver: AsyncBuilder<T>(
+            sliver: SliverAsyncBuilder<T>(
                 data: widget.asyncValue,
                 builder: (T media) {
                   return SliverGrid(

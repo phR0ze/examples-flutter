@@ -20,7 +20,7 @@ class ProfilesPage extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Profile selection'),
       ),
-      body: AsyncBuilder<List<model.Profile>>(
+      body: SliverAsyncBuilder<List<model.Profile>>(
         data: profilesAsyncValue,
         builder: (profiles) {
           return Padding(

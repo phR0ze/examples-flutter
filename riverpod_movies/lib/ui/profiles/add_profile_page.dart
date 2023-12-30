@@ -21,7 +21,7 @@ class _AddProfilePageState extends ConsumerState<AddProfilePage> {
     final profilesAsyncValue = ref.watch(profilesProvider);
     final controller = TextEditingController();
 
-    return AsyncBuilder<List<model.Profile>>(
+    return SliverAsyncBuilder<List<model.Profile>>(
       data: profilesAsyncValue,
       builder: (profiles) {
         return Scaffold(
