@@ -14,11 +14,13 @@ class AsyncBuilder<T> extends StatelessWidget {
     return data.when(
       skipError: true,
       data: builder,
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (error, stackTrace) => Center(
-        child: Text(
-          error.toString(),
-          style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.red),
+      loading: () => const SliverToBoxAdapter(child: Center(child: CircularProgressIndicator())),
+      error: (error, stackTrace) => SliverToBoxAdapter(
+        child: Center(
+          child: Text(
+            error.toString(),
+            style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.red),
+          ),
         ),
       ),
     );
