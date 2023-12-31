@@ -25,13 +25,12 @@ class MediaTile extends StatelessWidget {
     // Stack the poster image => top gradient => favourite badge.
     return Stack(
       fit: StackFit.expand,
+      clipBehavior: Clip.hardEdge,
       children: [
-        // Show the poster image full tile size
-        //Positioned(left: 0, top: 0, child: MediaBackgroundImage(movie.posterPath)),
         MediaBackgroundImage(movie.posterPath, imageWidth: tileWidth),
 
-        // Gradient to fade out the top of the poster image so overlay badges are more visible
-        const TopGradient(),
+        // Gradient to fade out background image so overlay badges are more visible
+        const MediaTopGradient(),
 
         // Show the index of the tile for debugging purposes
         if (debugIndex != null)
@@ -51,6 +50,9 @@ class MediaTile extends StatelessWidget {
             top: 0,
             child: favouriteBuilder!(context),
           ),
+
+        // Show the title at the bottom of the tile
+        Positioned(bottom: 0, child: TitleBar(movie.title)),
       ],
     );
   }
@@ -58,8 +60,8 @@ class MediaTile extends StatelessWidget {
 
 /// Media top gradient allows for a subtle fade out of the poster image so that
 /// overlay badges are more visible.
-class TopGradient extends StatelessWidget {
-  const TopGradient({super.key});
+class MediaTopGradient extends StatelessWidget {
+  const MediaTopGradient({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -70,10 +72,12 @@ class TopGradient extends StatelessWidget {
             Colors.black87,
             Colors.transparent,
           ],
+          // Start gradient fading immediately and reach full fade at 30% of tile direction
           stops: [0.0, 0.3],
+          // Fade starts at top center
           begin: Alignment.topCenter,
+          // Fade ends at bottom center
           end: Alignment.bottomCenter,
-          tileMode: TileMode.repeated,
         ),
       ),
     );
@@ -89,11 +93,24 @@ class MediaBackgroundImage extends StatelessWidget {
   Widget build(BuildContext context) {
     if (imagePath != null) {
       return FadeInImage.memoryNetwork(
+        alignment: Alignment.topCenter,
         placeholder: kTransparentImage,
         image: TMDB.imageUrl(imagePath!, selectPosterSize(imageWidth)),
-        fit: BoxFit.fitWidth,
       );
     }
     return Image.memory(kTransparentImage);
+  }
+}
+
+class TitleBar extends StatelessWidget {
+  final String title;
+  const TitleBar(this.title, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      title,
+      style: const TextStyle(color: Colors.white, fontSize: 14),
+    );
   }
 }
