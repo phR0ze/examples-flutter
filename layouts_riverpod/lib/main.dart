@@ -16,13 +16,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "layout examples with riverpod",
-      home: Scaffold(
-        body: LayoutBuilder(builder: (context, constraints) {
-          return constraints.maxWidth > Const.narrowThreshold
-              ? wide.ImagesPage(constraints)
-              : narrow.ImagesPage(constraints);
-        }),
-      ),
+      home: LayoutBuilder(builder: (context, constraints) {
+        return constraints.maxWidth > Const.narrowThreshold
+            ? wide.ImagesPage(constraints)
+            : narrow.ImagesPage(constraints);
+      }),
     );
   }
 }
