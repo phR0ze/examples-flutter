@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'const.dart';
-import 'ui/narrow/images.dart' as narrow;
-import 'ui/wide/images.dart' as wide;
+import 'ui/narrow/home_page.dart' as narrow;
+import 'ui/wide/home_page.dart' as wide;
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -18,8 +18,8 @@ class MyApp extends StatelessWidget {
       title: "layout examples with riverpod",
       home: LayoutBuilder(builder: (context, constraints) {
         return constraints.maxWidth > Const.narrowThreshold
-            ? wide.ImagesPage(constraints)
-            : narrow.ImagesPage(constraints);
+            ? wide.HomePage(constraints)
+            : narrow.HomePage(constraints);
       }),
     );
   }

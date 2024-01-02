@@ -1,52 +1,41 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import '../../providers/images.dart';
-import '../common/sliver_async_builder.dart';
+import 'package:layouts/providers/images.dart';
+import 'package:layouts/ui/common/sliver_async_builder.dart';
 import '../image_tile.dart';
 import '../common/navigation.dart';
 
-class ImagesPage extends StatelessWidget {
+class HomePage extends StatelessWidget {
   final BoxConstraints constraints;
-  const ImagesPage(this.constraints, {super.key});
+  const HomePage(this.constraints, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          const Expanded(
-            child: ImagesScroller(),
-          ),
-          Navigation(constraints),
-        ],
-      ),
-    );
+        appBar: AppBar(
+          title: const Text('Wide layout example'),
+          backgroundColor: Colors.blue,
+        ),
+        body: Row(
+          children: [
+            Navigation(constraints),
+            const Expanded(child: HomeScreenScroller()),
+          ],
+        ));
   }
 }
 
 // Need to keep this separate from HomeScreen to avoid performance issues for some reason.
-class ImagesScroller extends ConsumerWidget {
-  const ImagesScroller({super.key});
+class HomeScreenScroller extends ConsumerWidget {
+  const HomeScreenScroller({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var asyncValue = ref.watch(imagesProvider);
 
-    return Scaffold(
-        body: Container(
-      color: Colors.green,
+    return Container(
+      color: Colors.pink,
       child: CustomScrollView(slivers: [
-        SliverAppBar(
-          title: const Text('Narrow layout example'),
-          backgroundColor: Colors.blue,
-          expandedHeight: 200.0,
-          flexibleSpace: FlexibleSpaceBar(
-            background: Image.asset(
-              'assets/images/placeholder.png',
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
         SliverPadding(
             padding: const EdgeInsets.all(2.0),
             sliver: SliverAsyncBuilder<List<String>>(
@@ -66,6 +55,6 @@ class ImagesScroller extends ConsumerWidget {
                       ));
                 }))
       ]),
-    ));
+    );
   }
 }
