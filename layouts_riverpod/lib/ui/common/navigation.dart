@@ -5,20 +5,16 @@ import 'comms.dart';
 import '../../const.dart';
 
 class Navigation extends ConsumerWidget {
-  final BoxConstraints constraints;
-
-  const Navigation(
-    this.constraints, {
-    super.key,
-  });
+  final BoxConstraints size;
+  const Navigation(this.size, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var state = ref.watch(appStateProvider);
 
-    return constraints.maxWidth > Const.narrowThreshold
+    return size.maxWidth > Const.narrowThreshold
         ? NavigationRail(
-            extended: constraints.maxWidth > Const.wideThreshold,
+            extended: size.maxWidth > Const.wideThreshold,
             destinations: const [
               NavigationRailDestination(
                 icon: Icon(Icons.home),
@@ -37,7 +33,7 @@ class Navigation extends ConsumerWidget {
                 label: Text('Settings'),
               ),
             ],
-            labelType: constraints.maxWidth > Const.wideThreshold
+            labelType: size.maxWidth > Const.wideThreshold
                 ? NavigationRailLabelType.none
                 : NavigationRailLabelType.all,
             selectedIndex: state.currentRoute,
