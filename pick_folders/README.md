@@ -1,4 +1,4 @@
-# file_manager
+# pick_folders
 
 A new Flutter project.
 
