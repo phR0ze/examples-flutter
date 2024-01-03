@@ -46,44 +46,41 @@ class ImagesScroller extends ConsumerWidget {
     var asyncValue = ref.watch(imagesProvider);
 
     return Scaffold(
-        body: Container(
-      color: Colors.grey[400],
-      child: CustomScrollView(slivers: [
-        SliverAppBar(
-          title: Text(title),
-          backgroundColor: Colors.blue,
-          pinned: isNarrow(size) ? false : true,
-          expandedHeight: isNarrow(size) ? Const.appBarHeight : null,
-          flexibleSpace: isNarrow(size)
-              ? FlexibleSpaceBar(
-                  background: Image.asset(
-                    Const.imagePlaceholder,
-                    fit: BoxFit.cover,
-                  ),
-                )
-              : null,
-          actions: getZoomActions(ref),
-        ),
-        SliverPadding(
-            padding: const EdgeInsets.all(Const.pageOutsidePadding),
-            sliver: SliverAsyncBuilder<List<String>>(
-                data: asyncValue,
-                builder: (images) {
-                  return SliverGrid(
-                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: state.tileSize,
-                        mainAxisSpacing: Const.pageGridVertPadding,
-                        crossAxisSpacing: Const.pageGridHorzPadding,
-                        childAspectRatio: Const.tileAspectRatio,
-                      ),
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          return Tile('1.$index', index, images[index], images);
-                        },
-                        childCount: images.length,
-                      ));
-                }))
-      ]),
-    ));
+        body: CustomScrollView(slivers: [
+      SliverAppBar(
+        title: Text(title),
+        backgroundColor: Colors.blue,
+        pinned: isNarrow(size) ? false : true,
+        expandedHeight: isNarrow(size) ? Const.appBarHeight : null,
+        flexibleSpace: isNarrow(size)
+            ? FlexibleSpaceBar(
+                background: Image.asset(
+                  Const.imagePlaceholder,
+                  fit: BoxFit.cover,
+                ),
+              )
+            : null,
+        actions: getZoomActions(ref),
+      ),
+      SliverPadding(
+          padding: const EdgeInsets.all(Const.pageOutsidePadding),
+          sliver: SliverAsyncBuilder<List<String>>(
+              data: asyncValue,
+              builder: (images) {
+                return SliverGrid(
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: state.tileSize,
+                      mainAxisSpacing: Const.pageGridVertPadding,
+                      crossAxisSpacing: Const.pageGridHorzPadding,
+                      childAspectRatio: Const.tileAspectRatio,
+                    ),
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        return Tile('1.$index', index, images[index], images);
+                      },
+                      childCount: images.length,
+                    ));
+              }))
+    ]));
   }
 }

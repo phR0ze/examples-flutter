@@ -11,10 +11,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "layout examples with riverpod",
-      home: PageBuilder(),
+      theme: ThemeData(
+        scaffoldBackgroundColor: const Color.fromRGBO(28, 40, 55, 1),
+        primarySwatch: Colors.blue,
+        scrollbarTheme: ScrollbarThemeData(
+          thickness: MaterialStateProperty.all(10.0),
+          thumbColor: MaterialStateProperty.all(Colors.blue),
+        ),
+        textTheme: const TextTheme(
+          displaySmall: TextStyle(color: Colors.white, fontSize: 20.0),
+          displayMedium: TextStyle(color: Colors.white, fontSize: 30.0),
+        ),
+      ),
+      home: const PageBuilder(),
     );
   }
 }

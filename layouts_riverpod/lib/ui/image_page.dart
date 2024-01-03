@@ -28,7 +28,7 @@ class _ImagePageState extends State<ImagePage> {
               child: GridTile(
             header: Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Text(widget.id, style: const TextStyle(color: Colors.black, fontSize: 36.0)),
+              child: Text(widget.id, style: Theme.of(context).textTheme.displayMedium),
             ),
             child: Image.asset(
               Const.imagePlaceholder,

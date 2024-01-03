@@ -1,5 +1,6 @@
 // Build image widget
 import 'package:flutter/material.dart';
+import '../const.dart';
 import 'image_page.dart';
 
 // Image tile widget
@@ -24,26 +25,45 @@ class Tile extends StatelessWidget {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => ImagePage(id, index, image, images)));
       },
-      child: Stack(fit: StackFit.expand, clipBehavior: Clip.hardEdge, children: [
-        // Fills the entire tile space with blue
-        Container(color: Colors.blue),
+      child: SizedBox.expand(
+        child: Column(
+          children: [
+            // Use Expanded to fill all remaining space with Stack not required by SizedBox title below
+            Expanded(
+              child: Stack(fit: StackFit.loose, clipBehavior: Clip.hardEdge, children: [
+                // Fills the entire tile space with bluegrey
+                Container(color: Colors.blueGrey),
+                Image.asset(Const.imagePlaceholder, fit: BoxFit.fill),
 
-        // Draw gradient at the top reaching a third of the way down
-        const TopGradient(),
+                // Draw gradient at the top reaching a third of the way down
+                const TopGradient(),
 
-        // Now draw various badges over the grandient portion
-        Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: Text(id, style: const TextStyle(color: Colors.white)),
+                // Now draw various badges over the grandient portion
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Text(id, style: const TextStyle(color: Colors.white)),
+                ),
+
+                // Draw a favorite icon in the top right corner
+                Positioned(
+                  top: 1,
+                  right: 0,
+                  child: Transform.scale(
+                      scale: 0.8, child: const Icon(Icons.star, color: Colors.white)),
+                ),
+              ]),
+            ),
+
+            // Use SizedBox to reserve a specific height for the title.
+            // Use FittedBox to shrink the title to the available space.
+            SizedBox(
+              height: 20,
+              child: FittedBox(
+                  child: Text('title for tile', style: Theme.of(context).textTheme.displaySmall)),
+            ),
+          ],
         ),
-
-        // Draw a favorite icon in the top right corner
-        Positioned(
-          top: 1,
-          right: 0,
-          child: Transform.scale(scale: 0.8, child: const Icon(Icons.star, color: Colors.white)),
-        ),
-      ]),
+      ),
     );
   }
 }

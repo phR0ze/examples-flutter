@@ -13,7 +13,7 @@ List<Widget>? getZoomActions(WidgetRef ref) {
         padding: const EdgeInsets.fromLTRB(0, 2.0, 0, 0),
         child: Transform.scale(
           scale: 1.3,
-          child: const Icon(Icons.zoom_in, color: Colors.white70),
+          child: const Icon(Icons.zoom_in, color: Colors.black),
         ),
       ),
     ),
@@ -29,7 +29,7 @@ List<Widget>? getZoomActions(WidgetRef ref) {
           scale: 1.3,
           child: const Icon(
             Icons.zoom_out,
-            color: Colors.white70,
+            color: Colors.black,
           ),
         ),
       ),
