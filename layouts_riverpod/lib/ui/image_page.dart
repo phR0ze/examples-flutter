@@ -4,18 +4,18 @@ import 'package:layouts/ui/common/swipe_detector.dart';
 
 import '../const.dart';
 
-class ImageScreen extends StatefulWidget {
+class ImagePage extends StatefulWidget {
   String id;
   int index;
   String image;
   final List<String> images;
-  ImageScreen(this.id, this.index, this.image, this.images, {super.key});
+  ImagePage(this.id, this.index, this.image, this.images, {super.key});
 
   @override
-  State<ImageScreen> createState() => _ImageScreenState();
+  State<ImagePage> createState() => _ImagePageState();
 }
 
-class _ImageScreenState extends State<ImageScreen> {
+class _ImagePageState extends State<ImagePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

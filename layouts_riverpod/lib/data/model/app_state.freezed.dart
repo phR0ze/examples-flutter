@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$AppState {
   int get currentRoute => throw _privateConstructorUsedError;
+  double get tileSize => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AppStateCopyWith<AppState> get copyWith =>
@@ -28,7 +29,7 @@ abstract class $AppStateCopyWith<$Res> {
   factory $AppStateCopyWith(AppState value, $Res Function(AppState) then) =
       _$AppStateCopyWithImpl<$Res, AppState>;
   @useResult
-  $Res call({int currentRoute});
+  $Res call({int currentRoute, double tileSize});
 }
 
 /// @nodoc
@@ -45,12 +46,17 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
   @override
   $Res call({
     Object? currentRoute = null,
+    Object? tileSize = null,
   }) {
     return _then(_value.copyWith(
       currentRoute: null == currentRoute
           ? _value.currentRoute
           : currentRoute // ignore: cast_nullable_to_non_nullable
               as int,
+      tileSize: null == tileSize
+          ? _value.tileSize
+          : tileSize // ignore: cast_nullable_to_non_nullable
+              as double,
     ) as $Val);
   }
 }
@@ -63,7 +69,7 @@ abstract class _$$AppStateImplCopyWith<$Res>
       __$$AppStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int currentRoute});
+  $Res call({int currentRoute, double tileSize});
 }
 
 /// @nodoc
@@ -78,12 +84,17 @@ class __$$AppStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? currentRoute = null,
+    Object? tileSize = null,
   }) {
     return _then(_$AppStateImpl(
       currentRoute: null == currentRoute
           ? _value.currentRoute
           : currentRoute // ignore: cast_nullable_to_non_nullable
               as int,
+      tileSize: null == tileSize
+          ? _value.tileSize
+          : tileSize // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -91,14 +102,16 @@ class __$$AppStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$AppStateImpl implements _AppState {
-  const _$AppStateImpl({required this.currentRoute});
+  const _$AppStateImpl({required this.currentRoute, required this.tileSize});
 
   @override
   final int currentRoute;
+  @override
+  final double tileSize;
 
   @override
   String toString() {
-    return 'AppState(currentRoute: $currentRoute)';
+    return 'AppState(currentRoute: $currentRoute, tileSize: $tileSize)';
   }
 
   @override
@@ -107,11 +120,13 @@ class _$AppStateImpl implements _AppState {
         (other.runtimeType == runtimeType &&
             other is _$AppStateImpl &&
             (identical(other.currentRoute, currentRoute) ||
-                other.currentRoute == currentRoute));
+                other.currentRoute == currentRoute) &&
+            (identical(other.tileSize, tileSize) ||
+                other.tileSize == tileSize));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, currentRoute);
+  int get hashCode => Object.hash(runtimeType, currentRoute, tileSize);
 
   @JsonKey(ignore: true)
   @override
@@ -121,10 +136,14 @@ class _$AppStateImpl implements _AppState {
 }
 
 abstract class _AppState implements AppState {
-  const factory _AppState({required final int currentRoute}) = _$AppStateImpl;
+  const factory _AppState(
+      {required final int currentRoute,
+      required final double tileSize}) = _$AppStateImpl;
 
   @override
   int get currentRoute;
+  @override
+  double get tileSize;
   @override
   @JsonKey(ignore: true)
   _$$AppStateImplCopyWith<_$AppStateImpl> get copyWith =>

@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
 
 class Const {
-  // App attributes
-  static const appName = 'Image Viewer';
-  static const appVersion = '1.0.0';
-
   // App assets
   static const imagePlaceholder = 'assets/images/placeholder.png';
-
-  // App configuration
-  static const skipDirs = <String>['.git'];
-  static const imageSizeDefault = 100.0;
 
   /// AppBar hight
   static const appBarHeight = 200.0;
 
+  /// Size increment to use when zooming in/out images
+  static const tileSizeInc = 50.0;
+
+  /// Minimum tile width
+  static const tileWidthMin = 50.0;
+
   /// Default tile width
   static const tileWidthDefault = 100.0;
+
+  // Tile width to height ratio
+  static const tileAspectRatio = 0.75;
 
   // Padding around the page content
   static const pageOutsidePadding = 5.0;
 
   // Padding between grid tiles on the page
-  static const pageGridPadding = 10.0;
-
-  static const imageCacheQuality = 100;
+  static const pageGridVertPadding = 10.0;
+  static const pageGridHorzPadding = 10.0;
 
   // screen: 2560
   static const ultraWideThreshold = 1200;

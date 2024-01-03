@@ -1,10 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:layouts/const.dart';
+import 'package:layouts/providers/app_state.dart';
 import '../../providers/images.dart';
 import 'async_builder.dart';
-import '../image_tile.dart';
+import '../tile.dart';
 import '../common/navigation.dart';
+import 'zoom_actions.dart';
 
 class PageBuilder extends StatelessWidget {
   const PageBuilder({super.key});
@@ -40,11 +42,12 @@ class ImagesScroller extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final title = isNarrow(size) ? 'Narrow layout example' : 'Wide layout example';
+    var state = ref.watch(appStateProvider);
     var asyncValue = ref.watch(imagesProvider);
 
     return Scaffold(
         body: Container(
-      color: isNarrow(size) ? Colors.green : Colors.pink,
+      color: Colors.grey[400],
       child: CustomScrollView(slivers: [
         SliverAppBar(
           title: Text(title),
@@ -59,6 +62,7 @@ class ImagesScroller extends ConsumerWidget {
                   ),
                 )
               : null,
+          actions: getZoomActions(ref),
         ),
         SliverPadding(
             padding: const EdgeInsets.all(Const.pageOutsidePadding),
@@ -66,14 +70,15 @@ class ImagesScroller extends ConsumerWidget {
                 data: asyncValue,
                 builder: (images) {
                   return SliverGrid(
-                      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: Const.tileWidthDefault,
-                        mainAxisSpacing: Const.pageGridPadding,
-                        crossAxisSpacing: Const.pageGridPadding,
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: state.tileSize,
+                        mainAxisSpacing: Const.pageGridVertPadding,
+                        crossAxisSpacing: Const.pageGridHorzPadding,
+                        childAspectRatio: Const.tileAspectRatio,
                       ),
                       delegate: SliverChildBuilderDelegate(
                         (context, index) {
-                          return ImageTile('1.$index', index, images[index], images);
+                          return Tile('1.$index', index, images[index], images);
                         },
                         childCount: images.length,
                       ));
