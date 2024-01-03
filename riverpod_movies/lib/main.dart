@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
           thumbColor: MaterialStateProperty.all(Colors.blue),
         ),
         textTheme: const TextTheme(
-          displaySmall: TextStyle(color: Colors.white, fontSize: 15.0),
+          displaySmall: TextStyle(color: Colors.white, fontSize: 12.0),
           displayMedium: TextStyle(color: Colors.white, fontSize: 30.0),
         ),
       ),

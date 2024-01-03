@@ -24,52 +24,45 @@ class MediaTile extends StatelessWidget {
   Widget build(BuildContext context) {
     // Stack the poster image => top gradient => favourite badge.
     return SizedBox.expand(
-      child: Container(
-        color: Colors.green,
-        child: Column(
-          children: [
-            Expanded(
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  MediaBackgroundImage(movie.posterPath, imageWidth: tileWidth),
+      child: Column(
+        children: [
+          Expanded(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Container(color: Colors.blue),
+                MediaBackgroundImage(movie.posterPath, imageWidth: tileWidth),
 
-                  // Gradient to fade out background image so overlay badges are more visible
-                  const MediaTopGradient(),
+                // Gradient to fade out background image so overlay badges are more visible
+                const MediaTopGradient(),
 
-                  // Show the index of the tile for debugging purposes
-                  if (debugIndex != null)
-                    Positioned(
-                      left: 5,
-                      top: 5,
-                      child: Text(
-                        '$debugIndex',
-                        style: const TextStyle(color: Colors.white, fontSize: 14),
-                      ),
+                // Show the index of the tile for debugging purposes
+                if (debugIndex != null)
+                  Positioned(
+                    left: 5,
+                    top: 5,
+                    child: Text(
+                      '$debugIndex',
+                      style: const TextStyle(color: Colors.white, fontSize: 14),
                     ),
+                  ),
 
-                  // Show the favourite badge if provided
-                  if (favouriteBuilder != null)
-                    Positioned(
-                      right: 0,
-                      top: 0,
-                      child: favouriteBuilder!(context),
-                    ),
-                ],
-              ),
+                // Show the favourite badge if provided
+                if (favouriteBuilder != null)
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: favouriteBuilder!(context),
+                  ),
+              ],
             ),
-            SizedBox(
-                height: 20,
-                child: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: FittedBox(
-                      fit: BoxFit.fill,
-                      child: Text(movie.title,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.displaySmall)),
-                )),
-          ],
-        ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Text(movie.title,
+                overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.displaySmall),
+          ),
+        ],
       ),
     );
   }
@@ -110,24 +103,11 @@ class MediaBackgroundImage extends StatelessWidget {
   Widget build(BuildContext context) {
     if (imagePath != null) {
       return FadeInImage.memoryNetwork(
-        alignment: Alignment.topCenter,
+        fit: BoxFit.cover,
         placeholder: kTransparentImage,
         image: TMDB.imageUrl(imagePath!, selectPosterSize(imageWidth)),
       );
     }
     return Image.memory(kTransparentImage);
-  }
-}
-
-class TitleBar extends StatelessWidget {
-  final String title;
-  const TitleBar(this.title, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      title,
-      style: const TextStyle(color: Colors.white, fontSize: 14),
-    );
   }
 }
