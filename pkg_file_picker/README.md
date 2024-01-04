@@ -1,4 +1,4 @@
-# file_picker_overview
+# pkg_file_picker
 
 A new Flutter project.
 
