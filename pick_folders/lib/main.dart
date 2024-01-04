@@ -4,7 +4,7 @@ import 'providers/services.dart';
 import 'ui/home_page.dart';
 
 void main() {
-  initServices();
+  initGlobalServices();
 
   runApp(const ProviderScope(child: MyApp()));
 }
