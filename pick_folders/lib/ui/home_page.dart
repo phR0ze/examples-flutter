@@ -189,15 +189,22 @@ class _HomePageState extends ConsumerState<HomePage> {
                 if (paths.isEmpty) {
                   return const Text('No paths selected');
                 }
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    for (var path in paths) Text(path.name),
-                  ],
+                return ListView.separated(
+                  shrinkWrap: true,
+                  itemCount: paths.length,
+                  itemBuilder: (context, index) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('File $index: ${paths[index].name}',
+                          style: Theme.of(context).textTheme.titleMedium),
+                      Text(paths[index].path!),
+                    ],
+                  ),
+                  separatorBuilder: (context, index) => const Divider(),
                 );
               },
               loading: () => const LoadingIndicator(),
-              error: (error, stack) => const Text('error'), //showSnackBar('Error: $error'),
+              error: (error, stack) => const Text('error'),
             ),
           ],
         ),
