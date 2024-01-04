@@ -11,7 +11,6 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
-  final double fieldWidth = 400.0;
   final initDirectoryCtrl = TextEditingController();
 
   @override
@@ -31,7 +30,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           children: [
             SizedBox(
               height: 50,
-              width: fieldWidth,
+              width: 400,
               child: TextField(
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
