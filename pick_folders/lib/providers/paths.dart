@@ -8,6 +8,7 @@ part 'paths.g.dart';
 class Paths extends _$Paths {
   @override
   Future<List<PlatformFile>> build() async {
+    // There won't be any initial paths as the user needs to set these
     return [];
   }
 
