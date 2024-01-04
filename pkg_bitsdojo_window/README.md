@@ -1,4 +1,4 @@
-# bitsdojo_windowing
+# pkg_bitsdojo_window
 
 A new Flutter project.
 
