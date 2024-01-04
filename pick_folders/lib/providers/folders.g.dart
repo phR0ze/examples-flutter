@@ -1,24 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'paths.dart';
+part of 'folders.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$pathsHash() => r'048d6797ec826a45a9bafc9dbae63aa8ebdb8172';
+String _$foldersHash() => r'53577d7fc027c1942dc71e29fec4481a1a07b380';
 
-/// See also [Paths].
-@ProviderFor(Paths)
-final pathsProvider = AsyncNotifierProvider<Paths, List<PlatformFile>>.internal(
-  Paths.new,
-  name: r'pathsProvider',
+/// See also [Folders].
+@ProviderFor(Folders)
+final foldersProvider = AsyncNotifierProvider<Folders, List<String>>.internal(
+  Folders.new,
+  name: r'foldersProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$pathsHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$foldersHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$Paths = AsyncNotifier<List<PlatformFile>>;
+typedef _$Folders = AsyncNotifier<List<String>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
