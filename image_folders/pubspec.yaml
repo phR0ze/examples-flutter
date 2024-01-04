@@ -1,4 +1,4 @@
-name: codelab_first_app
+name: image_folders
 description: "A new Flutter project."
 publish_to: 'none'
 version: 1.0.0+1
@@ -9,13 +9,10 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  provider: ^6.1.1
-  english_words: ^4.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   flutter_lints: ^2.0.0
 
 flutter:
