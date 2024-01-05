@@ -1,64 +1,68 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'folder_page.dart';
-import 'loading.dart';
-import '../providers/folders.dart';
+import 'zoom_actions.dart';
+import 'entry_tile.dart';
+import '../../const.dart';
+import '../model/exports.dart' as model;
+import '../providers/exports.dart';
+import 'sliver_async_builder.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final asyncValue = ref.watch(foldersProvider);
+    final state = ref.watch(appStateProvider);
+    final entries = ref.watch(entriesProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Image folder example', style: Theme.of(context).textTheme.titleLarge),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10, top: 10),
-              child: SizedBox(
-                height: 40,
-                width: 130,
-                child: FloatingActionButton.extended(
-                  onPressed: () => ref.read(foldersProvider.notifier).getFolder(),
-                  label: const Text('Select folder'),
-                  icon: const Icon(Icons.folder),
-                ),
-              ),
-            ),
-
-            const Divider(),
-
-            // File selection results
-            switch (asyncValue) {
-              AsyncLoading() => const LoadingIndicator(),
-              AsyncData(:final value) => ListView.separated(
-                  shrinkWrap: true,
-                  itemCount: value.length,
-                  itemBuilder: (context, index) => GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      Text('Folder $index', style: Theme.of(context).textTheme.titleMedium),
-                      Text(value[index], style: Theme.of(context).textTheme.bodyMedium),
-                    ]),
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => FolderPage(path: value[index])));
-                    },
-                  ),
-                  separatorBuilder: (context, index) => const Divider(),
-                ),
-              _ => const Text(''),
-            },
-          ],
-        ),
+      body: Scrollbar(
+        child: CustomScrollView(slivers: [
+          SliverAppBar(
+              snap: true,
+              floating: true,
+              backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+              title: Text('Image folder example', style: Theme.of(context).textTheme.titleLarge),
+              actions: [
+                    IconButton(
+                      onPressed: () => ref.read(foldersProvider.notifier).getFolder(),
+                      icon: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 2.0, 0, 0),
+                        child: Transform.scale(
+                          scale: 1.3,
+                          child: const Icon(Icons.add, color: Colors.black),
+                        ),
+                      ),
+                    ),
+                  ] +
+                  getZoomActions(ref, topLevel: true)),
+          SliverPadding(
+              // Page content external padding
+              padding: const EdgeInsets.all(Const.pageOutsidePadding),
+              sliver: SliverAsyncBuilder<List<model.Entry>>(
+                  data: entries,
+                  builder: (entries) {
+                    return SliverGrid(
+                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: state.topLevelTileSize,
+                            mainAxisSpacing: Const.pageGridPadding,
+                            crossAxisSpacing: Const.pageGridPadding,
+                            childAspectRatio: Const.tileAspectRatio),
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            return GestureDetector(
+                              child: EntryTile(entries[index], index: index),
+                              onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => FolderPage(entries[index]))),
+                            );
+                          },
+                          childCount: entries.length,
+                        ));
+                  })),
+        ]),
       ),
     );
   }

@@ -18,12 +18,17 @@ class MyApp extends StatelessWidget {
       // Setup the global snackbar messenger
       scaffoldMessengerKey: locate<GlobalKey<ScaffoldMessengerState>>(),
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
 
       // Setup the app theme
       themeMode: ThemeMode.dark,
       darkTheme: ThemeData(
         useMaterial3: true,
         brightness: Brightness.dark,
+        scrollbarTheme: ScrollbarThemeData(
+          thickness: MaterialStateProperty.all(10.0),
+          thumbColor: MaterialStateProperty.all(Colors.blue),
+        ),
         snackBarTheme: const SnackBarThemeData(
           backgroundColor: Colors.deepPurple,
         ),

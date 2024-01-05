@@ -1,24 +1,25 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../model/entry.dart';
-import 'folders.dart';
+import '../model/exports.dart' as model;
+import 'exports.dart';
 
 part 'entries.g.dart';
 
 @Riverpod(keepAlive: true)
-Future<List<Entry>> entries(EntriesRef ref) async {
+Future<List<model.Entry>> entries(EntriesRef ref) async {
+  var entries = <model.Entry>[];
+
   // Wait for the folders to be loaded
   final topLevel = await ref.watch(foldersProvider.future);
 
-  var recurse = () {
-    for (final folder in topLevel) {
-      print(folder);
-    }
-  };
-
   // Now load the entries from disk as a list of Entry objects
-  for (final folder in topLevel) {
-    print(folder);
+  recurseOnFolderStructure(folder) {
+    var entry = model.Folder(folder);
+    entries.add(entry);
   }
 
-  return [];
+  for (final folder in topLevel) {
+    recurseOnFolderStructure(folder);
+  }
+
+  return entries;
 }

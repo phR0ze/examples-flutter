@@ -1,62 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:path/path.dart' as path;
+import 'package:image_folders/ui/zoom_actions.dart';
+import '../providers/exports.dart';
+import 'entry_tile.dart';
 import '../../const.dart';
-import '../providers/entries.dart';
+import '../model/exports.dart' as model;
+import 'sliver_async_builder.dart';
 
-class FolderPage extends ConsumerStatefulWidget {
-  final String path;
-  const FolderPage({required this.path, super.key});
-
-  @override
-  ConsumerState<FolderPage> createState() => _FolderPageState();
-}
-
-class _FolderPageState extends ConsumerState<FolderPage> {
-  final scrollController = ScrollController();
+class FolderPage extends ConsumerWidget {
+  final model.Entry entry;
+  const FolderPage(this.entry, {super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(appStateProvider);
     final entries = ref.watch(entriesProvider);
 
     return Scaffold(
       body: Scrollbar(
-        controller: scrollController,
-        child: CustomScrollView(controller: scrollController, slivers: [
+        child: CustomScrollView(slivers: [
           SliverAppBar(
             snap: true,
             floating: true,
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-            title: Text(path.basename(widget.path), style: Theme.of(context).textTheme.titleLarge),
+            title: Text(entry.name, style: Theme.of(context).textTheme.titleLarge),
+            actions: getZoomActions(ref),
           ),
-          const SliverPadding(
-            // Page content external padding
-            padding: EdgeInsets.all(Const.pageOutsidePadding),
-            sliver: SliverToBoxAdapter(child: Text('foobar')),
-            // SliverAsyncBuilder(
-            //     data: widget.asyncValue,
-            //     builder: (T media) {
-            //       final tileWidth =
-            //           configs.value != null ? configs.value!.tileSize : Const.tileWidthDefault;
-            //       return SliverGrid(
-            //           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            //               maxCrossAxisExtent: tileWidth,
-            //               mainAxisSpacing: Const.pageGridPadding,
-            //               crossAxisSpacing: Const.pageGridPadding,
-            //               // Make the standard poster image aspect ratio 3:4
-            //               childAspectRatio: Const.tileAspectRatio),
-            //           delegate: SliverChildBuilderDelegate(
-            //             (context, index) {
-            //               if (index == media.length - 5) {
-            //                 //widget.onNextPageRequested?.call();
-            //               }
-            //               return ItemTile(
-            //                   title: 'title', tileWidth: tileWidth, debugIndex: index);
-            //             },
-            //             childCount: media.length,
-            //           ));
-            //     })
-          ),
+          SliverPadding(
+              // Page content external padding
+              padding: const EdgeInsets.all(Const.pageOutsidePadding),
+              sliver: SliverAsyncBuilder<List<model.Entry>>(
+                  data: entries,
+                  builder: (entries) {
+                    return SliverGrid(
+                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: state.tileSize,
+                            mainAxisSpacing: Const.pageGridPadding,
+                            crossAxisSpacing: Const.pageGridPadding,
+                            childAspectRatio: Const.tileAspectRatio),
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            return EntryTile(entries[index], index: index);
+                          },
+                          childCount: entries.length,
+                        ));
+                  })),
         ]),
       ),
     );

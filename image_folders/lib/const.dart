@@ -12,7 +12,7 @@ class Const {
   static const tileWidthDefault = 100.0;
 
   // Tile width to height ratio
-  static const tileAspectRatio = 0.60;
+  static const tileAspectRatio = 0.8;
 
   // Padding around the page content
   static const pageOutsidePadding = 5.0;

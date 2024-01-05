@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import '../../const.dart';
+import '../model/exports.dart' as model;
 
 class EntryTile extends StatelessWidget {
-  final String? title;
-  final int? debugIndex;
-  final double tileWidth;
-  final String? bgImagePath;
+  final model.Entry entry;
+  final int? index;
 
-  const EntryTile({
+  const EntryTile(
+    this.entry, {
     super.key,
-    this.title,
-    this.debugIndex,
-    this.bgImagePath,
-    this.tileWidth = Const.tileWidthDefault,
+    this.index,
   });
 
   @override
@@ -24,31 +21,34 @@ class EntryTile extends StatelessWidget {
             child: Stack(
               fit: StackFit.expand,
               children: [
-                Container(color: Colors.blue),
-                BackgroundImage(bgImagePath, imageWidth: tileWidth),
+                Container(
+                    decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(Const.assetImagePlaceholder),
+                    fit: BoxFit.cover,
+                  ),
+                )),
 
                 // Gradient to fade out background image so overlay badges are more visible
                 const TopGradient(),
 
                 // Show the index of the tile for debugging purposes
-                if (debugIndex != null)
+                if (index != null)
                   Positioned(
                     left: 5,
                     top: 5,
                     child: Text(
-                      '$debugIndex',
+                      '$index',
                       style: const TextStyle(color: Colors.white, fontSize: 14),
                     ),
                   ),
               ],
             ),
           ),
-          if (title != null)
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Text(title!,
-                  overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.titleSmall),
-            ),
+
+          // Column allows for placing title below the image
+          Text(entry.name,
+              overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.titleSmall),
         ],
       ),
     );
@@ -78,23 +78,5 @@ class TopGradient extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class BackgroundImage extends StatelessWidget {
-  final String? imagePath;
-  final double imageWidth;
-  const BackgroundImage(this.imagePath, {this.imageWidth = Const.tileWidthDefault, super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    if (imagePath != null) {
-      return FadeInImage.assetNetwork(
-        fit: BoxFit.cover,
-        placeholder: Const.assetImagePlaceholder,
-        image: imagePath!,
-      );
-    }
-    return Image.asset(Const.assetImagePlaceholder);
   }
 }
