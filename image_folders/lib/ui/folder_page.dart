@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart' as path;
 import '../../const.dart';
+import '../providers/entries.dart';
 
 class FolderPage extends ConsumerStatefulWidget {
   final String path;
@@ -12,14 +13,16 @@ class FolderPage extends ConsumerStatefulWidget {
 }
 
 class _FolderPageState extends ConsumerState<FolderPage> {
-  final _scrollController = ScrollController();
+  final scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
+    final entries = ref.watch(entriesProvider);
+
     return Scaffold(
       body: Scrollbar(
-        controller: _scrollController,
-        child: CustomScrollView(controller: _scrollController, slivers: [
+        controller: scrollController,
+        child: CustomScrollView(controller: scrollController, slivers: [
           SliverAppBar(
             snap: true,
             floating: true,
