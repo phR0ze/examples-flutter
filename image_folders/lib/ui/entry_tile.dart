@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import '../../const.dart';
 
-class ItemTile extends StatelessWidget {
+class EntryTile extends StatelessWidget {
   final String? title;
   final int? debugIndex;
   final double tileWidth;
   final String? bgImagePath;
 
-  const ItemTile({
+  const EntryTile({
     super.key,
     this.title,
     this.debugIndex,
