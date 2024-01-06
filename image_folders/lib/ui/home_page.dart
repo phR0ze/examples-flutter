@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'file_page.dart';
-import 'folder_page.dart';
 import 'zoom_actions.dart';
 import 'entry_tile.dart';
 import '../../const.dart';
