@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'entry.dart';
-import 'file.dart';
+import 'file_entry.dart';
 
-class Folder extends Entry {
+class FolderEntry extends Entry {
   List<Entry> entries = [];
 
-  Folder(String path) : super(path);
+  FolderEntry(String path) : super(path);
 
   /// Returns true as this is a folder
   @override
@@ -13,7 +13,7 @@ class Folder extends Entry {
 
   /// Add a file to this folder
   void addFile(FileSystemEntity file) {
-    entries.add(File(file.path));
+    entries.add(FileEntry(file.path));
   }
 
   /// Add an entry to this folder
@@ -23,7 +23,7 @@ class Folder extends Entry {
 
   /// Add folder to this folder
   void addFolder(FileSystemEntity folder) {
-    entries.add(Folder(folder.path));
+    entries.add(FolderEntry(folder.path));
   }
 
   /// Get the number of entries in the root of this folder
@@ -35,7 +35,7 @@ class Folder extends Entry {
     var count = 0;
     for (final entry in entries) {
       if (entry.isFolder) {
-        count += (entry as Folder).count;
+        count += (entry as FolderEntry).count;
       } else {
         count++;
       }
@@ -45,6 +45,6 @@ class Folder extends Entry {
 
   @override
   String toString() {
-    return 'Folder(path: $path, entries: $entries)';
+    return 'FolderEntry(path: $path, entries: $entries)';
   }
 }

@@ -15,13 +15,13 @@ class Entries extends _$Entries {
     final topFolders = await ref.watch(topFoldersProvider.future);
 
     // Now load the entries from disk as a list of Entry objects
-    recurseOnFolder(model.Folder folder) async {
+    recurseOnFolder(model.FolderEntry folder) async {
       // TODO: stream files
       for (final x in await Directory(folder.path).list().toList()) {
         if (x is File) {
           folder.addFile(x);
         } else if (x is Directory) {
-          var subFolder = model.Folder(x.path);
+          var subFolder = model.FolderEntry(x.path);
           await recurseOnFolder(subFolder);
           folder.add(subFolder);
         }
@@ -29,11 +29,23 @@ class Entries extends _$Entries {
     }
 
     for (final topFolder in topFolders) {
-      final folder = model.Folder(topFolder);
+      // Skip folders that already exist
+      if (state.value != null) {
+        final entry =
+            state.value!.firstWhere((x) => x.path == topFolder, orElse: () => model.NoneEntry());
+        if (!entry.isNone) {
+          entries.add(entry);
+
+          // Incrementally notifies the UI of the new folder
+          state = AsyncData(entries);
+          continue;
+        }
+      }
+
+      // Load the new folder and incrementally notify out
+      final folder = model.FolderEntry(topFolder);
       await recurseOnFolder(folder);
       entries.add(folder);
-
-      // Incrementally notifies the UI of the new folder
       state = AsyncData(entries);
     }
 

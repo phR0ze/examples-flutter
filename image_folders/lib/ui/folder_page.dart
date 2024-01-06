@@ -7,7 +7,7 @@ import '../../const.dart';
 import '../model/exports.dart' as model;
 
 class FolderPage extends ConsumerStatefulWidget {
-  final model.Folder folder;
+  final model.FolderEntry folder;
   const FolderPage(this.folder, {super.key});
 
   @override

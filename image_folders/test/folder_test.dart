@@ -4,7 +4,7 @@ import 'package:test/test.dart';
 
 void main() {
   test('Test config read/write', () async {
-    var folder = model.Folder('./linux');
+    var folder = model.FolderEntry('./linux');
     var files = await Directory(folder.path).list().toList();
     for (final x in files) {
       if (x is File) {
@@ -12,7 +12,7 @@ void main() {
         folder.addFile(x);
       } else if (x is Directory) {
         print('Adding folder: ${x.path}');
-        var subFolder = model.Folder(x.path);
+        var subFolder = model.FolderEntry(x.path);
         folder.add(subFolder);
       }
     }

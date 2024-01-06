@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../model/exports.dart' as model;
 
 class FilePage extends ConsumerWidget {
-  final model.File file;
+  final model.FileEntry file;
   const FilePage(this.file, {super.key});
 
   @override

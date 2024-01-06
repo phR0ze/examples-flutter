@@ -3,9 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'zoom_actions.dart';
 import 'entry_tile.dart';
 import '../../const.dart';
-import '../model/exports.dart' as model;
 import '../providers/exports.dart';
-import 'sliver_async_builder.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -47,22 +45,26 @@ class _HomePageState extends ConsumerState<HomePage> {
           SliverPadding(
               // Page content external padding
               padding: const EdgeInsets.all(Const.pageOutsidePadding),
-              sliver: SliverAsyncBuilder<List<model.Entry>>(
-                  data: entries,
-                  builder: (entries) {
-                    return SliverGrid(
-                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: state.topTileSize,
-                            mainAxisSpacing: Const.pageGridPadding,
-                            crossAxisSpacing: Const.pageGridPadding,
-                            childAspectRatio: Const.tileAspectRatio),
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                            return EntryTile(entries[index]);
-                          },
-                          childCount: entries.length,
-                        ));
-                  })),
+              sliver: entries.when(
+                skipError: true,
+                loading: () =>
+                    const SliverToBoxAdapter(child: Center(child: CircularProgressIndicator())),
+                data: (entries) {
+                  return SliverGrid(
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: state.topTileSize,
+                          mainAxisSpacing: Const.pageGridPadding,
+                          crossAxisSpacing: Const.pageGridPadding,
+                          childAspectRatio: Const.tileAspectRatio),
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          return EntryTile(entries[index]);
+                        },
+                        childCount: entries.length,
+                      ));
+                },
+                error: (error, trace) => Text(''),
+              )),
         ]),
       ),
     );

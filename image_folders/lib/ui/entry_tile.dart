@@ -37,7 +37,7 @@ class EntryTile extends StatelessWidget {
                   const TopGradient(),
 
                   // Show the index of the tile for debugging purposes
-                  if (entry is model.Folder)
+                  if (entry is model.FolderEntry)
                     Positioned(
                       top: 5,
                       right: 5,
@@ -72,9 +72,9 @@ class EntryTile extends StatelessWidget {
         MaterialPageRoute(
           builder: (context) {
             if (entry.isFolder) {
-              return FolderPage(entry as model.Folder);
+              return FolderPage(entry as model.FolderEntry);
             }
-            return FilePage(entry as model.File);
+            return FilePage(entry as model.FileEntry);
           },
         ),
       ),
