@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'file_page.dart';
 import 'folder_page.dart';
 import 'zoom_actions.dart';
 import 'entry_tile.dart';
@@ -26,7 +27,7 @@ class HomePage extends ConsumerWidget {
               title: Text('Image folder example', style: Theme.of(context).textTheme.titleLarge),
               actions: [
                     IconButton(
-                      onPressed: () => ref.read(foldersProvider.notifier).getFolder(),
+                      onPressed: () => ref.read(topFoldersProvider.notifier).addFolder(),
                       icon: Padding(
                         padding: const EdgeInsets.fromLTRB(0, 2.0, 0, 0),
                         child: Transform.scale(
@@ -45,18 +46,26 @@ class HomePage extends ConsumerWidget {
                   builder: (entries) {
                     return SliverGrid(
                         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: state.topLevelTileSize,
+                            maxCrossAxisExtent: state.topTileSize,
                             mainAxisSpacing: Const.pageGridPadding,
                             crossAxisSpacing: Const.pageGridPadding,
                             childAspectRatio: Const.tileAspectRatio),
                         delegate: SliverChildBuilderDelegate(
                           (context, index) {
                             return GestureDetector(
+                              behavior: HitTestBehavior.opaque,
                               child: EntryTile(entries[index], index: index),
                               onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => FolderPage(entries[index]))),
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    if (entries[index].isFolder) {
+                                      return FolderPage(entries[index] as model.Folder);
+                                    }
+                                    return FilePage(entries[index] as model.File);
+                                  },
+                                ),
+                              ),
                             );
                           },
                           childCount: entries.length,

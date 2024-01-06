@@ -16,10 +16,13 @@ class SliverAsyncBuilder<T> extends StatelessWidget {
         data: builder,
         loading: () => const SliverToBoxAdapter(child: Center(child: CircularProgressIndicator())),
         error: (error, stackTrace) => SliverToBoxAdapter(
-              child: Center(
-                child: Text(
-                  error.toString(),
-                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.red),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: Center(
+                  child: Text(
+                    error.toString(),
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.red),
+                  ),
                 ),
               ),
             ));

@@ -6,7 +6,7 @@ part of 'entries.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$entriesHash() => r'3941cad7965ac88bca34907e2751a333e72cc95d';
+String _$entriesHash() => r'ecef9099b1d36fbe77050a578f68bc85e8e86f3e';
 
 /// See also [entries].
 @ProviderFor(entries)

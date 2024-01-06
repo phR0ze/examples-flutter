@@ -1,24 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'folders.dart';
+part of 'top_folders.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$foldersHash() => r'fe359cbf01d98ee3454cc05955b6044d72f3f6b4';
+String _$topFoldersHash() => r'3079e1e29d9b130a6ead3745c9cbd4a447cceb6d';
 
-/// See also [Folders].
-@ProviderFor(Folders)
-final foldersProvider = AsyncNotifierProvider<Folders, List<String>>.internal(
-  Folders.new,
-  name: r'foldersProvider',
+/// See also [TopFolders].
+@ProviderFor(TopFolders)
+final topFoldersProvider =
+    AsyncNotifierProvider<TopFolders, List<String>>.internal(
+  TopFolders.new,
+  name: r'topFoldersProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$foldersHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$topFoldersHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$Folders = AsyncNotifier<List<String>>;
+typedef _$TopFolders = AsyncNotifier<List<String>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -7,9 +7,9 @@ import '../../const.dart';
 import '../model/exports.dart' as model;
 import 'sliver_async_builder.dart';
 
-class FolderPage extends ConsumerWidget {
-  final model.Folder folder;
-  const FolderPage(this.folder, {super.key});
+class FilePage extends ConsumerWidget {
+  final model.File file;
+  const FilePage(this.file, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,7 +23,7 @@ class FolderPage extends ConsumerWidget {
             snap: true,
             floating: true,
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-            title: Text('Folder: ${folder.name}', style: Theme.of(context).textTheme.titleLarge),
+            title: Text('File: ${file.name}', style: Theme.of(context).textTheme.titleLarge),
             actions: getZoomActions(ref),
           ),
           SliverPadding(

@@ -7,9 +7,9 @@ part 'app_state.freezed.dart';
 class AppState with _$AppState {
   const factory AppState(
       {required int currentRoute,
-      required double tileSize,
-      required double topLevelTileSize}) = _AppState;
+      required double subTileSize,
+      required double topTileSize}) = _AppState;
 
   static AppState initial() => const AppState(
-      currentRoute: 0, tileSize: Const.tileWidthDefault, topLevelTileSize: Const.tileWidthDefault);
+      currentRoute: 0, subTileSize: Const.tileWidthDefault, topTileSize: Const.tileWidthDefault);
 }

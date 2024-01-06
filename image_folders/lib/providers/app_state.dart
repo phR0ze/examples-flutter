@@ -19,26 +19,26 @@ class AppState extends _$AppState {
   }
 
   /// Zoom in on the tile size and save it to the database
-  void zoomInTile() {
-    state = state.copyWith(tileSize: state.tileSize + Const.tileSizeInc);
+  void zoomInSubTile() {
+    state = state.copyWith(subTileSize: state.subTileSize + Const.tileSizeInc);
   }
 
   /// Zoom out on the tile size and save it to the database
-  void zoomOutTile() {
-    if (state.tileSize - Const.tileSizeInc > Const.tileWidthMin) {
-      state = state.copyWith(tileSize: state.tileSize - Const.tileSizeInc);
+  void zoomOutSubTile() {
+    if (state.subTileSize - Const.tileSizeInc > Const.tileWidthMin) {
+      state = state.copyWith(subTileSize: state.subTileSize - Const.tileSizeInc);
     }
   }
 
   /// Zoom in on the tile size and save it to the database
-  void zoomInTopLevelTile() {
-    state = state.copyWith(topLevelTileSize: state.topLevelTileSize + Const.tileSizeInc);
+  void zoomInTopTile() {
+    state = state.copyWith(topTileSize: state.topTileSize + Const.tileSizeInc);
   }
 
   /// Zoom out on the tile size and save it to the database
-  void zoomOutTopLevelTile() {
-    if (state.topLevelTileSize - Const.tileSizeInc > Const.tileWidthMin) {
-      state = state.copyWith(topLevelTileSize: state.topLevelTileSize - Const.tileSizeInc);
+  void zoomOutTopTile() {
+    if (state.topTileSize - Const.tileSizeInc > Const.tileWidthMin) {
+      state = state.copyWith(topTileSize: state.topTileSize - Const.tileSizeInc);
     }
   }
 }

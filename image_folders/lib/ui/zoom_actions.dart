@@ -8,9 +8,9 @@ List<IconButton> getZoomActions(WidgetRef ref, {bool topLevel = false}) {
     IconButton(
       onPressed: () {
         if (topLevel) {
-          ref.read(appStateProvider.notifier).zoomInTopLevelTile();
+          ref.read(appStateProvider.notifier).zoomInTopTile();
         } else {
-          ref.read(appStateProvider.notifier).zoomInTile();
+          ref.read(appStateProvider.notifier).zoomInSubTile();
         }
       },
       icon: Padding(
@@ -26,9 +26,9 @@ List<IconButton> getZoomActions(WidgetRef ref, {bool topLevel = false}) {
     IconButton(
       onPressed: () {
         if (topLevel) {
-          ref.read(appStateProvider.notifier).zoomOutTopLevelTile();
+          ref.read(appStateProvider.notifier).zoomOutTopTile();
         } else {
-          ref.read(appStateProvider.notifier).zoomOutTile();
+          ref.read(appStateProvider.notifier).zoomOutSubTile();
         }
       },
       icon: Padding(
