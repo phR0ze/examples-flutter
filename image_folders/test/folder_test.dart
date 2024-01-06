@@ -10,11 +10,9 @@ void main() {
       if (x is File) {
         print('Adding file: ${x.path}');
         folder.addFile(x);
-        print('after: ${folder.entries}');
       } else if (x is Directory) {
         print('Adding folder: ${x.path}');
         var subFolder = model.Folder(x.path);
-        //await recurseOnFolder(subFolder);
         folder.add(subFolder);
       }
     }

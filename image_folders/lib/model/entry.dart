@@ -14,6 +14,15 @@ abstract class Entry {
   /// Returns true as this is a folder
   bool get isFolder => false;
 
+  /// Get the total number of entries in this folder and all sub folders
+  int get count {
+    if (this is File) {
+      return 1;
+    } else {
+      return (this as Folder).count;
+    }
+  }
+
   @override
   String toString() {
     if (this is File) {

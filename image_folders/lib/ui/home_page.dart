@@ -54,7 +54,7 @@ class HomePage extends ConsumerWidget {
                           (context, index) {
                             return GestureDetector(
                               behavior: HitTestBehavior.opaque,
-                              child: EntryTile(entries[index], index: index),
+                              child: EntryTile(entries[index]),
                               onTap: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(

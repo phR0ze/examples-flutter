@@ -5,47 +5,50 @@ import '../providers/exports.dart';
 import 'entry_tile.dart';
 import '../../const.dart';
 import '../model/exports.dart' as model;
-import 'sliver_async_builder.dart';
 
-class FolderPage extends ConsumerWidget {
+class FolderPage extends ConsumerStatefulWidget {
   final model.Folder folder;
   const FolderPage(this.folder, {super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<FolderPage> createState() => _FolderPageState();
+}
+
+class _FolderPageState extends ConsumerState<FolderPage> {
+  final scrollController = ScrollController();
+
+  @override
+  Widget build(BuildContext context) {
     final state = ref.watch(appStateProvider);
-    final entries = ref.watch(entriesProvider);
 
     return Scaffold(
       body: Scrollbar(
-        child: CustomScrollView(slivers: [
+        controller: scrollController,
+        child: CustomScrollView(controller: scrollController, slivers: [
           SliverAppBar(
             snap: true,
             floating: true,
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-            title: Text('${folder.name} (${folder.totalEntries})',
+            title: Text('${widget.folder.name} (${widget.folder.count})',
                 style: Theme.of(context).textTheme.titleLarge),
             actions: getZoomActions(ref),
           ),
           SliverPadding(
-              // Page content external padding
-              padding: const EdgeInsets.all(Const.pageOutsidePadding),
-              sliver: SliverAsyncBuilder<List<model.Entry>>(
-                  data: entries,
-                  builder: (entries) {
-                    return SliverGrid(
-                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: state.subTileSize,
-                            mainAxisSpacing: Const.pageGridPadding,
-                            crossAxisSpacing: Const.pageGridPadding,
-                            childAspectRatio: Const.tileAspectRatio),
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                            return EntryTile(entries[index], index: index);
-                          },
-                          childCount: entries.length,
-                        ));
-                  })),
+            // Page content external padding
+            padding: const EdgeInsets.all(Const.pageOutsidePadding),
+            sliver: SliverGrid(
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: state.subTileSize,
+                    mainAxisSpacing: Const.pageGridPadding,
+                    crossAxisSpacing: Const.pageGridPadding,
+                    childAspectRatio: Const.tileAspectRatio),
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    return EntryTile(widget.folder.entries[index], index: index);
+                  },
+                  childCount: widget.folder.length,
+                )),
+          ),
         ]),
       ),
     );

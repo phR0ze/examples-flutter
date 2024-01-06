@@ -33,6 +33,17 @@ class EntryTile extends StatelessWidget {
                 const TopGradient(),
 
                 // Show the index of the tile for debugging purposes
+                if (entry is model.Folder)
+                  Positioned(
+                    top: 5,
+                    right: 5,
+                    child: Text(
+                      '(${entry.count})',
+                      style: const TextStyle(color: Colors.white, fontSize: 14),
+                    ),
+                  ),
+
+                // Show the index of the tile for debugging purposes
                 if (index != null)
                   Positioned(
                     left: 5,

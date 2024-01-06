@@ -26,12 +26,16 @@ class Folder extends Entry {
     entries.add(Folder(folder.path));
   }
 
-  /// Get recursive total entry count for this folder
-  int get totalEntries {
+  /// Get the number of entries in the root of this folder
+  int get length => entries.length;
+
+  /// Get the total number of entries in this folder and all sub folders
+  @override
+  int get count {
     var count = 0;
     for (final entry in entries) {
       if (entry.isFolder) {
-        count += (entry as Folder).totalEntries;
+        count += (entry as Folder).count;
       } else {
         count++;
       }
