@@ -44,7 +44,7 @@ class _FolderPageState extends ConsumerState<FolderPage> {
                     childAspectRatio: Const.tileAspectRatio),
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
-                    return EntryTile(widget.folder.entries[index], index: index);
+                    return EntryTile(widget.folder.entries[index]);
                   },
                   childCount: widget.folder.length,
                 )),

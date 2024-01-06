@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../const.dart';
 import '../model/exports.dart' as model;
+import 'file_page.dart';
+import 'folder_page.dart';
 
 class EntryTile extends StatelessWidget {
   final model.Entry entry;
@@ -14,53 +16,67 @@ class EntryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.expand(
-      child: Column(
-        children: [
-          Expanded(
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                Container(
-                    decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(Const.assetImagePlaceholder),
-                    fit: BoxFit.cover,
-                  ),
-                )),
-
-                // Gradient to fade out background image so overlay badges are more visible
-                const TopGradient(),
-
-                // Show the index of the tile for debugging purposes
-                if (entry is model.Folder)
-                  Positioned(
-                    top: 5,
-                    right: 5,
-                    child: Text(
-                      '(${entry.count})',
-                      style: const TextStyle(color: Colors.white, fontSize: 14),
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      child: SizedBox.expand(
+        child: Column(
+          children: [
+            Expanded(
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Container(
+                      decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(Const.assetImagePlaceholder),
+                      fit: BoxFit.cover,
                     ),
-                  ),
+                  )),
 
-                // Show the index of the tile for debugging purposes
-                if (index != null)
-                  Positioned(
-                    left: 5,
-                    top: 5,
-                    child: Text(
-                      '$index',
-                      style: const TextStyle(color: Colors.white, fontSize: 14),
+                  // Gradient to fade out background image so overlay badges are more visible
+                  const TopGradient(),
+
+                  // Show the index of the tile for debugging purposes
+                  if (entry is model.Folder)
+                    Positioned(
+                      top: 5,
+                      right: 5,
+                      child: Text(
+                        '(${entry.count})',
+                        style: const TextStyle(color: Colors.white, fontSize: 14),
+                      ),
                     ),
-                  ),
-              ],
+
+                  // Show the index of the tile for debugging purposes
+                  if (index != null)
+                    Positioned(
+                      left: 5,
+                      top: 5,
+                      child: Text(
+                        '$index',
+                        style: const TextStyle(color: Colors.white, fontSize: 14),
+                      ),
+                    ),
+                ],
+              ),
             ),
-          ),
 
-          // Column allows for placing title below the image
-          Text(entry.name,
-              overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.titleSmall),
-        ],
+            // Column allows for placing title below the image
+            Text(entry.name,
+                overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.titleSmall),
+          ],
+        ),
+      ),
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            if (entry.isFolder) {
+              return FolderPage(entry as model.Folder);
+            }
+            return FilePage(entry as model.File);
+          },
+        ),
       ),
     );
   }

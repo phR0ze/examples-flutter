@@ -9,17 +9,25 @@ import '../model/exports.dart' as model;
 import '../providers/exports.dart';
 import 'sliver_async_builder.dart';
 
-class HomePage extends ConsumerWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends ConsumerState<HomePage> {
+  final scrollController = ScrollController();
+
+  @override
+  Widget build(BuildContext context) {
     final state = ref.watch(appStateProvider);
     final entries = ref.watch(entriesProvider);
 
     return Scaffold(
       body: Scrollbar(
-        child: CustomScrollView(slivers: [
+        controller: scrollController,
+        child: CustomScrollView(controller: scrollController, slivers: [
           SliverAppBar(
               snap: true,
               floating: true,
@@ -52,21 +60,7 @@ class HomePage extends ConsumerWidget {
                             childAspectRatio: Const.tileAspectRatio),
                         delegate: SliverChildBuilderDelegate(
                           (context, index) {
-                            return GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              child: EntryTile(entries[index]),
-                              onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    if (entries[index].isFolder) {
-                                      return FolderPage(entries[index] as model.Folder);
-                                    }
-                                    return FilePage(entries[index] as model.File);
-                                  },
-                                ),
-                              ),
-                            );
+                            return EntryTile(entries[index]);
                           },
                           childCount: entries.length,
                         ));

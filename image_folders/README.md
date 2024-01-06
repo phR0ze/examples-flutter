@@ -5,3 +5,4 @@ and then display them as a thumbnail gallery.
 ## Backlog
 * [ ] Read a folder and select all files and folders within that folder
 * [ ] Display all files and folders as thumbnails
+* [ ] Don't reload a directory if it is already loaded
