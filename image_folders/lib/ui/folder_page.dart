@@ -23,7 +23,8 @@ class FolderPage extends ConsumerWidget {
             snap: true,
             floating: true,
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-            title: Text('Folder: ${folder.name}', style: Theme.of(context).textTheme.titleLarge),
+            title: Text('${folder.name} (${folder.totalEntries})',
+                style: Theme.of(context).textTheme.titleLarge),
             actions: getZoomActions(ref),
           ),
           SliverPadding(
