@@ -8,3 +8,4 @@ and then display them as as thumbnails
 * [X] Show a loading indicator as next tile until its loaded
 * [X] Don't reload a directory if it is already loaded
 * [X] Display all images as thumbnails
+* [X] Display full screen image

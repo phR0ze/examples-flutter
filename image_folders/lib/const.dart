@@ -21,7 +21,7 @@ class Const {
   static const pageOutsidePadding = 5.0;
 
   // Padding between grid tiles
-  static const pageGridPadding = 10.0;
+  static const pageGridPadding = 2.0;
 
   // Image cache quality
   static const imageCacheQuality = 400;
