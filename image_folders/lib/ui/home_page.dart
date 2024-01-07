@@ -52,8 +52,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                         maxCrossAxisExtent: state.topTileSize,
                         mainAxisSpacing: Const.pageGridPadding,
-                        crossAxisSpacing: Const.pageGridPadding,
-                        childAspectRatio: Const.tileAspectRatio),
+                        crossAxisSpacing: Const.pageGridPadding),
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
                         if (index == entries.length) {

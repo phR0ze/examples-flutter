@@ -40,8 +40,7 @@ class _FolderPageState extends ConsumerState<FolderPage> {
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: state.subTileSize,
                     mainAxisSpacing: Const.pageGridPadding,
-                    crossAxisSpacing: Const.pageGridPadding,
-                    childAspectRatio: Const.tileAspectRatio),
+                    crossAxisSpacing: Const.pageGridPadding),
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
                     return EntryTile(widget.folder.entries[index]);

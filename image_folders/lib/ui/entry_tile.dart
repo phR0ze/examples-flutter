@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import '../../const.dart';
 import '../model/exports.dart' as model;
@@ -18,54 +19,44 @@ class EntryTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      child: SizedBox.expand(
-        child: Column(
-          children: [
-            Expanded(
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  Container(
-                      decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(Const.assetImagePlaceholder),
-                      fit: BoxFit.cover,
-                    ),
-                  )),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          BackgroundImage(entry),
 
-                  // Gradient to fade out background image so overlay badges are more visible
-                  const TopGradient(),
+          // Gradient to fade out background image so overlay badges are more visible
+          const Gradient(top: true),
 
-                  // Show the index of the tile for debugging purposes
-                  if (entry is model.FolderEntry)
-                    Positioned(
-                      top: 5,
-                      right: 5,
-                      child: Text(
-                        '(${entry.count})',
-                        style: const TextStyle(color: Colors.white, fontSize: 14),
-                      ),
-                    ),
-
-                  // Show the index of the tile for debugging purposes
-                  if (index != null)
-                    Positioned(
-                      left: 5,
-                      top: 5,
-                      child: Text(
-                        '$index',
-                        style: const TextStyle(color: Colors.white, fontSize: 14),
-                      ),
-                    ),
-                ],
+          // Show the index of the tile for debugging purposes
+          if (entry is model.FolderEntry)
+            Positioned(
+              top: 5,
+              right: 5,
+              child: Text(
+                '(${entry.count})',
+                style: const TextStyle(color: Colors.white, fontSize: 14),
               ),
             ),
 
-            // Column allows for placing title below the image
-            Text(entry.name,
-                overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.titleSmall),
-          ],
-        ),
+          // Show the index of the tile for debugging purposes
+          if (index != null)
+            Positioned(
+              left: 5,
+              top: 5,
+              child: Text(
+                '$index',
+                style: const TextStyle(color: Colors.white, fontSize: 14),
+              ),
+            ),
+
+          if (entry is model.FolderEntry) const Gradient(),
+          if (entry is model.FolderEntry)
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Text(entry.name,
+                  overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.titleSmall!),
+            ),
+        ],
       ),
       onTap: () => Navigator.push(
         context,
@@ -82,26 +73,55 @@ class EntryTile extends StatelessWidget {
   }
 }
 
-/// Top gradient allows for a subtle fade out of the background image so that
+class BackgroundImage extends StatelessWidget {
+  final model.Entry entry;
+  const BackgroundImage(this.entry, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    if (entry is model.FileEntry && (entry as model.FileEntry).isImage) {
+      return Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: FileImage(File(entry.path)),
+            fit: BoxFit.cover,
+          ),
+        ),
+      );
+    } else {
+      return Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(Const.assetImagePlaceholder),
+            fit: BoxFit.cover,
+          ),
+        ),
+      );
+    }
+  }
+}
+
+/// Gradient allows for a subtle fade out of the background image so that
 /// overlay badges are more visible.
-class TopGradient extends StatelessWidget {
-  const TopGradient({super.key});
+class Gradient extends StatelessWidget {
+  final bool top;
+  const Gradient({this.top = false, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [
+          colors: const [
             Colors.black87,
             Colors.transparent,
           ],
           // Start gradient fading immediately and reach full fade at 30% of tile direction
-          stops: [0.0, 0.3],
+          stops: const [0.0, 0.3],
           // Fade starts at top center
-          begin: Alignment.topCenter,
+          begin: top ? Alignment.topCenter : Alignment.bottomCenter,
           // Fade ends at bottom center
-          end: Alignment.bottomCenter,
+          end: top ? Alignment.bottomCenter : Alignment.topCenter,
         ),
       ),
     );

@@ -7,5 +7,4 @@ and then display them as as thumbnails
 * [X] Incrementally notify listeners of processed folders
 * [X] Show a loading indicator as next tile until its loaded
 * [X] Don't reload a directory if it is already loaded
-* [ ] Display all images as thumbnails
-* [ ] Display folders with first image as thumbnail
+* [X] Display all images as thumbnails

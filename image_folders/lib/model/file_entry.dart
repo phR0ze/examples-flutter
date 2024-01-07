@@ -1,8 +1,15 @@
 import 'package:quiver/core.dart';
+import 'package:path/path.dart' as p;
+import '../const.dart';
 import 'entry.dart';
 
 class FileEntry extends Entry {
   FileEntry(String path) : super(path);
+
+  bool get isImage {
+    final ext = p.extension(path);
+    return Const.imageExt.contains(ext.toLowerCase());
+  }
 
   @override
   bool operator ==(Object other) {
