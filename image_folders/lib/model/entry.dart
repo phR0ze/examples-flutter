@@ -25,13 +25,4 @@ abstract class Entry {
       return (this as FolderEntry).count;
     }
   }
-
-  @override
-  String toString() {
-    if (this is FileEntry) {
-      return (this as FileEntry).toString();
-    } else {
-      return (this as FolderEntry).toString();
-    }
-  }
 }

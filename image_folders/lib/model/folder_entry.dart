@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:quiver/core.dart';
 import 'entry.dart';
 import 'file_entry.dart';
 
@@ -42,6 +43,16 @@ class FolderEntry extends Entry {
     }
     return count;
   }
+
+  @override
+  bool operator ==(Object other) {
+    return other is FolderEntry && path == other.path && count == other.count;
+  }
+
+  /// Returns a hash code value for the object.
+  /// Uses the google hash2 function on the path and the type name
+  @override
+  int get hashCode => hash2(path, 'FolderEntry');
 
   @override
   String toString() {

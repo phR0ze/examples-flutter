@@ -21,6 +21,10 @@ class TopFolders extends _$TopFolders {
         initialDirectory: (initialDir == null || initialDir.isEmpty) ? null : initialDir,
       );
       if (dir != null) {
+        if (state.value!.any((x) => x == dir)) {
+          showSnackBar('Folder already selected');
+          return;
+        }
         state.value!.add(dir);
         state = state;
       } else {
