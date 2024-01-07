@@ -29,6 +29,8 @@ class Entries extends _$Entries {
     }
 
     for (final topFolder in topFolders) {
+      state = const AsyncLoading();
+
       // Skip folders that already exist
       if (state.value != null) {
         final entry =

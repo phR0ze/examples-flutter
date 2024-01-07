@@ -32,24 +32,17 @@ class Posts extends _$Posts {
     if (!_retry && _page == 1) {
       _retry = true;
       print('Simulating page error');
-      // Returning this won't be seen as i've set 'skipError: true' thus the old values
-      // will be used and the next call through will trigger the same page to be fetched.
-      //state = AsyncValue.error('error', StackTrace.current);
+      state = AsyncValue.error('error', StackTrace.current);
       return;
     }
 
-    // Simulate page loading
+    // Simulate page loading on the second page
     if (_page == 2) {
-      _retry = true;
+      state = const AsyncValue.loading();
       print('Simulating page loading');
       await Future.delayed(const Duration(seconds: 10));
     }
 
-    // By not changing the state to a loading we can skip rebuilding the UI in a default
-    // state in between pages being loaded. Originally I was emitting this state which
-    // caused the UI to rebuild and show a loading indicator between pages but was so fast
-    // effectively was just resetting the scroll position to the top of the list.
-    // state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
       // Post increment to get the next page next time
       print('Fetching page $_page');

@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'zoom_actions.dart';
 import 'entry_tile.dart';
 import '../../const.dart';
+import '../model/exports.dart' as model;
 import '../providers/exports.dart';
+import 'sliver_async_builder.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -18,7 +20,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(appStateProvider);
-    final entries = ref.watch(entriesProvider);
+    final res = ref.watch(entriesProvider);
 
     return Scaffold(
       body: Scrollbar(
@@ -45,26 +47,27 @@ class _HomePageState extends ConsumerState<HomePage> {
           SliverPadding(
               // Page content external padding
               padding: const EdgeInsets.all(Const.pageOutsidePadding),
-              sliver: entries.when(
-                skipError: true,
-                loading: () =>
-                    const SliverToBoxAdapter(child: Center(child: CircularProgressIndicator())),
-                data: (entries) {
-                  return SliverGrid(
-                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: state.topTileSize,
-                          mainAxisSpacing: Const.pageGridPadding,
-                          crossAxisSpacing: Const.pageGridPadding,
-                          childAspectRatio: Const.tileAspectRatio),
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          return EntryTile(entries[index]);
-                        },
-                        childCount: entries.length,
-                      ));
-                },
-                error: (error, trace) => Text(''),
-              )),
+              sliver: SliverAsyncBuilder<List<model.Entry>>(res, (res, entries) {
+                return SliverGrid(
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: state.topTileSize,
+                        mainAxisSpacing: Const.pageGridPadding,
+                        crossAxisSpacing: Const.pageGridPadding,
+                        childAspectRatio: Const.tileAspectRatio),
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        if (index == entries.length) {
+                          if (res.isLoading) {
+                            return const Center(child: CircularProgressIndicator());
+                          } else if (res.hasError) {
+                            return const Center(child: Text('Error loading folders'));
+                          }
+                        }
+                        return EntryTile(entries[index]);
+                      },
+                      childCount: entries.length + (res.isLoading || res.hasError ? 1 : 0),
+                    ));
+              })),
         ]),
       ),
     );
