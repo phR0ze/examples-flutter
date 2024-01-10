@@ -1,16 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import '../../const.dart';
-import '../../providers/app_state.dart';
-import '../../providers/images.dart';
-import 'async_builder.dart';
-import '../tile.dart';
-import '../common/navigation.dart';
-import 'comms.dart';
-import 'zoom_actions.dart';
+import '../const.dart';
+import '../providers/app_state.dart';
+import '../providers/images.dart';
+import 'common/async_builder.dart';
+import 'tile.dart';
+import 'navigation.dart';
+import 'common/comms.dart';
+import 'common/zoom_actions.dart';
+import 'navigation.dart' as nav;
 
-class AppLayout extends ConsumerWidget {
-  const AppLayout({super.key});
+class App extends ConsumerWidget {
+  const App({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,50 +23,7 @@ class AppLayout extends ConsumerWidget {
         child: Text(state.currentRoute.toString(),
             style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
       ),
-      drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text('Drawer Header'),
-            ),
-            ListTile(
-              title: const Text('Home'),
-              selected: state.currentRoute == 0,
-              onTap: () {
-                ref.read(appStateProvider.notifier).setCurrentRoute(0);
-                showSnackBar('You chose navigation option: #0');
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Business'),
-              selected: state.currentRoute == 1,
-              onTap: () {
-                ref.read(appStateProvider.notifier).setCurrentRoute(1);
-                showSnackBar('You chose navigation option: #1');
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('School'),
-              selected: state.currentRoute == 2,
-              onTap: () {
-                ref.read(appStateProvider.notifier).setCurrentRoute(2);
-                showSnackBar('You chose navigation option: #2');
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: nav.drawer(context, ref, state),
     );
   }
 }
@@ -141,10 +99,6 @@ class AppLayout extends ConsumerWidget {
 //         title: Text(title),
 //         backgroundColor: Colors.blue,
 //         pinned: isNarrow(size) ? false : true,
-//         // leading: IconButton(
-//         //   icon: const Icon(Icons.menu),
-//         //   onPressed: () => showSnackBar('Show menu!'),
-//         // ),
 //         actions: getZoomActions(ref),
 //       ),
 //       SliverPadding(

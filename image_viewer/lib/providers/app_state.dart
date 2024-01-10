@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../const.dart';
-import '../data/model/app_state.dart' as model;
+import '../model/app_state.dart' as model;
 
 // Generated riverpod code
 part 'app_state.g.dart';
