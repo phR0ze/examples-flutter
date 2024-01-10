@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'providers/services.dart';
-import 'ui/common/page_builder.dart';
+import 'ui/common/layout.dart';
 
 void main() {
   initGlobalServices();
@@ -23,13 +23,21 @@ class MyApp extends StatelessWidget {
 
       // Configure app theme
       themeMode: ThemeMode.dark,
+      theme: ThemeData(
+        useMaterial3: true,
+        // colorScheme: ColorScheme.fromSwatch(
+        //   primarySwatch: Colors.blue,
+        //   // accentColor: Colors.blue,
+        //   // brightness: Brightness.dark,
+        // ),
+      ),
       darkTheme: ThemeData(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.blue,
-          // accentColor: Colors.blue,
-          // brightness: Brightness.dark,
-        ),
+        // colorScheme: ColorScheme.fromSwatch(
+        //   primarySwatch: Colors.blue,
+        //   // accentColor: Colors.blue,
+        //   brightness: Brightness.dark,
+        // ),
         // brightness: Brightness.dark,
         // scrollbarTheme: ScrollbarThemeData(
         //   thickness: MaterialStateProperty.all(10.0),
@@ -40,7 +48,7 @@ class MyApp extends StatelessWidget {
         // ),
       ),
 
-      home: const PageBuilder(),
+      home: const AppLayout(),
     );
   }
 }

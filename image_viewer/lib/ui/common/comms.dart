@@ -6,6 +6,11 @@ showSnackBar(String message) {
   // Its ok to use the null assertion operator here because we know that the
   // service locator will always return a non-null value since it is initialized
   // in main.dart in the MaterialApp widget.
+
+  // First hide any existing snackbar
+  locate<GlobalKey<ScaffoldMessengerState>>().currentState!.hideCurrentSnackBar();
+
+  // Show the new snackbar
   locate<GlobalKey<ScaffoldMessengerState>>().currentState!.showSnackBar(
         SnackBar(
           content: Center(
