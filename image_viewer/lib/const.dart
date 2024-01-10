@@ -23,8 +23,8 @@ class Const {
   static const pageOutsidePadding = 5.0;
 
   // Padding between grid tiles on the page
-  static const pageGridVertPadding = 10.0;
-  static const pageGridHorzPadding = 10.0;
+  static const pageGridVertPadding = 5.0;
+  static const pageGridHorzPadding = 5.0;
 
   // screen: 2560
   static const ultraWideThreshold = 1200;
