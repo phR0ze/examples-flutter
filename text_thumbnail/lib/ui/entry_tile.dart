@@ -95,16 +95,19 @@ class BackgroundImage extends StatelessWidget {
           ),
         );
       case final model.TextEntry _:
-        return Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: FileImage(File(entry.path)),
-              fit: BoxFit.cover,
-            ),
-          ),
+        return FittedBox(
+          fit: BoxFit.fill,
+          child: Container(
+              color: Colors.green,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(entry.ext.isEmpty ? entry.name : entry.ext,
+                    style: Theme.of(context).textTheme.labelSmall!),
+              )),
         );
       case final model.UnsupportedEntry _:
         return FittedBox(
+          fit: BoxFit.fill,
           child: Container(
               //color: const Color.fromRGBO(28, 40, 55, 1),
               color: Colors.blue,
@@ -113,8 +116,7 @@ class BackgroundImage extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(entry.ext.isEmpty ? entry.name : entry.ext,
-                        style: Theme.of(context).textTheme.titleLarge!),
-                    Text('Unsupported', style: Theme.of(context).textTheme.titleSmall!),
+                        style: Theme.of(context).textTheme.labelSmall!),
                   ],
                 ),
               )),
