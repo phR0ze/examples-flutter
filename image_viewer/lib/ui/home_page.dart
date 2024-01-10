@@ -26,7 +26,6 @@ class HomePage extends ConsumerWidget {
           slivers: [
             SliverAppBar(
               title: const Text('Image Viewer'),
-              backgroundColor: Colors.blue,
 
               // For narrow layouts scroll AppBar off but snap back if scrolling back
               snap: isNarrow(size) ? true : false,
