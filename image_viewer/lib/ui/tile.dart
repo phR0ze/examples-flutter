@@ -64,8 +64,7 @@ class Tile extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Text('title for the tile that is too',
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.displaySmall),
+                    overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.titleSmall),
               ),
             ],
           ),

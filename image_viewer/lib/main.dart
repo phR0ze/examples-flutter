@@ -1,31 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'providers/services.dart';
 import 'ui/common/page_builder.dart';
 
 void main() {
+  initGlobalServices();
+
   runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: "Image Viewer",
       debugShowCheckedModeBanner: false,
-      title: "layout examples with riverpod",
-      theme: ThemeData(
-        scaffoldBackgroundColor: const Color.fromRGBO(28, 40, 55, 1),
-        primarySwatch: Colors.blue,
-        scrollbarTheme: ScrollbarThemeData(
-          thickness: MaterialStateProperty.all(10.0),
-          thumbColor: MaterialStateProperty.all(Colors.blue),
+
+      // Configure global snackbar messenger
+      scaffoldMessengerKey: locate<GlobalKey<ScaffoldMessengerState>>(),
+
+      // Configure app theme
+      themeMode: ThemeMode.dark,
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.blue,
+          // accentColor: Colors.blue,
+          // brightness: Brightness.dark,
         ),
-        textTheme: const TextTheme(
-          displaySmall: TextStyle(color: Colors.white, fontSize: 12.0),
-          displayMedium: TextStyle(color: Colors.white, fontSize: 30.0),
-        ),
+        // brightness: Brightness.dark,
+        // scrollbarTheme: ScrollbarThemeData(
+        //   thickness: MaterialStateProperty.all(10.0),
+        //   thumbColor: MaterialStateProperty.all(Colors.blue),
+        // ),
+        // snackBarTheme: const SnackBarThemeData(
+        //   backgroundColor: Colors.deepPurple,
+        // ),
       ),
+
       home: const PageBuilder(),
     );
   }

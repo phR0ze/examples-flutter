@@ -37,7 +37,7 @@ class _ImagePageState extends State<ImagePage> {
               height: MediaQuery.of(context).size.height,
             ),
           )),
-          onSwipeUp: () => showSnackBar(context, 'Show image details!'),
+          onSwipeUp: () => showSnackBar('Show image details!'),
           onSwipeDown: () => Navigator.pop(context),
           onSwipeLeft: () => {
                 if (widget.index + 1 < widget.images.length - 1)

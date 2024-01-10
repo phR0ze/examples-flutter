@@ -39,7 +39,7 @@ class Navigation extends ConsumerWidget {
             selectedIndex: state.currentRoute,
             selectedIconTheme: const IconThemeData(color: Colors.blue),
             onDestinationSelected: (value) {
-              showSnackBar(context, 'You chose navigation option: #$value');
+              showSnackBar('You chose navigation option: #$value');
 
               // Check if the route has changed so we don't trigger a rebuild when not needed
               if (state.currentRoute != value) {
@@ -72,7 +72,7 @@ class Navigation extends ConsumerWidget {
             unselectedItemColor: Colors.black,
             currentIndex: state.currentRoute,
             onTap: (value) {
-              showSnackBar(context, 'You chose navigation option: #$value');
+              showSnackBar('You chose navigation option: #$value');
 
               // Check if the route has changed so we don't trigger a rebuild when not needed
               if (state.currentRoute != value) {
