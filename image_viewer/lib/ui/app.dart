@@ -19,17 +19,31 @@ class App extends ConsumerWidget {
 
     return LayoutBuilder(builder: (context, size) {
       return Scaffold(
-        appBar: AppBar(
-          title: const Text('Image Viewer'),
-        ),
-
         // Only use the app drawer for narrow layouts
         drawer: isNarrow(size) ? nav.drawer(context, ref, state) : null,
 
         // For wide layouts persist a navigation rail on the left instead
-        body: Center(
-          child: Text(state.currentRoute.toString(),
-              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              title: const Text('Image Viewer'),
+              backgroundColor: Colors.blue,
+
+              // For narrow layouts scroll AppBar off but snap back if scrolling back
+              snap: isNarrow(size) ? true : false,
+              floating: isNarrow(size) ? true : false,
+
+              // For wide layout keep the AppBar pinned to the top
+              pinned: isNarrow(size) ? false : true,
+              actions: getZoomActions(ref),
+            ),
+            SliverToBoxAdapter(
+              child: Center(
+                child: Text(state.currentRoute.toString(),
+                    style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+              ),
+            ),
+          ],
         ),
       );
     });
