@@ -4,7 +4,7 @@ import '../providers/app_state.dart';
 import '../model/exports.dart' as model;
 import 'common/comms.dart';
 
-Widget? drawer(BuildContext context, WidgetRef ref, model.AppState state) {
+Widget drawer(BuildContext context, WidgetRef ref, model.AppState state) {
   return Drawer(
     // ListView provides scrolling if needed
     child: ListView(
@@ -48,7 +48,7 @@ Widget? drawer(BuildContext context, WidgetRef ref, model.AppState state) {
   );
 }
 
-Widget? rail(BuildContext context, WidgetRef ref, model.AppState state) {
+Widget rail(BuildContext context, WidgetRef ref, model.AppState state) {
   return NavigationRail(
     extended: true,
     destinations: const [

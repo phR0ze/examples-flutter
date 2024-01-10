@@ -5,13 +5,11 @@ import '../providers/app_state.dart';
 import '../providers/images.dart';
 import 'common/async_builder.dart';
 import 'tile.dart';
-import 'navigation.dart';
-import 'common/comms.dart';
 import 'common/zoom_actions.dart';
 import 'navigation.dart' as nav;
 
-class App extends ConsumerWidget {
-  const App({super.key});
+class HomePage extends ConsumerWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -63,30 +61,3 @@ class App extends ConsumerWidget {
     });
   }
 }
-
-//     var state = ref.watch(appStateProvider);
-//     var asyncValue = ref.watch(imagesProvider);
-
-//     return Scaffold(
-//       SliverPadding(
-//           padding: const EdgeInsets.all(Const.pageOutsidePadding),
-//           sliver: SliverAsyncBuilder<List<String>>(
-//               data: asyncValue,
-//               builder: (images) {
-//                 return SliverGrid(
-//                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-//                       maxCrossAxisExtent: state.tileSize,
-//                       mainAxisSpacing: Const.pageGridVertPadding,
-//                       crossAxisSpacing: Const.pageGridHorzPadding,
-//                       childAspectRatio: Const.tileAspectRatio,
-//                     ),
-//                     delegate: SliverChildBuilderDelegate(
-//                       (context, index) {
-//                         return Tile('1.$index', index, images[index], images);
-//                       },
-//                       childCount: images.length,
-//                     ));
-//               }))
-//     ]));
-//   }
-// }
