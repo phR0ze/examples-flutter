@@ -17,70 +17,24 @@ class App extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var state = ref.watch(appStateProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Image Viewer')),
-      body: Center(
-        child: Text(state.currentRoute.toString(),
-            style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-      ),
-      drawer: nav.drawer(context, ref, state),
-    );
+    return LayoutBuilder(builder: (context, size) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Image Viewer'),
+        ),
+
+        // Only use the app drawer for narrow layouts
+        drawer: isNarrow(size) ? nav.drawer(context, ref, state) : null,
+
+        // For wide layouts persist a navigation rail on the left instead
+        body: Center(
+          child: Text(state.currentRoute.toString(),
+              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+        ),
+      );
+    });
   }
 }
-
-// class PageBuilder extends StatelessWidget {
-//   const PageBuilder({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         drawer: Drawer(
-//           child: ListView(
-//             padding: EdgeInsets.zero,
-//             children: [
-//               const DrawerHeader(
-//                 decoration: BoxDecoration(
-//                   color: Colors.blue,
-//                 ),
-//                 child: Text('Drawer Header'),
-//               ),
-//               ListTile(
-//                 title: const Text('Item 1'),
-//                 onTap: () {
-//                   showSnackBar('You chose drawer option: #1');
-//                   Navigator.pop(context);
-//                 },
-//               ),
-//               ListTile(
-//                 title: const Text('Item 2'),
-//                 onTap: () {
-//                   showSnackBar('You chose drawer option: #2');
-//                   Navigator.pop(context);
-//                 },
-//               ),
-//             ],
-//           ),
-//         ),
-//         // Image scroller
-//         body: LayoutBuilder(builder: (context, size) {
-//           if (isNarrow(size)) {
-//             return Column(
-//               children: [
-//                 Expanded(
-//                   child: ImageScroller(size),
-//                 ),
-//               ],
-//             );
-//           }
-//           return Row(
-//             children: [
-//               Navigation(size),
-//               Expanded(child: ImageScroller(size)),
-//             ],
-//           );
-//         }));
-//   }
-// }
 
 // // Need to keep this separate from HomeScreen to avoid performance issues for some reason.
 // class ImageScroller extends ConsumerWidget {
@@ -97,7 +51,6 @@ class App extends ConsumerWidget {
 //         body: CustomScrollView(slivers: [
 //       SliverAppBar(
 //         title: Text(title),
-//         backgroundColor: Colors.blue,
 //         pinned: isNarrow(size) ? false : true,
 //         actions: getZoomActions(ref),
 //       ),

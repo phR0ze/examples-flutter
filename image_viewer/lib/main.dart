@@ -33,11 +33,11 @@ class MyApp extends StatelessWidget {
       ),
       darkTheme: ThemeData(
         useMaterial3: true,
-        // colorScheme: ColorScheme.fromSwatch(
-        //   primarySwatch: Colors.blue,
-        //   // accentColor: Colors.blue,
-        //   brightness: Brightness.dark,
-        // ),
+        colorScheme: ColorScheme.fromSwatch(
+          //primarySwatch: Colors.blue,
+          // accentColor: Colors.blue,
+          brightness: Brightness.dark,
+        ),
         // brightness: Brightness.dark,
         // scrollbarTheme: ScrollbarThemeData(
         //   thickness: MaterialStateProperty.all(10.0),
