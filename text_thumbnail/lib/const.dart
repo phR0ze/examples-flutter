@@ -1,6 +1,9 @@
 class Const {
-  /// Flutters default image format support
+  /// Supported image types
   static const imageExt = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.wbmp'];
+
+  /// Supported text types
+  static const textExt = ['.md', '.txt', '.text'];
 
   // App assets
   static const assetImagePlaceholder = 'assets/images/placeholder.png';

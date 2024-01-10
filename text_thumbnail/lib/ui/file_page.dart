@@ -28,26 +28,30 @@ class FullScreenImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final img = Image.file(File(entry.path));
+    switch (entry) {
+      case final model.ImageEntry _:
+        return Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: FileImage(File(entry.path)),
+              fit: BoxFit.contain,
+            ),
+          ),
+        );
+      case final model.TextEntry _:
+        return Container(
+          color: Colors.green,
+        );
 
-    if (entry.isImage) {
-      return Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: img.image,
-            fit: BoxFit.contain,
+      default:
+        return Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(Const.assetImagePlaceholder),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-      );
-    } else {
-      return Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(Const.assetImagePlaceholder),
-            fit: BoxFit.cover,
-          ),
-        ),
-      );
+        );
     }
   }
 }

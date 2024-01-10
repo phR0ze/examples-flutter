@@ -18,58 +18,63 @@ class EntryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          BackgroundImage(entry),
+        behavior: HitTestBehavior.opaque,
+        onTap: entry.isSupported
+            ? () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      if (entry is model.FolderEntry) {
+                        return FolderPage(entry as model.FolderEntry);
+                      } else {
+                        return FilePage(entry as model.FileEntry);
+                      }
+                    },
+                  ),
+                );
+              }
+            : null,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            BackgroundImage(entry),
 
-          // Gradient to fade out background image so overlay badges are more visible
-          const Gradient(top: true),
+            // Gradient to fade out background image so overlay badges are more visible
+            const Gradient(top: true),
 
-          // Show the index of the tile for debugging purposes
-          if (entry is model.FolderEntry)
-            Positioned(
-              top: 5,
-              right: 5,
-              child: Text(
-                '(${entry.count})',
-                style: const TextStyle(color: Colors.white, fontSize: 14),
+            // Show the index of the tile for debugging purposes
+            if (entry is model.FolderEntry)
+              Positioned(
+                top: 5,
+                right: 5,
+                child: Text(
+                  '(${entry.count})',
+                  style: const TextStyle(color: Colors.white, fontSize: 14),
+                ),
               ),
-            ),
 
-          // Show the index of the tile for debugging purposes
-          if (index != null)
-            Positioned(
-              left: 5,
-              top: 5,
-              child: Text(
-                '$index',
-                style: const TextStyle(color: Colors.white, fontSize: 14),
+            // Show the index of the tile for debugging purposes
+            if (index != null)
+              Positioned(
+                left: 5,
+                top: 5,
+                child: Text(
+                  '$index',
+                  style: const TextStyle(color: Colors.white, fontSize: 14),
+                ),
               ),
-            ),
 
-          if (entry is model.FolderEntry) const Gradient(),
-          if (entry is model.FolderEntry)
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Text(entry.name,
-                  overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.titleSmall!),
-            ),
-        ],
-      ),
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) {
-            if (entry.isFolder) {
-              return FolderPage(entry as model.FolderEntry);
-            }
-            return FilePage(entry as model.FileEntry);
-          },
-        ),
-      ),
-    );
+            if (entry is model.FolderEntry) const Gradient(),
+            if (entry is model.FolderEntry)
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Text(entry.name,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleSmall!),
+              ),
+          ],
+        ));
   }
 }
 
@@ -79,26 +84,53 @@ class BackgroundImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (entry is model.FileEntry && (entry as model.FileEntry).isImage) {
-      return Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: FileImage(File(entry.path)),
-            fit: BoxFit.cover,
+    switch (entry) {
+      case final model.ImageEntry _:
+        return Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: FileImage(File(entry.path)),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-      );
-    } else {
-      return Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(Const.assetImagePlaceholder),
-            fit: BoxFit.cover,
+        );
+      case final model.TextEntry _:
+        return Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: FileImage(File(entry.path)),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-      );
+        );
+      case final model.UnsupportedEntry _:
+        return FittedBox(
+          child: Container(
+              //color: const Color.fromRGBO(28, 40, 55, 1),
+              color: Colors.blue,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    Text(entry.ext.isEmpty ? entry.name : entry.ext,
+                        style: Theme.of(context).textTheme.titleLarge!),
+                    Text('Unsupported', style: Theme.of(context).textTheme.titleSmall!),
+                  ],
+                ),
+              )),
+        );
+      default:
+        return Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(Const.assetImagePlaceholder),
+              fit: BoxFit.cover,
+            ),
+          ),
+        );
     }
   }
+  // }
 }
 
 /// Gradient allows for a subtle fade out of the background image so that
