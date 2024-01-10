@@ -4,6 +4,7 @@ import '../../const.dart';
 import '../model/exports.dart' as model;
 import 'file_page.dart';
 import 'folder_page.dart';
+import 'text_page.dart';
 
 class EntryTile extends StatelessWidget {
   final model.Entry entry;
@@ -25,10 +26,13 @@ class EntryTile extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      if (entry is model.FolderEntry) {
-                        return FolderPage(entry as model.FolderEntry);
-                      } else {
-                        return FilePage(entry as model.FileEntry);
+                      switch (entry) {
+                        case final model.FolderEntry folder:
+                          return FolderPage(folder);
+                        case final model.TextEntry text:
+                          return TextPage(text);
+                        default:
+                          return FilePage(entry as model.FileEntry);
                       }
                     },
                   ),
@@ -65,8 +69,8 @@ class EntryTile extends StatelessWidget {
                 ),
               ),
 
-            if (entry is model.FolderEntry) const Gradient(),
-            if (entry is model.FolderEntry)
+            if (entry is! model.ImageEntry) const Gradient(),
+            if (entry is! model.ImageEntry)
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Text(entry.name,
@@ -97,13 +101,7 @@ class BackgroundImage extends StatelessWidget {
       case final model.TextEntry _:
         return FittedBox(
           fit: BoxFit.fill,
-          child: Container(
-              color: Colors.green,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(entry.ext.isEmpty ? entry.name : entry.ext,
-                    style: Theme.of(context).textTheme.labelSmall!),
-              )),
+          child: Container(color: Colors.green, child: const Icon(Icons.article)),
         );
       case final model.UnsupportedEntry _:
         return FittedBox(

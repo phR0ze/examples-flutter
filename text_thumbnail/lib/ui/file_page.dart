@@ -5,26 +5,26 @@ import '../const.dart';
 import '../model/exports.dart' as model;
 
 class FilePage extends ConsumerWidget {
-  final model.FileEntry file;
-  const FilePage(this.file, {super.key});
+  final model.FileEntry entry;
+  const FilePage(this.entry, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('File: ${file.name}', style: Theme.of(context).textTheme.titleLarge),
+        title: Text('File: ${entry.name}', style: Theme.of(context).textTheme.titleLarge),
       ),
       body: Center(
-        child: FullScreenImage(file),
+        child: ImageContent(entry),
       ),
     );
   }
 }
 
-class FullScreenImage extends StatelessWidget {
+class ImageContent extends StatelessWidget {
   final model.FileEntry entry;
-  const FullScreenImage(this.entry, {super.key});
+  const ImageContent(this.entry, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +38,6 @@ class FullScreenImage extends StatelessWidget {
             ),
           ),
         );
-      case final model.TextEntry _:
-        return Container(
-          color: Colors.green,
-        );
-
       default:
         return Container(
           decoration: const BoxDecoration(

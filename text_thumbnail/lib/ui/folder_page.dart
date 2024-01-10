@@ -5,8 +5,8 @@ import '../../const.dart';
 import '../model/exports.dart' as model;
 
 class FolderPage extends ConsumerStatefulWidget {
-  final model.FolderEntry folder;
-  const FolderPage(this.folder, {super.key});
+  final model.FolderEntry entry;
+  const FolderPage(this.entry, {super.key});
 
   @override
   ConsumerState<FolderPage> createState() => _FolderPageState();
@@ -25,7 +25,7 @@ class _FolderPageState extends ConsumerState<FolderPage> {
             snap: true,
             floating: true,
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-            title: Text('${widget.folder.name} (${widget.folder.count})',
+            title: Text('${widget.entry.name} (${widget.entry.count})',
                 style: Theme.of(context).textTheme.titleLarge),
           ),
           SliverPadding(
@@ -38,9 +38,9 @@ class _FolderPageState extends ConsumerState<FolderPage> {
                     crossAxisSpacing: Const.pageGridPadding),
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
-                    return EntryTile(widget.folder.entries[index]);
+                    return EntryTile(widget.entry.entries[index]);
                   },
-                  childCount: widget.folder.length,
+                  childCount: widget.entry.length,
                 )),
           ),
         ]),
