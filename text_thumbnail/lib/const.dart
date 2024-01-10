@@ -3,7 +3,7 @@ class Const {
   static const imageExt = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.wbmp'];
 
   /// Supported text types
-  static const textExt = ['.md', '.txt', '.text'];
+  static const textExt = ['.md', '.txt', '.text', '.json', '.yaml', '.csv'];
 
   // App assets
   static const assetImagePlaceholder = 'assets/images/placeholder.png';
