@@ -11,15 +11,15 @@ Widget drawer(BuildContext context, WidgetRef ref, model.AppState state) {
     child: ListView(
       padding: EdgeInsets.zero,
       children: [
-        const DrawerHeader(
-          decoration: BoxDecoration(
+        DrawerHeader(
+          decoration: const BoxDecoration(
             color: Colors.blue,
           ),
-          child: Text(Const.appName),
+          child: Text(Const.appName, style: Theme.of(context).textTheme.headlineMedium),
         ),
         ListTile(
           title: const Text('Folders'),
-          leading: const Icon(Icons.folder),
+          leading: const Icon(Icons.perm_media),
           selected: state.currentRoute == 0,
           onTap: () {
             ref.read(appStateProvider.notifier).setCurrentRoute(0);
