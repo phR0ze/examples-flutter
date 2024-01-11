@@ -7,6 +7,9 @@ class Const {
   /// Flutters default image format support
   static const imageExt = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.wbmp'];
 
+  /// Supported text types
+  static const textExt = ['.md', '.txt', '.text', '.json', '.yaml', '.csv'];
+
   // App assets
   static const assetImagePlaceholder = 'assets/images/placeholder.png';
 
@@ -26,7 +29,7 @@ class Const {
   static const tileAspectRatio = 0.75;
 
   // Padding around the page content
-  static const pageOutsidePadding = 5.0;
+  static const pageOutsidePadding = 2.0;
 
   // Padding between grid tiles
   static const pageGridPadding = 2.0;

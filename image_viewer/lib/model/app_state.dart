@@ -13,7 +13,7 @@ class AppState with _$AppState {
 
   static AppState initial() => const AppState(
       currentRoute: 0,
-      darkMode: false,
+      darkMode: true,
       subTileSize: Const.tileWidthDefault,
       topTileSize: Const.tileWidthDefault);
 }

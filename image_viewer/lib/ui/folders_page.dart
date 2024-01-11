@@ -25,7 +25,7 @@ class FoldersPage extends ConsumerWidget {
           title: const Text(Const.appName),
           snap: true,
           floating: true,
-          actions: addFolderAction(ref) + zoomActions(ref) + themeModeAction(ref),
+          actions: addFolderAction(ref) + zoomActions(ref, topLevel: true) + themeModeAction(ref),
         ),
         SliverPadding(
             padding: const EdgeInsets.all(Const.pageOutsidePadding),

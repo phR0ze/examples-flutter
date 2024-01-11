@@ -13,7 +13,7 @@ class FilePage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('File: ${file.name}', style: Theme.of(context).textTheme.titleLarge),
+        title: Text(file.name, style: Theme.of(context).textTheme.titleLarge),
       ),
       body: Center(
         child: FullScreenImage(file),

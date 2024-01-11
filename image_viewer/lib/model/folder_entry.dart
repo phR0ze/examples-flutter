@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:quiver/core.dart';
-import 'entry.dart';
-import 'file_entry.dart';
+import 'exports.dart';
 
 class FolderEntry extends Entry {
   List<Entry> entries = [];
@@ -14,7 +13,7 @@ class FolderEntry extends Entry {
 
   /// Add a file to this folder
   void addFile(FileSystemEntity file) {
-    entries.add(FileEntry(file.path));
+    entries.add(FileEntry.fromPath(file.path));
   }
 
   /// Add an entry to this folder

@@ -1,14 +1,31 @@
 import 'package:quiver/core.dart';
 import 'package:path/path.dart' as p;
-import '../const.dart';
-import 'entry.dart';
+import '../../const.dart';
+import 'exports.dart';
 
-class FileEntry extends Entry {
+abstract class FileEntry extends Entry {
   FileEntry(String path) : super(path);
+
+  /// Create a subtype of FileEntry based on the file extension
+  factory FileEntry.fromPath(String path) {
+    final ext = p.extension(path);
+    if (Const.imageExt.contains(ext.toLowerCase())) {
+      return ImageEntry(path);
+    } else if (Const.textExt.contains(ext.toLowerCase())) {
+      return TextEntry(path);
+    } else {
+      return UnsupportedEntry(path);
+    }
+  }
 
   bool get isImage {
     final ext = p.extension(path);
     return Const.imageExt.contains(ext.toLowerCase());
+  }
+
+  bool get isText {
+    final ext = p.extension(path);
+    return Const.textExt.contains(ext.toLowerCase());
   }
 
   @override

@@ -23,7 +23,7 @@ Widget drawer(BuildContext context, WidgetRef ref, model.AppState state) {
           selected: state.currentRoute == 0,
           onTap: () {
             ref.read(appStateProvider.notifier).setCurrentRoute(0);
-            showSnackBar('You chose navigation option: #0');
+            dismissSnackBar();
             Navigator.pop(context);
           },
         ),
@@ -43,7 +43,7 @@ Widget drawer(BuildContext context, WidgetRef ref, model.AppState state) {
           selected: state.currentRoute == 2,
           onTap: () {
             ref.read(appStateProvider.notifier).setCurrentRoute(2);
-            showSnackBar('You chose navigation option: #2');
+            showSnackBar('Settings is not yet implemented');
             Navigator.pop(context);
           },
         ),
