@@ -31,7 +31,7 @@ class _ImagePageState extends State<ImagePage> {
               child: Text(widget.id, style: Theme.of(context).textTheme.displayMedium),
             ),
             child: Image.asset(
-              Const.imagePlaceholder,
+              Const.assetImagePlaceholder,
               fit: BoxFit.contain,
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,

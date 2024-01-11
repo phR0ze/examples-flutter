@@ -8,7 +8,7 @@ class Const {
   static const imageExt = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.wbmp'];
 
   // App assets
-  static const imagePlaceholder = 'assets/images/placeholder.png';
+  static const assetImagePlaceholder = 'assets/images/placeholder.png';
 
   /// AppBar hight
   static const appBarHeight = 200.0;
@@ -28,9 +28,8 @@ class Const {
   // Padding around the page content
   static const pageOutsidePadding = 5.0;
 
-  // Padding between grid tiles on the page
-  static const pageGridVertPadding = 5.0;
-  static const pageGridHorzPadding = 5.0;
+  // Padding between grid tiles
+  static const pageGridPadding = 2.0;
 
   // screen: 2560
   static const ultraWideThreshold = 1200;

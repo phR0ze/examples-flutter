@@ -13,6 +13,11 @@ class AppState extends _$AppState {
     return model.AppState.initial();
   }
 
+  // Toggle dark mode
+  void togglDarkMode() {
+    state = state.copyWith(darkMode: !state.darkMode);
+  }
+
   // Set the current route
   void setCurrentRoute(int value) {
     state = state.copyWith(currentRoute: value);

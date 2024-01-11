@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$AppState {
   int get currentRoute => throw _privateConstructorUsedError;
+  bool get darkMode => throw _privateConstructorUsedError;
   double get subTileSize => throw _privateConstructorUsedError;
   double get topTileSize => throw _privateConstructorUsedError;
 
@@ -30,7 +31,11 @@ abstract class $AppStateCopyWith<$Res> {
   factory $AppStateCopyWith(AppState value, $Res Function(AppState) then) =
       _$AppStateCopyWithImpl<$Res, AppState>;
   @useResult
-  $Res call({int currentRoute, double subTileSize, double topTileSize});
+  $Res call(
+      {int currentRoute,
+      bool darkMode,
+      double subTileSize,
+      double topTileSize});
 }
 
 /// @nodoc
@@ -47,6 +52,7 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
   @override
   $Res call({
     Object? currentRoute = null,
+    Object? darkMode = null,
     Object? subTileSize = null,
     Object? topTileSize = null,
   }) {
@@ -55,6 +61,10 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
           ? _value.currentRoute
           : currentRoute // ignore: cast_nullable_to_non_nullable
               as int,
+      darkMode: null == darkMode
+          ? _value.darkMode
+          : darkMode // ignore: cast_nullable_to_non_nullable
+              as bool,
       subTileSize: null == subTileSize
           ? _value.subTileSize
           : subTileSize // ignore: cast_nullable_to_non_nullable
@@ -75,7 +85,11 @@ abstract class _$$AppStateImplCopyWith<$Res>
       __$$AppStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int currentRoute, double subTileSize, double topTileSize});
+  $Res call(
+      {int currentRoute,
+      bool darkMode,
+      double subTileSize,
+      double topTileSize});
 }
 
 /// @nodoc
@@ -90,6 +104,7 @@ class __$$AppStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? currentRoute = null,
+    Object? darkMode = null,
     Object? subTileSize = null,
     Object? topTileSize = null,
   }) {
@@ -98,6 +113,10 @@ class __$$AppStateImplCopyWithImpl<$Res>
           ? _value.currentRoute
           : currentRoute // ignore: cast_nullable_to_non_nullable
               as int,
+      darkMode: null == darkMode
+          ? _value.darkMode
+          : darkMode // ignore: cast_nullable_to_non_nullable
+              as bool,
       subTileSize: null == subTileSize
           ? _value.subTileSize
           : subTileSize // ignore: cast_nullable_to_non_nullable
@@ -115,11 +134,14 @@ class __$$AppStateImplCopyWithImpl<$Res>
 class _$AppStateImpl implements _AppState {
   const _$AppStateImpl(
       {required this.currentRoute,
+      required this.darkMode,
       required this.subTileSize,
       required this.topTileSize});
 
   @override
   final int currentRoute;
+  @override
+  final bool darkMode;
   @override
   final double subTileSize;
   @override
@@ -127,7 +149,7 @@ class _$AppStateImpl implements _AppState {
 
   @override
   String toString() {
-    return 'AppState(currentRoute: $currentRoute, subTileSize: $subTileSize, topTileSize: $topTileSize)';
+    return 'AppState(currentRoute: $currentRoute, darkMode: $darkMode, subTileSize: $subTileSize, topTileSize: $topTileSize)';
   }
 
   @override
@@ -137,6 +159,8 @@ class _$AppStateImpl implements _AppState {
             other is _$AppStateImpl &&
             (identical(other.currentRoute, currentRoute) ||
                 other.currentRoute == currentRoute) &&
+            (identical(other.darkMode, darkMode) ||
+                other.darkMode == darkMode) &&
             (identical(other.subTileSize, subTileSize) ||
                 other.subTileSize == subTileSize) &&
             (identical(other.topTileSize, topTileSize) ||
@@ -144,8 +168,8 @@ class _$AppStateImpl implements _AppState {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, currentRoute, subTileSize, topTileSize);
+  int get hashCode => Object.hash(
+      runtimeType, currentRoute, darkMode, subTileSize, topTileSize);
 
   @JsonKey(ignore: true)
   @override
@@ -157,11 +181,14 @@ class _$AppStateImpl implements _AppState {
 abstract class _AppState implements AppState {
   const factory _AppState(
       {required final int currentRoute,
+      required final bool darkMode,
       required final double subTileSize,
       required final double topTileSize}) = _$AppStateImpl;
 
   @override
   int get currentRoute;
+  @override
+  bool get darkMode;
   @override
   double get subTileSize;
   @override

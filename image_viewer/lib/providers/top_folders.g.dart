@@ -6,7 +6,7 @@ part of 'top_folders.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$topFoldersHash() => r'1e2df6584071ebf4faaf0c023b105944a95b96f4';
+String _$topFoldersHash() => r'bc3ab7cc798084b1c0dcfacd267f0469409c75fb';
 
 /// See also [TopFolders].
 @ProviderFor(TopFolders)

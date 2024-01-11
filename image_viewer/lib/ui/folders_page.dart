@@ -2,11 +2,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:image_viewer/ui/common/top_folder_action.dart';
 import '../const.dart';
-import '../providers/app_state.dart';
-import '../providers/images.dart';
+import '../providers/exports.dart';
 import 'common/async_builder.dart';
+import 'entry_tile.dart';
 import 'navigation.dart' as nav;
-import 'tile.dart';
+import '../model/exports.dart' as model;
 import 'common/zoom_actions.dart';
 
 class FoldersPage extends ConsumerWidget {
@@ -15,7 +15,7 @@ class FoldersPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(appStateProvider);
-    final asyncValue = ref.watch(imagesProvider);
+    final res = ref.watch(entriesProvider);
 
     return Scaffold(
       drawer: nav.drawer(context, ref, state),
@@ -28,23 +28,28 @@ class FoldersPage extends ConsumerWidget {
         ),
         SliverPadding(
             padding: const EdgeInsets.all(Const.pageOutsidePadding),
-            sliver: SliverAsyncBuilder<List<String>>(
-                data: asyncValue,
-                builder: (images) {
-                  return SliverGrid(
-                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: state.topTileSize,
-                        mainAxisSpacing: Const.pageGridVertPadding,
-                        crossAxisSpacing: Const.pageGridHorzPadding,
-                        childAspectRatio: Const.tileAspectRatio,
-                      ),
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          return Tile('1.$index', index, images[index], images);
-                        },
-                        childCount: images.length,
-                      ));
-                })),
+            sliver: SliverAsyncBuilder<List<model.Entry>>(res, (res, entries) {
+              return SliverGrid(
+                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: state.topTileSize,
+                    mainAxisSpacing: Const.pageGridPadding,
+                    crossAxisSpacing: Const.pageGridPadding,
+                    childAspectRatio: Const.tileAspectRatio,
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      if (index == entries.length) {
+                        if (res.isLoading) {
+                          return const Center(child: CircularProgressIndicator());
+                        } else if (res.hasError) {
+                          return const Center(child: Text('Error loading folders'));
+                        }
+                      }
+                      return EntryTile(entries[index]);
+                    },
+                    childCount: entries.length + (res.isLoading || res.hasError ? 1 : 0),
+                  ));
+            })),
       ]),
     );
   }
