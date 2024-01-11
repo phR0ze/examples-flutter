@@ -111,9 +111,9 @@ class BackgroundImage extends StatelessWidget {
           ),
         );
       case final model.TextEntry _:
-        return FittedBox(
+        return const FittedBox(
           fit: BoxFit.fill,
-          child: Container(color: Colors.green, child: const Icon(Icons.article)),
+          child: Icon(Icons.article),
         );
       case final model.UnsupportedEntry _:
         return FittedBox(

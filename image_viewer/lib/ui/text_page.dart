@@ -24,7 +24,7 @@ class _TextPageState extends State<TextPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Text: ${widget.entry.name}', style: Theme.of(context).textTheme.titleLarge),
+        title: Text(widget.entry.name, style: Theme.of(context).textTheme.titleLarge),
       ),
       body: SingleChildScrollView(
         child: Center(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_viewer/ui/common/theme_action.dart';
 import '../providers/exports.dart';
 import 'common/zoom_actions.dart';
 import 'entry_tile.dart';
@@ -31,7 +32,7 @@ class _FolderPageState extends ConsumerState<FolderPage> {
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
             title: Text('${widget.folder.name} (${widget.folder.count})',
                 style: Theme.of(context).textTheme.titleLarge),
-            actions: zoomActions(ref),
+            actions: zoomActions(ref) + themeModeAction(ref),
           ),
           SliverPadding(
             // Page content external padding
