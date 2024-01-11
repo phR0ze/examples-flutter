@@ -1,7 +1,7 @@
 import 'file_entry.dart';
 
 class UnsupportedEntry extends FileEntry {
-  UnsupportedEntry(String path) : super(path);
+  UnsupportedEntry(super.path);
 
   @override
   String toString() {

@@ -1,15 +1,12 @@
 import 'dart:io';
+import 'package:collection/collection.dart';
 import 'package:quiver/core.dart';
 import 'exports.dart';
 
 class FolderEntry extends Entry {
   List<Entry> entries = [];
 
-  FolderEntry(String path) : super(path);
-
-  /// Returns true as this is a folder
-  @override
-  bool get isFolder => true;
+  FolderEntry(super.path);
 
   /// Add a file to this folder
   void addFile(FileSystemEntity file) {
@@ -24,6 +21,24 @@ class FolderEntry extends Entry {
   /// Add folder to this folder
   void addFolder(FileSystemEntity folder) {
     entries.add(FolderEntry(folder.path));
+  }
+
+  /// Get the first image file from this folder
+  ImageEntry? get firstImage {
+    // First try all the files in the folder then fall back on recursion
+    final image = entries.firstWhereOrNull((x) => x.isImage);
+    if (image != null) {
+      return image as ImageEntry;
+    }
+
+    // Fall back on recursing any sub folders
+    for (final entry in entries.where((x) => x.isFolder)) {
+      final image = (entry as FolderEntry).firstImage;
+      if (image != null) {
+        return image;
+      }
+    }
+    return null;
   }
 
   /// Get the number of entries in the root of this folder

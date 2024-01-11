@@ -27,6 +27,7 @@ class Entries extends _$Entries {
       }
     }
 
+    // Loop over top folders and add any new ones to the state to be processed
     for (final topFolder in topFolders) {
       state = const AsyncLoading();
 

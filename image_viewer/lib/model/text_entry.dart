@@ -1,7 +1,7 @@
 import 'file_entry.dart';
 
 class TextEntry extends FileEntry {
-  TextEntry(String path) : super(path);
+  TextEntry(super.path);
 
   @override
   String toString() {

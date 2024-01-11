@@ -4,7 +4,7 @@ import '../../const.dart';
 import 'exports.dart';
 
 abstract class FileEntry extends Entry {
-  FileEntry(String path) : super(path);
+  FileEntry(super.path);
 
   /// Create a subtype of FileEntry based on the file extension
   factory FileEntry.fromPath(String path) {
@@ -16,16 +16,6 @@ abstract class FileEntry extends Entry {
     } else {
       return UnsupportedEntry(path);
     }
-  }
-
-  bool get isImage {
-    final ext = p.extension(path);
-    return Const.imageExt.contains(ext.toLowerCase());
-  }
-
-  bool get isText {
-    final ext = p.extension(path);
-    return Const.textExt.contains(ext.toLowerCase());
   }
 
   @override
