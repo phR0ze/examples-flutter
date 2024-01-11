@@ -1,11 +1,15 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import '../../const.dart';
+import '../const.dart';
 
 part 'app_state.freezed.dart';
 
 @freezed
 class AppState with _$AppState {
-  const factory AppState({required int currentRoute, required double tileSize}) = _AppState;
+  const factory AppState(
+      {required int currentRoute,
+      required double subTileSize,
+      required double topTileSize}) = _AppState;
 
-  static AppState initial() => const AppState(currentRoute: 0, tileSize: Const.tileWidthDefault);
+  static AppState initial() => const AppState(
+      currentRoute: 0, subTileSize: Const.tileWidthDefault, topTileSize: Const.tileWidthDefault);
 }

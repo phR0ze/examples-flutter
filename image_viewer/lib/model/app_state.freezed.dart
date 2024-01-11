@@ -17,7 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$AppState {
   int get currentRoute => throw _privateConstructorUsedError;
-  double get tileSize => throw _privateConstructorUsedError;
+  double get subTileSize => throw _privateConstructorUsedError;
+  double get topTileSize => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AppStateCopyWith<AppState> get copyWith =>
@@ -29,7 +30,7 @@ abstract class $AppStateCopyWith<$Res> {
   factory $AppStateCopyWith(AppState value, $Res Function(AppState) then) =
       _$AppStateCopyWithImpl<$Res, AppState>;
   @useResult
-  $Res call({int currentRoute, double tileSize});
+  $Res call({int currentRoute, double subTileSize, double topTileSize});
 }
 
 /// @nodoc
@@ -46,16 +47,21 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
   @override
   $Res call({
     Object? currentRoute = null,
-    Object? tileSize = null,
+    Object? subTileSize = null,
+    Object? topTileSize = null,
   }) {
     return _then(_value.copyWith(
       currentRoute: null == currentRoute
           ? _value.currentRoute
           : currentRoute // ignore: cast_nullable_to_non_nullable
               as int,
-      tileSize: null == tileSize
-          ? _value.tileSize
-          : tileSize // ignore: cast_nullable_to_non_nullable
+      subTileSize: null == subTileSize
+          ? _value.subTileSize
+          : subTileSize // ignore: cast_nullable_to_non_nullable
+              as double,
+      topTileSize: null == topTileSize
+          ? _value.topTileSize
+          : topTileSize // ignore: cast_nullable_to_non_nullable
               as double,
     ) as $Val);
   }
@@ -69,7 +75,7 @@ abstract class _$$AppStateImplCopyWith<$Res>
       __$$AppStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int currentRoute, double tileSize});
+  $Res call({int currentRoute, double subTileSize, double topTileSize});
 }
 
 /// @nodoc
@@ -84,16 +90,21 @@ class __$$AppStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? currentRoute = null,
-    Object? tileSize = null,
+    Object? subTileSize = null,
+    Object? topTileSize = null,
   }) {
     return _then(_$AppStateImpl(
       currentRoute: null == currentRoute
           ? _value.currentRoute
           : currentRoute // ignore: cast_nullable_to_non_nullable
               as int,
-      tileSize: null == tileSize
-          ? _value.tileSize
-          : tileSize // ignore: cast_nullable_to_non_nullable
+      subTileSize: null == subTileSize
+          ? _value.subTileSize
+          : subTileSize // ignore: cast_nullable_to_non_nullable
+              as double,
+      topTileSize: null == topTileSize
+          ? _value.topTileSize
+          : topTileSize // ignore: cast_nullable_to_non_nullable
               as double,
     ));
   }
@@ -102,16 +113,21 @@ class __$$AppStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$AppStateImpl implements _AppState {
-  const _$AppStateImpl({required this.currentRoute, required this.tileSize});
+  const _$AppStateImpl(
+      {required this.currentRoute,
+      required this.subTileSize,
+      required this.topTileSize});
 
   @override
   final int currentRoute;
   @override
-  final double tileSize;
+  final double subTileSize;
+  @override
+  final double topTileSize;
 
   @override
   String toString() {
-    return 'AppState(currentRoute: $currentRoute, tileSize: $tileSize)';
+    return 'AppState(currentRoute: $currentRoute, subTileSize: $subTileSize, topTileSize: $topTileSize)';
   }
 
   @override
@@ -121,12 +137,15 @@ class _$AppStateImpl implements _AppState {
             other is _$AppStateImpl &&
             (identical(other.currentRoute, currentRoute) ||
                 other.currentRoute == currentRoute) &&
-            (identical(other.tileSize, tileSize) ||
-                other.tileSize == tileSize));
+            (identical(other.subTileSize, subTileSize) ||
+                other.subTileSize == subTileSize) &&
+            (identical(other.topTileSize, topTileSize) ||
+                other.topTileSize == topTileSize));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, currentRoute, tileSize);
+  int get hashCode =>
+      Object.hash(runtimeType, currentRoute, subTileSize, topTileSize);
 
   @JsonKey(ignore: true)
   @override
@@ -138,12 +157,15 @@ class _$AppStateImpl implements _AppState {
 abstract class _AppState implements AppState {
   const factory _AppState(
       {required final int currentRoute,
-      required final double tileSize}) = _$AppStateImpl;
+      required final double subTileSize,
+      required final double topTileSize}) = _$AppStateImpl;
 
   @override
   int get currentRoute;
   @override
-  double get tileSize;
+  double get subTileSize;
+  @override
+  double get topTileSize;
   @override
   @JsonKey(ignore: true)
   _$$AppStateImplCopyWith<_$AppStateImpl> get copyWith =>

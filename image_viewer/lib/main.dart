@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'providers/services.dart';
-import 'ui/app.dart';
+import 'ui/folders_page.dart';
 
 void main() {
   initGlobalServices();
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
 
-      home: const App(),
+      home: const FoldersPage(),
     );
   }
 }

@@ -8,8 +8,8 @@ import 'navigation.dart' as nav;
 import 'tile.dart';
 import 'common/zoom_actions.dart';
 
-class App extends ConsumerWidget {
-  const App({super.key});
+class FoldersPage extends ConsumerWidget {
+  const FoldersPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,7 +32,7 @@ class App extends ConsumerWidget {
                 builder: (images) {
                   return SliverGrid(
                       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: state.tileSize,
+                        maxCrossAxisExtent: state.topTileSize,
                         mainAxisSpacing: Const.pageGridVertPadding,
                         crossAxisSpacing: Const.pageGridHorzPadding,
                         childAspectRatio: Const.tileAspectRatio,

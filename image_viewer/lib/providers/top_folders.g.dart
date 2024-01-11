@@ -1,24 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'app_state.dart';
+part of 'top_folders.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$appStateHash() => r'991ad995836a7845073ff6a7c2b636a53bcdc7f7';
+String _$topFoldersHash() => r'1e2df6584071ebf4faaf0c023b105944a95b96f4';
 
-/// See also [AppState].
-@ProviderFor(AppState)
-final appStateProvider = NotifierProvider<AppState, model.AppState>.internal(
-  AppState.new,
-  name: r'appStateProvider',
+/// See also [TopFolders].
+@ProviderFor(TopFolders)
+final topFoldersProvider =
+    AsyncNotifierProvider<TopFolders, List<String>>.internal(
+  TopFolders.new,
+  name: r'topFoldersProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$appStateHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$topFoldersHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$AppState = Notifier<model.AppState>;
+typedef _$TopFolders = AsyncNotifier<List<String>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
