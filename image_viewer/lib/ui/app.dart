@@ -20,7 +20,7 @@ class App extends ConsumerWidget {
       drawer: nav.drawer(context, ref, state),
       body: CustomScrollView(slivers: [
         SliverAppBar(
-          title: const Text('Image Viewer'),
+          title: const Text(Const.appName),
           snap: true,
           floating: true,
           actions: getZoomActions(ref),

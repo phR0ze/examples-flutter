@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../const.dart';
 import '../providers/app_state.dart';
 import '../model/exports.dart' as model;
 import 'common/comms.dart';
@@ -14,10 +15,11 @@ Widget drawer(BuildContext context, WidgetRef ref, model.AppState state) {
           decoration: BoxDecoration(
             color: Colors.blue,
           ),
-          child: Text('Drawer Header'),
+          child: Text(Const.appName),
         ),
         ListTile(
-          title: const Text('Home'),
+          title: const Text('Folders'),
+          leading: const Icon(Icons.folder),
           selected: state.currentRoute == 0,
           onTap: () {
             ref.read(appStateProvider.notifier).setCurrentRoute(0);
@@ -26,7 +28,8 @@ Widget drawer(BuildContext context, WidgetRef ref, model.AppState state) {
           },
         ),
         ListTile(
-          title: const Text('Business'),
+          title: const Text('Gallery'),
+          leading: const Icon(Icons.photo_library),
           selected: state.currentRoute == 1,
           onTap: () {
             ref.read(appStateProvider.notifier).setCurrentRoute(1);
@@ -35,7 +38,8 @@ Widget drawer(BuildContext context, WidgetRef ref, model.AppState state) {
           },
         ),
         ListTile(
-          title: const Text('School'),
+          title: const Text('Settings'),
+          leading: const Icon(Icons.settings),
           selected: state.currentRoute == 2,
           onTap: () {
             ref.read(appStateProvider.notifier).setCurrentRoute(2);

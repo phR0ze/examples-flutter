@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class Const {
+  static const appName = 'Image Viewer';
+  static const appVer = '0.0.1';
+
   // App assets
   static const imagePlaceholder = 'assets/images/placeholder.png';
 
