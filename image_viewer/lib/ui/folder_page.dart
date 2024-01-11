@@ -31,7 +31,7 @@ class _FolderPageState extends ConsumerState<FolderPage> {
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
             title: Text('${widget.folder.name} (${widget.folder.count})',
                 style: Theme.of(context).textTheme.titleLarge),
-            actions: getZoomActions(ref),
+            actions: zoomActions(ref),
           ),
           SliverPadding(
             // Page content external padding

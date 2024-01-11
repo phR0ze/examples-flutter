@@ -12,9 +12,9 @@ Widget drawer(BuildContext context, WidgetRef ref, model.AppState state) {
       padding: EdgeInsets.zero,
       children: [
         DrawerHeader(
-          decoration: const BoxDecoration(
-            color: Colors.blue,
-          ),
+          // decoration: const BoxDecoration(
+          //   color: Colors.blue,
+          // ),
           child: Text(Const.appName, style: Theme.of(context).textTheme.headlineMedium),
         ),
         ListTile(

@@ -14,7 +14,7 @@ class AppState extends _$AppState {
   }
 
   // Toggle dark mode
-  void togglDarkMode() {
+  void toggleDarkMode() {
     state = state.copyWith(darkMode: !state.darkMode);
   }
 

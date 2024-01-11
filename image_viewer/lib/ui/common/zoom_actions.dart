@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/app_state.dart';
 
-List<IconButton> getZoomActions(WidgetRef ref, {bool topLevel = false}) {
+List<IconButton> zoomActions(WidgetRef ref, {bool topLevel = false}) {
   // Zoom in on the tile
   return [
     IconButton(
@@ -17,7 +17,7 @@ List<IconButton> getZoomActions(WidgetRef ref, {bool topLevel = false}) {
         padding: const EdgeInsets.fromLTRB(0, 2.0, 0, 0),
         child: Transform.scale(
           scale: 1.3,
-          child: const Icon(Icons.zoom_in, color: Colors.black),
+          child: const Icon(Icons.zoom_in),
         ),
       ),
     ),
@@ -35,10 +35,7 @@ List<IconButton> getZoomActions(WidgetRef ref, {bool topLevel = false}) {
         padding: const EdgeInsets.fromLTRB(0, 2.0, 5, 0),
         child: Transform.scale(
           scale: 1.3,
-          child: const Icon(
-            Icons.zoom_out,
-            color: Colors.black,
-          ),
+          child: const Icon(Icons.zoom_out),
         ),
       ),
     ),

@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:image_viewer/ui/common/top_folder_action.dart';
+import 'package:image_viewer/ui/common/add_folder_action.dart';
+import 'package:image_viewer/ui/common/theme_action.dart';
 import '../const.dart';
 import '../providers/exports.dart';
 import 'common/async_builder.dart';
@@ -24,7 +25,7 @@ class FoldersPage extends ConsumerWidget {
           title: const Text(Const.appName),
           snap: true,
           floating: true,
-          actions: getTopFolderAction(ref) + getZoomActions(ref),
+          actions: addFolderAction(ref) + zoomActions(ref) + themeModeAction(ref),
         ),
         SliverPadding(
             padding: const EdgeInsets.all(Const.pageOutsidePadding),
