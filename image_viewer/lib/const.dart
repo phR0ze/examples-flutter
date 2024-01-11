@@ -11,6 +11,7 @@ class Const {
   static const textExt = ['.md', '.txt', '.text', '.json', '.yaml', '.csv'];
 
   // App assets
+  static const assetDocumentIcon = 'assets/images/document-icon.png';
   static const assetImagePlaceholder = 'assets/images/placeholder.png';
 
   /// AppBar hight

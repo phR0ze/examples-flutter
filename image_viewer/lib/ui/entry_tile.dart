@@ -42,7 +42,7 @@ class EntryTile extends StatelessWidget {
             BackgroundImage(entry),
 
             // Gradient to fade out background image so overlay badges are more visible
-            const Gradient(top: true),
+            if (entry is! model.ImageEntry && entry is! model.TextEntry) const Gradient(top: true),
 
             // Show the index of the tile for debugging purposes
             if (entry is model.FolderEntry)
@@ -66,8 +66,8 @@ class EntryTile extends StatelessWidget {
                 ),
               ),
 
-            if (entry is! model.ImageEntry) const Gradient(),
-            if (entry is! model.ImageEntry)
+            if (entry is model.FolderEntry) const Gradient(),
+            if (entry is model.FolderEntry || entry is model.TextEntry)
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Text(entry.name,
@@ -108,24 +108,23 @@ class BackgroundImage extends StatelessWidget {
           ),
         );
       case final model.TextEntry _:
-        return const FittedBox(
-          fit: BoxFit.fill,
-          child: Icon(Icons.article),
+        return Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(Const.assetDocumentIcon),
+              fit: BoxFit.cover,
+            ),
+          ),
         );
       case final model.UnsupportedEntry _:
         return FittedBox(
           fit: BoxFit.fill,
           child: Container(
-              //color: const Color.fromRGBO(28, 40, 55, 1),
-              color: Colors.blue,
+              color: Colors.grey,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    Text(entry.ext.isEmpty ? entry.name : entry.ext,
-                        style: Theme.of(context).textTheme.labelSmall!),
-                  ],
-                ),
+                child: Text(entry.ext.isEmpty ? entry.name : entry.ext,
+                    style: Theme.of(context).textTheme.labelSmall!),
               )),
         );
       case final model.FolderEntry x:
