@@ -42,8 +42,9 @@ class MyApp extends ConsumerWidget {
       // darkTheme: ThemeData(
       //   useMaterial3: true,
       //   colorScheme: ColorScheme.fromSeed(
-      //     seedColor: Color
-      //     brightness: Brightness.dark,
+      //     seedColor: Const.colorPrimary,
+      //     primary: Const.colorPrimary,
+      //     secondary: Const.colorPrimary,
       //   ),
       //   // appBarTheme: const AppBarTheme(
       //   //   backgroundColor: Colors.blue,

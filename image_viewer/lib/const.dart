@@ -31,6 +31,8 @@ class Const {
   // Padding between grid tiles
   static const pageGridPadding = 2.0;
 
+  static const colorPrimary = Color(0xFF00344E);
+
   // screen: 2560
   static const ultraWideThreshold = 1200;
   static const wideThreshold = 800;
@@ -76,7 +78,8 @@ class Const {
     onPrimary: Color(0xFF00344E),
     primaryContainer: Color(0xFF004B6F),
     onPrimaryContainer: Color(0xFFC9E6FF),
-    secondary: Color(0xFFB7C9D9),
+    secondary: Color.fromARGB(255, 226, 140, 28),
+    // secondary: Color(0xFFB7C9D9),
     onSecondary: Color(0xFF22323F),
     secondaryContainer: Color(0xFF384956),
     onSecondaryContainer: Color(0xFFD3E5F5),
@@ -91,12 +94,26 @@ class Const {
     background: Color(0xFF1A1C1E),
     onBackground: Color(0xFFE2E2E5),
     surface: Color(0xFF1A1C1E),
+
+    // AppBar text, Drawer text
+    //onSurface: Color.fromARGB(255, 228, 12, 228),
     onSurface: Color(0xFFE2E2E5),
+
     surfaceVariant: Color(0xFF41474D),
+
+    // Icons,
+    //onSurfaceVariant: Color.fromARGB(255, 9, 224, 27),
     onSurfaceVariant: Color(0xFFC1C7CE),
+
     outline: Color(0xFF8B9198),
+
+    //
     onInverseSurface: Color(0xFF1A1C1E),
+
+    // SnackBar background
+    // inverseSurface: Color(0xFF00344E),
     inverseSurface: Color(0xFFE2E2E5),
+
     inversePrimary: Color(0xFF006491),
     shadow: Color(0xFF000000),
     surfaceTint: Color(0xFF8ACEFF),

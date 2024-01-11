@@ -16,9 +16,7 @@ showSnackBar(String message) {
           content: Center(
             child: Text(
               message,
-              style: const TextStyle(
-                color: Colors.white,
-              ),
+              //style: const TextStyle(),
             ),
           ),
         ),
