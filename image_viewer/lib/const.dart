@@ -4,6 +4,9 @@ class Const {
   static const appName = 'Image Viewer';
   static const appVer = '0.0.1';
 
+  /// Flutters default image format support
+  static const imageExt = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.wbmp'];
+
   // App assets
   static const imagePlaceholder = 'assets/images/placeholder.png';
 

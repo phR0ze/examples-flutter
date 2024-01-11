@@ -2,6 +2,7 @@
 Working on a simple image viewer in Flutter
 
 ## Backlog
+* [X] Add top level folder selection
 * [ ] Add a button to switch between light and dark mode
 * [X] Responsive layout for mobile and desktop
 * [X] Dismiss previous snackbar when a new one is triggered
