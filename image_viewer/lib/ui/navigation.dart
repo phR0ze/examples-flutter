@@ -47,38 +47,3 @@ Widget drawer(BuildContext context, WidgetRef ref, model.AppState state) {
     ),
   );
 }
-
-Widget rail(BuildContext context, WidgetRef ref, model.AppState state) {
-  return NavigationRail(
-    extended: true,
-    destinations: const [
-      NavigationRailDestination(
-        icon: Icon(Icons.home),
-        label: Text('Home'),
-      ),
-      NavigationRailDestination(
-        icon: Icon(Icons.feed),
-        label: Text('Feed'),
-      ),
-      NavigationRailDestination(
-        icon: Icon(Icons.favorite),
-        label: Text('Favorites'),
-      ),
-      NavigationRailDestination(
-        icon: Icon(Icons.settings),
-        label: Text('Settings'),
-      ),
-    ],
-    labelType: NavigationRailLabelType.all,
-    selectedIndex: state.currentRoute,
-    selectedIconTheme: const IconThemeData(color: Colors.blue),
-    onDestinationSelected: (value) {
-      showSnackBar('You chose navigation option: #$value');
-
-      // Check if the route has changed so we don't trigger a rebuild when not needed
-      if (state.currentRoute != value) {
-        ref.read(appStateProvider.notifier).setCurrentRoute(value);
-      }
-    },
-  );
-}
