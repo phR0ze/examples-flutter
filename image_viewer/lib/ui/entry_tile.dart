@@ -51,7 +51,7 @@ class EntryTile extends StatelessWidget {
                 right: 5,
                 child: Text(
                   '(${entry.count})',
-                  style: Theme.of(context).textTheme.titleSmall!,
+                  style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white),
                 ),
               ),
 
@@ -62,17 +62,25 @@ class EntryTile extends StatelessWidget {
                 top: 5,
                 child: Text(
                   '$index',
-                  style: Theme.of(context).textTheme.titleSmall!,
+                  style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white),
                 ),
               ),
 
-            if (entry is model.FolderEntry) const Gradient(),
-            if (entry is model.FolderEntry || entry is model.TextEntry)
+            if (entry is model.FolderEntry ||
+                entry is model.TextEntry ||
+                entry is model.UnsupportedEntry)
+              const Gradient(),
+            if (entry is model.FolderEntry ||
+                entry is model.TextEntry ||
+                entry is model.UnsupportedEntry)
               Align(
                 alignment: Alignment.bottomCenter,
-                child: Text(entry.name,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.titleSmall!),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 2, right: 2, bottom: 1),
+                  child: Text(entry.name,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white)),
+                ),
               ),
           ],
         ));
@@ -124,7 +132,7 @@ class BackgroundImage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(entry.ext.isEmpty ? entry.name : entry.ext,
-                    style: Theme.of(context).textTheme.labelSmall!),
+                    style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white)),
               )),
         );
       case final model.FolderEntry x:
@@ -161,6 +169,7 @@ class Gradient extends StatelessWidget {
         gradient: LinearGradient(
           colors: const [
             Colors.black87,
+            // Colors.white60,
             Colors.transparent,
           ],
           // Start gradient fading immediately and reach full fade at 30% of tile direction
