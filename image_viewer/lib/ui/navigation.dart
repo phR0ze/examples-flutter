@@ -33,7 +33,7 @@ Widget drawer(BuildContext context, WidgetRef ref, model.AppState state) {
           selected: state.currentRoute == 1,
           onTap: () {
             ref.read(appStateProvider.notifier).setCurrentRoute(1);
-            showSnackBar('You chose navigation option: #1');
+            showSnackBar('Gallery is not yet implmented');
             Navigator.pop(context);
           },
         ),
