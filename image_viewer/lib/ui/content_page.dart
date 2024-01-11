@@ -1,64 +1,63 @@
 import 'package:flutter/material.dart';
-import 'common/comms.dart';
-import 'common/swipe_detector.dart';
+import 'package:image_viewer/ui/text_view.dart';
+import '../model/exports.dart' as model;
+import 'image_view.dart';
 
-import '../const.dart';
-
-class ImagePage extends StatefulWidget {
-  String id;
-  int index;
-  String image;
-  final List<String> images;
-  ImagePage(this.id, this.index, this.image, this.images, {super.key});
+class ContentPage extends StatefulWidget {
+  final model.FileEntry entry;
+  const ContentPage(this.entry, {super.key});
 
   @override
-  State<ImagePage> createState() => _ImagePageState();
+  State<ContentPage> createState() => _ContentPageState();
 }
 
-class _ImagePageState extends State<ImagePage> {
+class _ContentPageState extends State<ContentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Image view'),
-        backgroundColor: Colors.grey,
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text(widget.entry.name, style: Theme.of(context).textTheme.titleLarge),
       ),
-      body: SwipeDetector(
-          child: Center(
-              child: GridTile(
-            header: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Text(widget.id, style: Theme.of(context).textTheme.displayMedium),
-            ),
-            child: Image.asset(
-              Const.assetImagePlaceholder,
-              fit: BoxFit.contain,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-            ),
-          )),
-          onSwipeUp: () => showSnackBar('Show image details!'),
-          onSwipeDown: () => Navigator.pop(context),
-          onSwipeLeft: () => {
-                if (widget.index + 1 < widget.images.length - 1)
-                  {
-                    setState(() {
-                      widget.index++;
-                      widget.id = '1.${widget.index}';
-                      widget.image = widget.images[widget.index];
-                    })
-                  }
-              },
-          onSwipeRight: () => {
-                if (widget.index > 0)
-                  {
-                    setState(() {
-                      widget.index--;
-                      widget.id = '1.${widget.index}';
-                      widget.image = widget.images[widget.index];
-                    })
-                  }
-              }),
+      body: widget.entry.isImage
+          ? ImageView(widget.entry as model.ImageEntry)
+          : TextView(widget.entry as model.TextEntry),
+      // body: SwipeDetector(
+      //     child: Center(
+      //         child: GridTile(
+      //       header: Padding(
+      //         padding: const EdgeInsets.all(20.0),
+      //         child: Text(widget.id, style: Theme.of(context).textTheme.displayMedium),
+      //       ),
+      //       child: Image.asset(
+      //         Const.assetImagePlaceholder,
+      //         fit: BoxFit.contain,
+      //         width: MediaQuery.of(context).size.width,
+      //         height: MediaQuery.of(context).size.height,
+      //       ),
+      //     )),
+      //     onSwipeUp: () => showSnackBar('Show image details!'),
+      //     onSwipeDown: () => Navigator.pop(context),
+      //     onSwipeLeft: () => {
+      //           if (widget.index + 1 < widget.images.length - 1)
+      //             {
+      //               setState(() {
+      //                 widget.index++;
+      //                 widget.id = '1.${widget.index}';
+      //                 widget.image = widget.images[widget.index];
+      //               })
+      //             }
+      //         },
+      //     onSwipeRight: () => {
+      //           if (widget.index > 0)
+      //             {
+      //               setState(() {
+      //                 widget.index--;
+      //                 widget.id = '1.${widget.index}';
+      //                 widget.image = widget.images[widget.index];
+      //               })
+      //             }
+      //         }),
     );
   }
 }

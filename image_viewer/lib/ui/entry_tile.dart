@@ -2,9 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import '../../const.dart';
 import '../model/exports.dart' as model;
-import 'file_page.dart';
+import 'content_page.dart';
 import 'folder_page.dart';
-import 'text_page.dart';
 
 class EntryTile extends StatelessWidget {
   final model.Entry entry;
@@ -29,10 +28,8 @@ class EntryTile extends StatelessWidget {
                       switch (entry) {
                         case final model.FolderEntry folder:
                           return FolderPage(folder);
-                        case final model.TextEntry text:
-                          return TextPage(text);
                         default:
-                          return FilePage(entry as model.FileEntry);
+                          return ContentPage(entry as model.FileEntry);
                       }
                     },
                   ),
