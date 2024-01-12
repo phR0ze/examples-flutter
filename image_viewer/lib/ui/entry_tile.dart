@@ -6,17 +6,20 @@ import 'content_page.dart';
 import 'folder_page.dart';
 
 class EntryTile extends StatelessWidget {
-  final model.Entry entry;
+  final model.FolderEntry folder;
   final int? index;
 
   const EntryTile(
-    this.entry, {
-    super.key,
+    this.folder, {
     this.index,
+    super.key,
   });
 
   @override
   Widget build(BuildContext context) {
+    // If index is specified then this is entry in a folder else it is the folder
+    final entry = index != null ? folder[index!] : folder;
+
     return GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: entry.isSupported

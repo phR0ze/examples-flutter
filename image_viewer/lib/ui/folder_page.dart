@@ -44,7 +44,7 @@ class _FolderPageState extends ConsumerState<FolderPage> {
                     crossAxisSpacing: Const.pageGridPadding),
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
-                    return EntryTile(widget.folder.entries[index]);
+                    return EntryTile(widget.folder, index: index);
                   },
                   childCount: widget.folder.length,
                 )),

@@ -23,6 +23,9 @@ class FolderEntry extends Entry {
     entries.add(FolderEntry(folder.path));
   }
 
+  /// Get the entry at the specified index
+  Entry operator [](int index) => entries[index];
+
   /// Get the first image file from this folder
   ImageEntry? get firstImage {
     // First try all the files in the folder then fall back on recursion

@@ -46,7 +46,7 @@ class FoldersPage extends ConsumerWidget {
                           return const Center(child: Text('Error loading folders'));
                         }
                       }
-                      return EntryTile(entries[index]);
+                      return EntryTile(entries[index] as model.FolderEntry);
                     },
                     childCount: entries.length + (res.isLoading || res.hasError ? 1 : 0),
                   ));
