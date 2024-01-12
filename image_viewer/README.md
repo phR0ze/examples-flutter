@@ -2,7 +2,7 @@
 Working on a simple image viewer in Flutter
 
 ## Backlog
-* [ ] Navigate to prev and next from content page
+* [X] Navigate to prev and next from content page
 * [X] Add top level folder selection
 * [ ] Add a button to switch between light and dark mode
 * [X] Responsive layout for mobile and desktop
