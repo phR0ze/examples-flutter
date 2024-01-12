@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/logger.dart';
 import 'text_view.dart';
 import '../model/exports.dart' as model;
 import 'common/exports.dart';
@@ -14,9 +15,29 @@ class ContentPage extends StatefulWidget {
 }
 
 class _ContentPageState extends State<ContentPage> {
+  var i = -1;
+
+  @override
+  void initState() {
+    super.initState();
+    i = widget.index;
+  }
+
+  // Get the entry widget for the current index
+  Widget _entryWidget(model.Entry entry) {
+    switch (entry) {
+      case model.ImageEntry x:
+        return ImageView(x);
+      case model.TextEntry x:
+        return TextView(x);
+      default:
+        return Container();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final entry = widget.folder[widget.index];
+    final entry = widget.folder[i];
 
     return Scaffold(
       appBar: AppBar(
@@ -24,31 +45,25 @@ class _ContentPageState extends State<ContentPage> {
         title: Text(entry.name, style: Theme.of(context).textTheme.titleLarge),
       ),
       body: SwipeDetector(
-        child: entry.isImage
-            ? ImageView(entry as model.ImageEntry)
-            : TextView(entry as model.TextEntry),
+        child: _entryWidget(entry),
         onSwipeUp: () => showSnackBar('Show image details!'),
         onSwipeDown: () => Navigator.pop(context),
-        // onSwipeLeft: () => {
-        //   if (widget.index + 1 < widget.images.length - 1)
-        //     {
-        //       setState(() {
-        //         widget.index++;
-        //         widget.id = '1.${widget.index}';
-        //         widget.image = widget.images[widget.index];
-        //       })
-        //     }
-        // },
-        // onSwipeRight: () => {
-        //   if (widget.index > 0)
-        //     {
-        //       setState(() {
-        //         widget.index--;
-        //         widget.id = '1.${widget.index}';
-        //         widget.image = widget.images[widget.index];
-        //       })
-        //     }
-        // },
+        onSwipeLeft: () {
+          if (i + 1 < widget.folder.length - 1) {
+            setState(() {
+              log.info('Show the next image');
+              i++;
+            });
+          }
+        },
+        onSwipeRight: () {
+          if (i > 0) {
+            setState(() {
+              log.info('Show the prevous image');
+              i--;
+            });
+          }
+        },
       ),
     );
   }

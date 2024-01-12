@@ -1,6 +1,8 @@
 import 'dart:developer' as developer;
 import 'package:flutter/foundation.dart';
 
+/// A simple logger that can be used to log messages to the console in color during
+/// development which doesn't log anything in release mode.
 Logger get log => Logger();
 
 class Logger {

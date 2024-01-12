@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../const.dart';
 import '../model/exports.dart' as model;
@@ -59,7 +60,7 @@ class EntryTile extends StatelessWidget {
               ),
 
             // Show the index of the tile for debugging purposes
-            if (index != null)
+            if (kDebugMode && index != null)
               Positioned(
                 left: 5,
                 top: 5,
