@@ -5,8 +5,9 @@ import 'common/exports.dart';
 import 'image_view.dart';
 
 class ContentPage extends StatefulWidget {
-  final model.FileEntry entry;
-  const ContentPage(this.entry, {super.key});
+  final model.FolderEntry folder;
+  final int index;
+  const ContentPage(this.folder, this.index, {super.key});
 
   @override
   State<ContentPage> createState() => _ContentPageState();
@@ -15,15 +16,17 @@ class ContentPage extends StatefulWidget {
 class _ContentPageState extends State<ContentPage> {
   @override
   Widget build(BuildContext context) {
+    final entry = widget.folder[widget.index];
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.entry.name, style: Theme.of(context).textTheme.titleLarge),
+        title: Text(entry.name, style: Theme.of(context).textTheme.titleLarge),
       ),
       body: SwipeDetector(
-        child: widget.entry.isImage
-            ? ImageView(widget.entry as model.ImageEntry)
-            : TextView(widget.entry as model.TextEntry),
+        child: entry.isImage
+            ? ImageView(entry as model.ImageEntry)
+            : TextView(entry as model.TextEntry),
         onSwipeUp: () => showSnackBar('Show image details!'),
         onSwipeDown: () => Navigator.pop(context),
         // onSwipeLeft: () => {

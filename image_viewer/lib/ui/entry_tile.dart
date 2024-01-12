@@ -32,7 +32,7 @@ class EntryTile extends StatelessWidget {
                         case final model.FolderEntry folder:
                           return FolderPage(folder);
                         default:
-                          return ContentPage(entry as model.FileEntry);
+                          return ContentPage(folder, index!);
                       }
                     },
                   ),
