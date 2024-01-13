@@ -2,9 +2,10 @@
 Working on a simple image viewer in Flutter
 
 ## Backlog
+* [ ] Setup Android storage permissions
 * [X] Navigate to prev and next from content page
 * [X] Add top level folder selection
-* [ ] Add a button to switch between light and dark mode
+* [X] Add a button to switch between light and dark mode
 * [X] Responsive layout for mobile and desktop
 * [X] Dismiss previous snackbar when a new one is triggered
 * [X] Adding global snackbar for comms to the user
