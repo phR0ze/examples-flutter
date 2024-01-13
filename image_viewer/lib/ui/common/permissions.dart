@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import '../../utils/logger.dart';
 import 'exports.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -13,6 +14,7 @@ class PermissionHandler extends StatefulWidget {
 
 class _PermissionHandlerState extends State<PermissionHandler> {
   late Future<PermissionStatus> _storagePermissionGetter;
+  bool next = false;
 
   @override
   void initState() {
@@ -34,9 +36,13 @@ class _PermissionHandlerState extends State<PermissionHandler> {
   // If the user has already chosen
   // `Deny And Don't Ask Again` then open the app settings so they can change it.
   Future<PermissionStatus> _getStoragePermission() async {
+    log.info('Getting storage permission');
     // Linux has no support for this
     if (Platform.isLinux) {
-      return PermissionStatus.granted;
+      if (next) {
+        return PermissionStatus.granted;
+      }
+      return PermissionStatus.denied;
     }
 
     // Prompt the user with a dialog
@@ -64,10 +70,50 @@ class _PermissionHandlerState extends State<PermissionHandler> {
           }
           if (snapshot.hasData) {
             final storagePermission = snapshot.data!;
+
+            // Prompt the user to try again since we can't use the app othewise
+            if (storagePermission.isDenied) {
+              return AlertDialog(
+                title: const Text('Permission denied'),
+                content: const Text('Reading and writing storage is required to use this app.'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text('Cancel'),
+                  ),
+                  TextButton(
+                    onPressed: () => setState(() {
+                      Navigator.of(context).pop();
+                      next = true;
+                      _storagePermissionGetter = _getStoragePermission();
+                    }),
+                    child: const Text('Retry'),
+                  ),
+                ],
+              );
+            }
+
             if (storagePermission.isGranted) {
               return const Text('Permission granted');
             } else if (storagePermission.isPermanentlyDenied) {
-              return const Text('Permission permanently denied');
+              return AlertDialog(
+                title: const Text('Permission denied'),
+                content: const Text(
+                    'Reading and writing storage is required to use this app. Please grant permission in the settings.'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text('Cancel'),
+                  ),
+                  TextButton(
+                    onPressed: () async {
+                      await openAppSettings();
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Open settings'),
+                  ),
+                ],
+              );
             } else if (storagePermission.isDenied) {
               return const Text('Permission is denied');
             }
