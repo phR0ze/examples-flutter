@@ -38,13 +38,13 @@ class _PermissionHandlerState extends State<PermissionHandler> {
       _androidInfo = await DeviceInfoPlugin().androidInfo;
       if (_androidInfo.version.sdkInt <= 32) {
         // Android 12 and below
+        //return await [Permission.manageExternalStorage].request();
         return await [Permission.storage].request();
       } else {
         // Android 13 and above
         return await [Permission.photos, Permission.videos].request();
       }
     }
-    // Permission.manageExternalStorage].request();
     // Default for systems like Linux just ignore this
     return {Permission.storage: PermissionStatus.granted};
   }
