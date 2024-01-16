@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import '../../utils/logger.dart';
 import 'exports.dart';
@@ -13,15 +14,16 @@ class PermissionHandler extends StatefulWidget {
 }
 
 class _PermissionHandlerState extends State<PermissionHandler> {
-  late Future<PermissionStatus> _storagePermissionGetter;
+  late AndroidDeviceInfo _androidInfo;
+  late Future<Map<Permission, PermissionStatus>> _permissionGetter;
 
   @override
   void initState() {
     super.initState();
-    _storagePermissionGetter = _getStoragePermission();
+    _permissionGetter = _getPermissions();
   }
 
-  // Prompt the user for permission to access the filesystem.
+  // Prompt the user for permissions for needed features
   //
   // If the user has not yet been prompted or has already chosen 'Deny' once
   // * a dialog is shown "Allow APP_NAME to access photos, media, and files on your device?"
@@ -30,26 +32,56 @@ class _PermissionHandlerState extends State<PermissionHandler> {
   // * choosing "Deny" triggers the dialog again the next time a check is made
   // * choosing "Deny" a second time completes any future requests with fail without the dialog
   //
-  Future<PermissionStatus> _getStoragePermission() async {
-    log.info('Getting storage permission');
-    // Linux has no support for this
-    if (Platform.isLinux) {
-      return PermissionStatus.granted;
+  Future<Map<Permission, PermissionStatus>> _getPermissions() async {
+    log.info('Getting permissions');
+    if (Platform.isAndroid) {
+      _androidInfo = await DeviceInfoPlugin().androidInfo;
+      if (_androidInfo.version.sdkInt <= 32) {
+        // Android 12 and below
+        return await [Permission.storage].request();
+      } else {
+        // Android 13 and above
+        return await [Permission.photos, Permission.videos].request();
+      }
     }
-    return await Permission.storage.request();
+    // Permission.manageExternalStorage].request();
+    // Default for systems like Linux just ignore this
+    return {Permission.storage: PermissionStatus.granted};
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<PermissionStatus>(
-        future: _storagePermissionGetter,
-        builder: (BuildContext context, AsyncSnapshot<PermissionStatus> snapshot) {
+      body: FutureBuilder<Map<Permission, PermissionStatus>>(
+        future: _permissionGetter,
+        builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: LoadingIndicator(size: 200, bottom: 100));
           }
           if (snapshot.hasData) {
-            final storagePermission = snapshot.data!;
+            // Check permissions
+            final permissions = snapshot.data!;
+            var storagePermission = PermissionStatus.granted;
+            if (permissions.containsKey(Permission.storage)) {
+              storagePermission = permissions[Permission.storage]!;
+            } else {
+              // Both permissions will be the same result as they are shown to the user at
+              // the same time and will have the same response.
+              switch (permissions[Permission.photos]) {
+                case PermissionStatus.denied:
+                  storagePermission = PermissionStatus.denied;
+                case PermissionStatus.permanentlyDenied:
+                  storagePermission = PermissionStatus.permanentlyDenied;
+                case PermissionStatus.restricted:
+                  storagePermission = PermissionStatus.restricted;
+                case PermissionStatus.limited:
+                  storagePermission = PermissionStatus.limited;
+                case PermissionStatus.provisional:
+                  storagePermission = PermissionStatus.provisional;
+                default:
+                  storagePermission = PermissionStatus.granted;
+              }
+            }
 
             // Prompt the user to try again since we can't use the app othewise
             if (storagePermission.isDenied) {
@@ -63,14 +95,19 @@ class _PermissionHandlerState extends State<PermissionHandler> {
                   ),
                   TextButton(
                     onPressed: () => setState(() {
-                      _storagePermissionGetter = _getStoragePermission();
+                      _permissionGetter = _getPermissions();
                     }),
                     child: const Text('Retry'),
                   ),
                 ],
               );
             } else if (storagePermission.isGranted) {
+              // ******************************************************
+              // Permission check succeeded so load the target widget
+              // ******************************************************
               return widget.child ?? const SizedBox();
+              // ******************************************************
+              // ******************************************************
             } else if (storagePermission.isPermanentlyDenied) {
               return AlertDialog(
                 title: const Text('Permission denied permanently'),
@@ -85,7 +122,7 @@ class _PermissionHandlerState extends State<PermissionHandler> {
                     onPressed: () async {
                       await openAppSettings();
                       setState(() {
-                        _storagePermissionGetter = _getStoragePermission();
+                        _permissionGetter = _getPermissions();
                       });
                     },
                     child: const Text('Open settings'),
@@ -104,7 +141,7 @@ class _PermissionHandlerState extends State<PermissionHandler> {
               bottom: 100,
               msg: 'Error loading permissions',
               onRetry: () => setState(() {
-                _storagePermissionGetter = _getStoragePermission();
+                _permissionGetter = _getPermissions();
               }),
             ));
           }
