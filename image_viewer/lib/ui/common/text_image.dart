@@ -55,26 +55,23 @@ class TextImage extends ImageProvider<TextImage> {
     // Read the entire file as a string.
     final text = await File(path).readAsString();
 
-    // Draw the text to a canvas and convert to an image
+    // Setup the canvas recorder
     final recorder = ui.PictureRecorder();
     final canvas = Canvas(recorder);
 
-    final textPainter = TextPainter(
-      text: TextSpan(
-        text: text,
-        style: const TextStyle(color: Colors.white, fontSize: 12),
-      ),
+    // Draw the text to a canvas
+    final builder = ui.ParagraphBuilder(ui.ParagraphStyle(
+      textAlign: TextAlign.left,
+      fontSize: 12,
       textDirection: TextDirection.ltr,
-    );
-    textPainter.layout();
-    textPainter.paint(canvas, const Offset(0, 0));
+    ));
+    builder.addText(text);
+    final paragraph = builder.build();
+    paragraph.layout(ui.ParagraphConstraints(width: size.width));
+    // Offset.zero is the top left corner of the canvas
+    canvas.drawParagraph(paragraph, const Offset(8, 8));
 
-    // Draw a blue rectangle
-    // final stroke = Paint()
-    //   ..color = Colors.blue
-    //   ..style = PaintingStyle.fill;
-    // canvas.drawRect(const Rect.fromLTWH(0.0, 0.0, 100, 100), stroke);
-
+    // Convert the canvas to an image
     final picture = recorder.endRecording();
     final img = await picture.toImage(size.width.toInt(), size.height.toInt());
     final bytes = await img.toByteData(format: ui.ImageByteFormat.png);
