@@ -1,9 +1,28 @@
+import 'dart:io';
+
+import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
 import '../utils/logger.dart';
 import 'text_view.dart';
 import '../model/exports.dart' as model;
 import 'common/exports.dart';
 import 'image_view.dart';
+
+class ContentProvider extends EasyImageProvider {
+  @override
+  final int initialIndex;
+  final model.FolderEntry folder;
+
+  ContentProvider(this.folder, index) : initialIndex = index;
+
+  @override
+  int get imageCount => folder.length;
+
+  @override
+  ImageProvider<Object> imageBuilder(BuildContext context, int index) {
+    return FileImage(File(folder.entries[index].path));
+  }
+}
 
 class ContentPage extends StatefulWidget {
   final model.FolderEntry folder;
