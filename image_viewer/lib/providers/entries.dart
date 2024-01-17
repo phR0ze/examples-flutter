@@ -25,6 +25,20 @@ class Entries extends _$Entries {
           folder.add(subFolder);
         }
       }
+
+      // Now sort the folder; folders first, then files with both
+      // in alphabetical order.
+      folder.entries.sort((a, b) {
+        if (a is model.FolderEntry && b is model.FolderEntry) {
+          return a.name.compareTo(b.name);
+        } else if (a is model.FolderEntry) {
+          return -1;
+        } else if (b is model.FolderEntry) {
+          return 1;
+        } else {
+          return a.name.compareTo(b.name);
+        }
+      });
     }
 
     // Loop over top folders and add any new ones to the state to be processed

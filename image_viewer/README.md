@@ -7,6 +7,7 @@ Working on a simple image viewer in Flutter
 * [ ] Swipe to navigate between images isn't working correctly
 * [ ] Setup Android storage permissions
 * [ ] Write TextImageProvider
+* [X] Display all folders first and sort folders and files alphabetically
 * [X] Use easy_image_viewer for swipe, pinch to zoom and pan
 * [X] Navigate to prev and next from content page
 * [X] Add top level folder selection

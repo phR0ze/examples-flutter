@@ -48,7 +48,25 @@ class TextImage extends ImageProvider<TextImage> {
       PaintingBinding.instance.imageCache.evict(key);
       throw StateError('$file is empty and cannot be loaded as an image.');
     }
-    return decode(await ui.ImmutableBuffer.fromFilePath(file.path));
+
+    // Read the entire file as a string.
+    //final text = await File(path).readAsString();
+
+    // Draw the text to a canvas and convert to an image
+    final recorder = ui.PictureRecorder();
+    final canvas = Canvas(recorder);
+    final stroke = Paint()
+      ..color = Colors.blue
+      ..style = PaintingStyle.fill;
+    canvas.drawRect(const Rect.fromLTWH(0.0, 0.0, 100, 100), stroke);
+
+    final picture = recorder.endRecording();
+    final img = await picture.toImage(200, 200);
+    final bytes = await img.toByteData(format: ui.ImageByteFormat.png);
+    if (bytes == null) {
+      throw StateError('Error converting $path text bytes to image.');
+    }
+    return decode(await ui.ImmutableBuffer.fromUint8List(Uint8List.view(bytes.buffer)));
   }
 
   @override
