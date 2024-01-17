@@ -22,34 +22,39 @@ class _FolderPageState extends ConsumerState<FolderPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(appStateProvider);
 
-    return Scaffold(
-      body: Scrollbar(
-        controller: scrollController,
-        child: CustomScrollView(controller: scrollController, slivers: [
-          SliverAppBar(
-            snap: true,
-            floating: true,
-            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-            title: Text('${widget.folder.name} (${widget.folder.count})',
-                style: Theme.of(context).textTheme.titleLarge),
-            actions: zoomActions(ref) + themeModeAction(ref),
-          ),
-          SliverPadding(
-            // Page content external padding
-            padding: const EdgeInsets.all(Const.pageOutsidePadding),
-            sliver: SliverGrid(
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: state.subTileSize,
-                    mainAxisSpacing: Const.pageGridPadding,
-                    crossAxisSpacing: Const.pageGridPadding),
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    return EntryTile(widget.folder, index: index);
-                  },
-                  childCount: widget.folder.length,
-                )),
-          ),
-        ]),
+    return SafeArea(
+      left: false,
+      right: false,
+      top: false,
+      child: Scaffold(
+        body: Scrollbar(
+          controller: scrollController,
+          child: CustomScrollView(controller: scrollController, slivers: [
+            SliverAppBar(
+              snap: true,
+              floating: true,
+              backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+              title: Text('${widget.folder.name} (${widget.folder.count})',
+                  style: Theme.of(context).textTheme.titleLarge),
+              actions: zoomActions(ref) + themeModeAction(ref),
+            ),
+            SliverPadding(
+              // Page content external padding
+              padding: const EdgeInsets.all(Const.pageOutsidePadding),
+              sliver: SliverGrid(
+                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: state.subTileSize,
+                      mainAxisSpacing: Const.pageGridPadding,
+                      crossAxisSpacing: Const.pageGridPadding),
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return EntryTile(widget.folder, index: index);
+                    },
+                    childCount: widget.folder.length,
+                  )),
+            ),
+          ]),
+        ),
       ),
     );
   }

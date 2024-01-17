@@ -51,103 +51,108 @@ class _PermissionHandlerState extends State<PermissionHandler> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: FutureBuilder<Map<Permission, PermissionStatus>>(
-        future: _permissionGetter,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: LoadingIndicator(size: 200, bottom: 100));
-          }
-          if (snapshot.hasData) {
-            // Check permissions
-            final permissions = snapshot.data!;
-            var storagePermission = PermissionStatus.granted;
-            if (permissions.containsKey(Permission.storage)) {
-              storagePermission = permissions[Permission.storage]!;
-            } else {
-              // Both permissions will be the same result as they are shown to the user at
-              // the same time and will have the same response.
-              switch (permissions[Permission.photos]) {
-                case PermissionStatus.denied:
-                  storagePermission = PermissionStatus.denied;
-                case PermissionStatus.permanentlyDenied:
-                  storagePermission = PermissionStatus.permanentlyDenied;
-                case PermissionStatus.restricted:
-                  storagePermission = PermissionStatus.restricted;
-                case PermissionStatus.limited:
-                  storagePermission = PermissionStatus.limited;
-                case PermissionStatus.provisional:
-                  storagePermission = PermissionStatus.provisional;
-                default:
-                  storagePermission = PermissionStatus.granted;
+    return SafeArea(
+      left: false,
+      right: false,
+      top: false,
+      child: Scaffold(
+        body: FutureBuilder<Map<Permission, PermissionStatus>>(
+          future: _permissionGetter,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: LoadingIndicator(size: 200, bottom: 100));
+            }
+            if (snapshot.hasData) {
+              // Check permissions
+              final permissions = snapshot.data!;
+              var storagePermission = PermissionStatus.granted;
+              if (permissions.containsKey(Permission.storage)) {
+                storagePermission = permissions[Permission.storage]!;
+              } else {
+                // Both permissions will be the same result as they are shown to the user at
+                // the same time and will have the same response.
+                switch (permissions[Permission.photos]) {
+                  case PermissionStatus.denied:
+                    storagePermission = PermissionStatus.denied;
+                  case PermissionStatus.permanentlyDenied:
+                    storagePermission = PermissionStatus.permanentlyDenied;
+                  case PermissionStatus.restricted:
+                    storagePermission = PermissionStatus.restricted;
+                  case PermissionStatus.limited:
+                    storagePermission = PermissionStatus.limited;
+                  case PermissionStatus.provisional:
+                    storagePermission = PermissionStatus.provisional;
+                  default:
+                    storagePermission = PermissionStatus.granted;
+                }
               }
-            }
 
-            // Prompt the user to try again since we can't use the app othewise
-            if (storagePermission.isDenied) {
-              return AlertDialog(
-                title: const Text('Permission denied'),
-                content: const Text('Reading and writing storage is required to use this app.'),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('Cancel'),
-                  ),
-                  TextButton(
-                    onPressed: () => setState(() {
-                      _permissionGetter = _getPermissions();
-                    }),
-                    child: const Text('Retry'),
-                  ),
-                ],
-              );
-            } else if (storagePermission.isGranted) {
-              // ******************************************************
-              // Permission check succeeded so load the target widget
-              // ******************************************************
-              return widget.child ?? const SizedBox();
-              // ******************************************************
-              // ******************************************************
-            } else if (storagePermission.isPermanentlyDenied) {
-              return AlertDialog(
-                title: const Text('Permission denied permanently'),
-                content: const Text(
-                    'Reading and writing storage is required to use this app. Please grant permission in the settings.'),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('Cancel'),
-                  ),
-                  TextButton(
-                    onPressed: () async {
-                      await openAppSettings();
-                      setState(() {
+              // Prompt the user to try again since we can't use the app othewise
+              if (storagePermission.isDenied) {
+                return AlertDialog(
+                  title: const Text('Permission denied'),
+                  content: const Text('Reading and writing storage is required to use this app.'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () => setState(() {
                         _permissionGetter = _getPermissions();
-                      });
-                    },
-                    child: const Text('Open settings'),
-                  ),
-                ],
-              );
+                      }),
+                      child: const Text('Retry'),
+                    ),
+                  ],
+                );
+              } else if (storagePermission.isGranted) {
+                // ******************************************************
+                // Permission check succeeded so load the target widget
+                // ******************************************************
+                return widget.child ?? const SizedBox();
+                // ******************************************************
+                // ******************************************************
+              } else if (storagePermission.isPermanentlyDenied) {
+                return AlertDialog(
+                  title: const Text('Permission denied permanently'),
+                  content: const Text(
+                      'Reading and writing storage is required to use this app. Please grant permission in the settings.'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        await openAppSettings();
+                        setState(() {
+                          _permissionGetter = _getPermissions();
+                        });
+                      },
+                      child: const Text('Open settings'),
+                    ),
+                  ],
+                );
+              }
+              return const SizedBox();
             }
+
+            // Permission check failed
+            if (snapshot.hasError) {
+              return Center(
+                  child: ErrorRetry(
+                size: 100,
+                bottom: 100,
+                msg: 'Error loading permissions',
+                onRetry: () => setState(() {
+                  _permissionGetter = _getPermissions();
+                }),
+              ));
+            }
+
             return const SizedBox();
-          }
-
-          // Permission check failed
-          if (snapshot.hasError) {
-            return Center(
-                child: ErrorRetry(
-              size: 100,
-              bottom: 100,
-              msg: 'Error loading permissions',
-              onRetry: () => setState(() {
-                _permissionGetter = _getPermissions();
-              }),
-            ));
-          }
-
-          return const SizedBox();
-        },
+          },
+        ),
       ),
     );
   }

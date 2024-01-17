@@ -4,8 +4,10 @@ Working on a simple image viewer in Flutter
 ## Backlog
 * [ ] Add slide up panel https://pub.dev/packages/sliding_up_panel for image info
 * [ ] Setup Android storage permissions
-* [ ] Don't allow easy image viewer to load folders
 * [ ] Improve pinch to zoom sensativity
+* [ ] Persistent thumbnail cache
+* [X] Using SafeArea to avoid hiding content behind controls on bottom of screen
+* [X] Show placeholder image if not image or text for easy image viewer
 * [X] Increased thumbnail generation speed by caching thumbnails
 * [X] Write TextImageProvider
 * [X] Display all folders first and sort folders and files alphabetically
