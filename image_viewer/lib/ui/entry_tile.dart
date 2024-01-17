@@ -1,9 +1,11 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:io';
 import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../const.dart';
 import '../model/exports.dart' as model;
+import '../providers/app_state.dart';
 import 'content_page.dart';
 import 'folder_page.dart';
 
@@ -91,15 +93,15 @@ class EntryTile extends StatelessWidget {
 }
 
 /// Show a background image or color for the entry based on its type
-class BackgroundImage extends StatelessWidget {
+class BackgroundImage extends ConsumerWidget {
   final model.Entry entry;
   const BackgroundImage(this.entry, {super.key});
 
-  Widget _placeholderImage() {
+  Widget _placeholderImage(double width) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(Const.assetImagePlaceholder),
+          image: Image.asset(Const.assetImagePlaceholder, cacheWidth: width.toInt()).image,
           fit: BoxFit.cover,
         ),
       ),
@@ -107,22 +109,26 @@ class BackgroundImage extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(appStateProvider);
+
     switch (entry) {
       case final model.ImageEntry _:
         return Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: FileImage(File(entry.path)),
+              // by specifying width only we can retain the aspect ratio and still sample down
+              image: Image.file(File(entry.path), cacheWidth: state.subTileSize.toInt()).image,
               fit: BoxFit.cover,
             ),
           ),
         );
       case final model.TextEntry _:
         return Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(Const.assetDocumentIcon),
+              image: ResizeImage(const AssetImage(Const.assetDocumentIcon),
+                  width: state.subTileSize.toInt()),
               fit: BoxFit.cover,
             ),
           ),
@@ -144,19 +150,18 @@ class BackgroundImage extends StatelessWidget {
           return Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: FileImage(File(image.path)),
+                image: Image.file(File(image.path), cacheWidth: state.subTileSize.toInt()).image,
                 fit: BoxFit.cover,
               ),
             ),
           );
         } else {
-          return _placeholderImage();
+          return _placeholderImage(state.subTileSize);
         }
       default:
-        return _placeholderImage();
+        return _placeholderImage(state.subTileSize);
     }
   }
-  // }
 }
 
 /// Gradient allows for a subtle fade out of the background image so that

@@ -16,9 +16,16 @@ class ContentProvider extends EasyImageProvider {
 
   @override
   ImageProvider<Object> imageBuilder(BuildContext context, int index) {
+    final size = MediaQuery.of(context).size;
+
     if (folder.entries[index] is model.TextEntry) {
-      return TextImage(folder.entries[index].path, MediaQuery.of(context).size);
+      return TextImage(folder.entries[index].path, size);
     }
-    return FileImage(File(folder.entries[index].path));
+    // Don't want to sample down here as then we can't zoom in with good quality
+    // return Image.file(
+    //   File(folder.entries[index].path),
+    //   cacheWidth: size.width.toInt(),
+    // ).image;
+    return Image.file(File(folder.entries[index].path)).image;
   }
 }
