@@ -21,7 +21,7 @@ class ContentProvider extends EasyImageProvider {
   @override
   ImageProvider<Object> imageBuilder(BuildContext context, int index) {
     if (folder.entries[index] is model.TextEntry) {
-      return TextImage(folder.entries[index].path);
+      return TextImage(folder.entries[index].path, MediaQuery.of(context).size);
     }
     return FileImage(File(folder.entries[index].path));
   }

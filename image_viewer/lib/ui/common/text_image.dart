@@ -11,13 +11,16 @@ typedef _SimpleDecoderCallback = Future<ui.Codec> Function(ui.ImmutableBuffer bu
 @immutable
 class TextImage extends ImageProvider<TextImage> {
   /// Creates an object that decodes a [String] path to a text as an image.
-  const TextImage(this.path, {this.scale = 1.0});
+  const TextImage(this.path, this.size, {this.scale = 1.0});
 
   /// The path to read as a text file.
   ///
   /// The bytes represent encoded image bytes and can be encoded in any of the
   /// following supported image formats: {@macro dart.ui.imageFormats}
   final String path;
+
+  /// The screen size to use when drawing the text.
+  final Size size;
 
   /// The scale to place in the [ImageInfo] object of the image.
   final double scale;
@@ -50,18 +53,30 @@ class TextImage extends ImageProvider<TextImage> {
     }
 
     // Read the entire file as a string.
-    //final text = await File(path).readAsString();
+    final text = await File(path).readAsString();
 
     // Draw the text to a canvas and convert to an image
     final recorder = ui.PictureRecorder();
     final canvas = Canvas(recorder);
-    final stroke = Paint()
-      ..color = Colors.blue
-      ..style = PaintingStyle.fill;
-    canvas.drawRect(const Rect.fromLTWH(0.0, 0.0, 100, 100), stroke);
+
+    final textPainter = TextPainter(
+      text: TextSpan(
+        text: text,
+        style: const TextStyle(color: Colors.white, fontSize: 12),
+      ),
+      textDirection: TextDirection.ltr,
+    );
+    textPainter.layout();
+    textPainter.paint(canvas, const Offset(0, 0));
+
+    // Draw a blue rectangle
+    // final stroke = Paint()
+    //   ..color = Colors.blue
+    //   ..style = PaintingStyle.fill;
+    // canvas.drawRect(const Rect.fromLTWH(0.0, 0.0, 100, 100), stroke);
 
     final picture = recorder.endRecording();
-    final img = await picture.toImage(200, 200);
+    final img = await picture.toImage(size.width.toInt(), size.height.toInt());
     final bytes = await img.toByteData(format: ui.ImageByteFormat.png);
     if (bytes == null) {
       throw StateError('Error converting $path text bytes to image.');
