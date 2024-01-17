@@ -1,8 +1,8 @@
 import 'dart:io';
-
 import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
 import '../utils/logger.dart';
+import 'common/text_image.dart';
 import 'text_view.dart';
 import '../model/exports.dart' as model;
 import 'common/exports.dart';
@@ -20,10 +20,17 @@ class ContentProvider extends EasyImageProvider {
 
   @override
   ImageProvider<Object> imageBuilder(BuildContext context, int index) {
+    if (folder.entries[index] is model.TextEntry) {
+      return TextImage(folder.entries[index].path);
+    }
     return FileImage(File(folder.entries[index].path));
   }
 }
 
+//
+//
+//
+// Old code
 class ContentPage extends StatefulWidget {
   final model.FolderEntry folder;
   final int index;

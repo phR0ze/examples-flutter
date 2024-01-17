@@ -26,23 +26,16 @@ class EntryTile extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         onTap: entry.isSupported
             ? () {
-                if (entry is model.ImageEntry) {
-                  showImageViewerPager(context, ContentProvider(folder, index!),
-                      swipeDismissible: true, doubleTapZoomable: true);
-                } else {
+                if (entry is model.FolderEntry) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) {
-                        switch (entry) {
-                          case final model.FolderEntry folder:
-                            return FolderPage(folder);
-                          default:
-                            return ContentPage(folder, index!);
-                        }
-                      },
+                      builder: (context) => FolderPage(folder),
                     ),
                   );
+                } else {
+                  showImageViewerPager(context, ContentProvider(folder, index!),
+                      swipeDismissible: true, doubleTapZoomable: true);
                 }
               }
             : null,

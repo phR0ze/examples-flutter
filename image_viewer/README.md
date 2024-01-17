@@ -6,7 +6,8 @@ Working on a simple image viewer in Flutter
 * [ ] Swipeable https://pub.dev/packages/swipeable_page_route/example
 * [ ] Swipe to navigate between images isn't working correctly
 * [ ] Setup Android storage permissions
-* [ ] Use https://pub.dev/packages/easy_image_viewer
+* [ ] Write TextImageProvider
+* [X] Use easy_image_viewer for swipe, pinch to zoom and pan
 * [X] Navigate to prev and next from content page
 * [X] Add top level folder selection
 * [X] Add a button to switch between light and dark mode
