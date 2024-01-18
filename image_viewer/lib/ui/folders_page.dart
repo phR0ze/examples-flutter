@@ -18,6 +18,7 @@ class FoldersPage extends ConsumerWidget {
     final state = ref.watch(appStateProvider);
     final res = ref.watch(entriesProvider);
 
+    // Ensure content is not obscured by system UI at bottom of screen
     return SafeArea(
       left: false,
       right: false,

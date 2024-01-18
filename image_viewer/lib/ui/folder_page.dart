@@ -22,6 +22,7 @@ class _FolderPageState extends ConsumerState<FolderPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(appStateProvider);
 
+    // Ensure content is not obscured by system UI at bottom of screen
     return SafeArea(
       left: false,
       right: false,

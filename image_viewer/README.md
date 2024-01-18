@@ -6,6 +6,7 @@ Working on a simple image viewer in Flutter
 * [ ] Setup Android storage permissions
 * [ ] Improve pinch to zoom sensativity
 * [ ] Persistent thumbnail cache
+* [ ] Pre-cache prev and next images for performance
 * [X] Using SafeArea to avoid hiding content behind controls on bottom of screen
 * [X] Show placeholder image if not image or text for easy image viewer
 * [X] Increased thumbnail generation speed by caching thumbnails

@@ -51,6 +51,7 @@ class _PermissionHandlerState extends State<PermissionHandler> {
 
   @override
   Widget build(BuildContext context) {
+    // Ensure content is not obscured by system UI at bottom of screen
     return SafeArea(
       left: false,
       right: false,
