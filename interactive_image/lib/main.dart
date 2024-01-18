@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:mirage/mirage.dart' as mirage;
 import 'const.dart';
 
 void main() {
@@ -33,7 +33,16 @@ class MyHomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          //
+          showDialog(
+              context: context,
+              builder: (context) {
+                return const AlertDialog(
+                  title: Text('ImageView'),
+                  content: mirage.ImageView(
+                    AssetImage(Const.assetFreeImage),
+                  ),
+                );
+              });
         },
         tooltip: 'Launch ImageView',
         child: const Icon(Icons.launch),
