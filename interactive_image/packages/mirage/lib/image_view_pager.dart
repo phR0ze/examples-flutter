@@ -1,9 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'image_providers.dart';
 import 'image_view.dart';
 
-// PointerDeviceKind.mouse is excluded from drag scrolling by default
+// Enable mouse draging and scrolling for the page view which is excluded by default.
 // https://docs.flutter.dev/release/breaking-changes/default-scroll-behavior-drag
 class MouseEnabledScrollBehavior extends MaterialScrollBehavior {
   @override
@@ -14,12 +15,12 @@ class MouseEnabledScrollBehavior extends MaterialScrollBehavior {
 /// pan and zoom capablities.
 ///
 /// ### Parameters
-/// - `imageProvider` - The image provider to get the image from to display.
+/// - `imageProviderBuilder` - An ImageProviderBuilder for retrieving images.
 class ImageViewPager extends StatefulWidget {
   const ImageViewPager(this.imageProviders, {Key? key}) : super(key: key);
 
   /// The image provider to get the image from to display.
-  final List<ImageProvider> imageProviders;
+  final ImageProviders imageProviders;
 
   @override
   State<ImageViewPager> createState() => _ImageViewPagerState();
@@ -70,7 +71,7 @@ class _ImageViewPagerState extends State<ImageViewPager> {
                       ? const PageScrollPhysics()
                       : const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
-                    return ImageView(widget.imageProviders[index], onScale: (scale) {
+                    return ImageView(widget.imageProviders.get(context, index), onScale: (scale) {
                       setState(() {
                         // Disable page view swiping when the image is scaled
                         _dismissible = scale <= 1.0;

@@ -36,11 +36,11 @@ class MyHomePage extends StatelessWidget {
         onPressed: () {
           mirage.showImageViewPager(
             context,
-            [
-              const AssetImage(Const.assetDocumentIcon),
-              const AssetImage(Const.assetFreeImage),
-              const AssetImage(Const.assetImagePlaceholder),
-            ],
+            const mirage.ImageProviderList([
+              AssetImage(Const.assetDocumentIcon),
+              AssetImage(Const.assetFreeImage),
+              AssetImage(Const.assetImagePlaceholder),
+            ]),
           );
         },
         tooltip: 'Launch ImageView',
