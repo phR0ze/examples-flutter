@@ -34,9 +34,13 @@ class MyHomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          mirage.showImage(
+          mirage.showImageViewPager(
             context,
-            const AssetImage(Const.assetFreeImage),
+            [
+              const AssetImage(Const.assetDocumentIcon),
+              const AssetImage(Const.assetFreeImage),
+              const AssetImage(Const.assetImagePlaceholder),
+            ],
           );
         },
         tooltip: 'Launch ImageView',

@@ -1,7 +1,7 @@
 library mirage;
 
 import 'package:flutter/material.dart';
-import 'image_view.dart';
+import 'image_view_pager.dart';
 
 // Public exports
 // export 'image_view.dart' show ImageView;
@@ -13,12 +13,12 @@ import 'image_view.dart';
 /// ### Parameters
 /// - `context` - The context to show the dialog in.
 /// - `imageProvider` - The image provider to get the image from to display.
-Future<Dialog?> showImage(BuildContext context, ImageProvider imageProvider) {
+Future<Dialog?> showImageViewPager(BuildContext context, List<ImageProvider> imageProviders) {
   return showDialog<Dialog>(
       context: context,
       barrierColor: Colors.transparent,
       barrierDismissible: false,
       builder: (context) {
-        return ImageView(imageProvider, dismissible: true);
+        return ImageViewPager(imageProviders);
       });
 }
