@@ -3,6 +3,7 @@ Researching the interactiveviewer class
 https://api.flutter.dev/flutter/widgets/InteractiveViewer-class.html
 
 ## Backlog
+- [X] Fix page swiping on Linux
 - [X] Block page swiping when the image is scaled 
 - [X] Block page dissmissing when the image is scaled 
 - [X] Use PageView to make the page swipeable

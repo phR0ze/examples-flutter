@@ -1,6 +1,14 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'image_view.dart';
+
+// PointerDeviceKind.mouse is excluded from drag scrolling by default
+// https://docs.flutter.dev/release/breaking-changes/default-scroll-behavior-drag
+class MouseEnabledScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => PointerDeviceKind.values.toSet();
+}
 
 /// A dismissible paging system wrapping an interactive view to an image to provide
 /// pan and zoom capablities.
@@ -55,6 +63,7 @@ class _ImageViewPagerState extends State<ImageViewPager> {
             // Allows image to take the full screen
             SizedBox.expand(
               child: PageView.builder(
+                  scrollBehavior: MouseEnabledScrollBehavior(),
                   itemCount: widget.imageProviders.length,
                   controller: _pageController,
                   physics: _dismissible
