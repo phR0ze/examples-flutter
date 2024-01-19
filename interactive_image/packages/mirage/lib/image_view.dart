@@ -26,7 +26,7 @@ class _ImageViewState extends State<ImageView> {
 
   @override
   void dispose() {
-    // Restore the system UI mode
+    // Restore the system UI mode back to normal
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.bottom, SystemUiOverlay.top]);
     super.dispose();

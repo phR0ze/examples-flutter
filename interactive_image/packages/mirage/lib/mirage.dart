@@ -10,6 +10,7 @@ import 'image_view.dart';
 Future<Dialog?> showImage(BuildContext context, ImageProvider imageProvider) {
   return showDialog<Dialog>(
       context: context,
+      barrierColor: Colors.transparent,
       barrierDismissible: false,
       builder: (context) {
         return ImageView(imageProvider);
