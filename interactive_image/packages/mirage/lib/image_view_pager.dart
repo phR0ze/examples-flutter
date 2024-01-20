@@ -11,8 +11,8 @@ class MouseEnabledScrollBehavior extends MaterialScrollBehavior {
   Set<PointerDeviceKind> get dragDevices => PointerDeviceKind.values.toSet();
 }
 
-/// A dismissible paging system wrapping an interactive view to an image to provide
-/// pan and zoom capablities.
+/// A dismissible paging system wrapping the ImageView to provide swipe to scroll
+/// capabilities around a collection of ImageView widgets.
 ///
 /// ### Parameters
 /// - `imageProviderBuilder` - An ImageProviderBuilder for retrieving images.
@@ -33,7 +33,7 @@ class _ImageViewPagerState extends State<ImageViewPager> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage: 0);
+    _pageController = PageController(initialPage: widget.imageProviders.index);
 
     // Make the experience immersive
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
@@ -44,6 +44,7 @@ class _ImageViewPagerState extends State<ImageViewPager> {
     // Restore the system UI mode back to normal
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.bottom, SystemUiOverlay.top]);
+    _pageController.dispose();
     super.dispose();
   }
 
@@ -71,7 +72,8 @@ class _ImageViewPagerState extends State<ImageViewPager> {
                       ? const PageScrollPhysics()
                       : const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
-                    return ImageView(widget.imageProviders.get(context, index), onScale: (scale) {
+                    return ImageView(widget.imageProviders.get(context, index),
+                        onScaleEnd: (scale) {
                       setState(() {
                         // Disable page view swiping when the image is scaled
                         _dismissible = scale <= 1.0;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// An flexible way to get user supplied ImageProvider instances
+/// Provides a flexible way for users to supply their own ImageProvider instances
 /// for each image that is then passed to the to the [ImageViewPager] for display.
 abstract class ImageProviders {
   /// Index of the image provider that will be getting the image to display.
