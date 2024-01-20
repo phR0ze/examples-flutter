@@ -21,7 +21,8 @@ dependencies:
   collection: ^1.18.0
   permission_handler: ^11.1.0
   device_info_plus: ^9.1.1
-  easy_image_viewer: ^1.4.0
+  mirage:
+    path: ../interactive_image/packages/mirage
 
 dev_dependencies:
   flutter_test:

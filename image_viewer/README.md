@@ -14,6 +14,7 @@ Working on a simple image viewer in Flutter
   * [ ] Flow light/dark mode toggle throughout image pager (invert text color)
   * [ ] Text view is cutting off last character of longest line on right margin
   * [ ] Pinch to zoom only seems to work about half the time
+  * [ ] Create an about dialog to show the app version
 
 * Pre-release 0.0.2
   * [X] Using SafeArea to avoid hiding content behind controls on bottom of screen

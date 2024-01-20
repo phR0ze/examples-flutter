@@ -1,22 +1,22 @@
 import 'dart:io';
-import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
+import 'package:mirage/mirage.dart' as mirage;
 import '../const.dart';
 import 'common/text_image.dart';
 import '../model/exports.dart' as model;
 
-class ContentProvider extends EasyImageProvider {
-  @override
-  final int initialIndex;
+class ContentProvider extends mirage.ImageProviders {
   final model.FolderEntry folder;
-
-  ContentProvider(this.folder, index) : initialIndex = index;
-
-  @override
-  int get imageCount => folder.length;
+  ContentProvider(this.folder, this.index);
 
   @override
-  ImageProvider<Object> imageBuilder(BuildContext context, int index) {
+  final int index;
+
+  @override
+  int get length => folder.length;
+
+  @override
+  ImageProvider<Object> get(BuildContext context, int index) {
     switch (folder.entries[index]) {
       case model.ImageEntry entry:
         // Don't want to sample down here as then we can't zoom in with good quality

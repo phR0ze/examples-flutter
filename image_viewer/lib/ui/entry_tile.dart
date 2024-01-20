@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:io';
-import 'package:easy_image_viewer/easy_image_viewer.dart';
+import 'package:mirage/mirage.dart' as mirage;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../const.dart';
@@ -36,8 +36,7 @@ class EntryTile extends StatelessWidget {
                     ),
                   );
                 } else {
-                  showImageViewerPager(context, ContentProvider(folder, index!),
-                      swipeDismissible: true, doubleTapZoomable: true);
+                  mirage.showImageViewPager(context, ContentProvider(folder, index!));
                 }
               }
             : null,
