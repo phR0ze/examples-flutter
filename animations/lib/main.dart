@@ -1,5 +1,6 @@
+import 'package:animations/animate_grow_and_shrink.dart';
 import 'package:flutter/material.dart';
-import 'image_grow.dart';
+import 'animate_grow.dart';
 import 'page_button.dart';
 
 const assetImageFree = 'assets/images/pixabay-free.jpg';
@@ -39,8 +40,12 @@ class MyHomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             PageButton(
-              title: 'Grow container from 0 -> 400',
-              child: ImageGrow(),
+              title: 'Grow container',
+              child: AnimateGrow(),
+            ),
+            PageButton(
+              title: 'Grow and shrink container',
+              child: AnimateGrowAndShrink(),
             ),
           ],
         ),

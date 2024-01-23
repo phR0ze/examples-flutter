@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
-class ImageGrow extends StatefulWidget {
-  const ImageGrow({super.key});
+class AnimateGrowAndShrink extends StatefulWidget {
+  const AnimateGrowAndShrink({super.key});
 
   @override
-  State<ImageGrow> createState() => _LogoGrowState();
+  State<AnimateGrowAndShrink> createState() => _AnimateGrowAndShrinkState();
 }
 
-class _LogoGrowState extends State<ImageGrow> with SingleTickerProviderStateMixin {
+class _AnimateGrowAndShrinkState extends State<AnimateGrowAndShrink>
+    with SingleTickerProviderStateMixin {
   late Animation<double> animation;
   late AnimationController controller;
 
@@ -24,7 +25,16 @@ class _LogoGrowState extends State<ImageGrow> with SingleTickerProviderStateMixi
       // The listener is called each time the animation value changes and we
       // use that to trigger a rebuild by calling setState to draw the image from sizes
       // between 0 and 400.
-      ..addListener(() => setState(() {}));
+      ..addListener(() => setState(() {}))
+
+      // Add a status listener to reverse the animation when it completes
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          controller.reverse();
+        } else if (status == AnimationStatus.dismissed) {
+          controller.forward();
+        }
+      });
 
     // Start the animation running forward
     controller.forward();
@@ -41,30 +51,7 @@ class _LogoGrowState extends State<ImageGrow> with SingleTickerProviderStateMixi
     );
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Center(
-  //     child: Container(
-  //       margin: const EdgeInsets.symmetric(vertical: 10),
-  //       height: animation.value,
-  //       width: animation.value,
-  //       child: const FlutterLogo(),
-  //     ),
-  //   );
-  // }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Container(
-  //     width: animation.value,
-  //     height: animation.value,
-  //     decoration: const BoxDecoration(
-  //       image:
-  //           DecorationImage(image: AssetImage('assets/images/pixabay-free.jpg'), fit: BoxFit.cover),
-  //     ),
-  //   );
-  // }
-
+  // Controllers need to be disposed of to prevent memory leaks
   @override
   void dispose() {
     controller.dispose();
