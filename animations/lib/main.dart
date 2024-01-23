@@ -1,5 +1,7 @@
+import 'package:animations/animate_fade.dart';
 import 'package:animations/animate_grow_and_shrink.dart';
 import 'package:flutter/material.dart';
+import 'animate_fade_and_grow.dart';
 import 'animate_grow.dart';
 import 'page_button.dart';
 
@@ -46,6 +48,14 @@ class MyHomePage extends StatelessWidget {
             PageButton(
               title: 'Grow and shrink container',
               child: AnimateGrowAndShrink(),
+            ),
+            PageButton(
+              title: 'Fade in',
+              child: AnimateFade(),
+            ),
+            PageButton(
+              title: 'Fade and grow',
+              child: AnimateFadeAndGrow(),
             ),
           ],
         ),
