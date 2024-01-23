@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 
-class AnimateFade extends StatefulWidget {
-  const AnimateFade({super.key});
+class ExplicitFadeAndGrow extends StatefulWidget {
+  const ExplicitFadeAndGrow({super.key});
 
   @override
-  State<AnimateFade> createState() => _AnimateFadeState();
+  State<ExplicitFadeAndGrow> createState() => _ExplicitFadeAndGrowState();
 }
 
-class _AnimateFadeState extends State<AnimateFade> with SingleTickerProviderStateMixin {
-  late Animation<double> animation;
+class _ExplicitFadeAndGrowState extends State<ExplicitFadeAndGrow> with TickerProviderStateMixin {
+  late Animation<double> fade;
+  late Animation<double> grow;
   late AnimationController controller;
 
   @override
   void initState() {
     super.initState();
     controller = AnimationController(duration: const Duration(seconds: 2), vsync: this);
-    animation = Tween<double>(begin: 0.1, end: 1).animate(controller)
+    grow = Tween<double>(begin: 0, end: 400).animate(controller)
+      ..addListener(() => setState(() {}));
+    fade = Tween<double>(begin: 0.1, end: 1).animate(controller)
       ..addListener(() => setState(() {}));
     controller.forward();
   }
@@ -24,11 +27,11 @@ class _AnimateFadeState extends State<AnimateFade> with SingleTickerProviderStat
   Widget build(BuildContext context) {
     return Center(
       child: Opacity(
-        opacity: animation.value,
+        opacity: fade.value,
         child: Container(
           color: Colors.blue,
-          height: 400,
-          width: 400,
+          height: grow.value,
+          width: grow.value,
         ),
       ),
     );

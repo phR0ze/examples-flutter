@@ -1,11 +1,10 @@
-import 'package:animations/animate_fade.dart';
-import 'package:animations/animate_grow_and_shrink.dart';
 import 'package:flutter/material.dart';
-import 'animate_fade_and_grow.dart';
-import 'animate_grow.dart';
+import 'explicit_grow_and_shrink.dart';
+import 'explicit_fade_and_grow.dart';
+import 'implicit_hero.dart';
+import 'implicit_tween.dart';
+import 'implicit_container.dart';
 import 'page_button.dart';
-
-const assetImageFree = 'assets/images/pixabay-free.jpg';
 
 void main() {
   runApp(const MyApp());
@@ -42,20 +41,24 @@ class MyHomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             PageButton(
-              title: 'Grow container',
-              child: AnimateGrow(),
+              title: 'Implicit - Hero',
+              child: ImplicitHero(),
             ),
             PageButton(
-              title: 'Grow and shrink container',
-              child: AnimateGrowAndShrink(),
+              title: 'Implicit Tween',
+              child: ImplicitTween(),
             ),
             PageButton(
-              title: 'Fade in',
-              child: AnimateFade(),
+              title: 'Implicit - AnimatedContainer',
+              child: ImplicitContainer(),
             ),
             PageButton(
-              title: 'Fade and grow',
-              child: AnimateFadeAndGrow(),
+              title: 'Explicit - Grow and shrink container',
+              child: ExplicitGrowAndShrink(),
+            ),
+            PageButton(
+              title: 'Explicit - Fade and grow',
+              child: ExplicitFadeAndGrow(),
             ),
           ],
         ),

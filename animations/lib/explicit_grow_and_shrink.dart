@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class AnimateGrowAndShrink extends StatefulWidget {
-  const AnimateGrowAndShrink({super.key});
+class ExplicitGrowAndShrink extends StatefulWidget {
+  const ExplicitGrowAndShrink({super.key});
 
   @override
-  State<AnimateGrowAndShrink> createState() => _AnimateGrowAndShrinkState();
+  State<ExplicitGrowAndShrink> createState() => _ExplicitGrowAndShrinkState();
 }
 
-class _AnimateGrowAndShrinkState extends State<AnimateGrowAndShrink>
+class _ExplicitGrowAndShrinkState extends State<ExplicitGrowAndShrink>
     with SingleTickerProviderStateMixin {
   late Animation<double> animation;
   late AnimationController controller;
