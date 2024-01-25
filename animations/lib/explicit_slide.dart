@@ -45,10 +45,6 @@ class _ExplicitSlideState extends State<ExplicitSlide> with TickerProviderStateM
     _resetSlideAnimation();
   }
 
-  // Reset the slide animation in the direction of the drag. This is called when:
-  // 1. The controller is created
-  // 2. The drag starts
-  // 3. The drag changes direction
   void _resetSlideAnimation() {
     // Offset is used here to represent a 2D location on the screen. The slide tween
     // animation will be generating location values to move the child widget.
@@ -92,28 +88,6 @@ class _ExplicitSlideState extends State<ExplicitSlide> with TickerProviderStateM
     //   _dragDelta += details.primaryDelta!;
     // }
 
-    // Check if the direction has changed and reset the animation if so
-
-    // if (!_slideController.isAnimating) {
-
-    // Each widget has its own BuildContext i.e. context, which becomes the parent of the widget
-    // returned by the build function. This means that inside the build function the context is not
-    // the same as the context outside the build function. context provides information about the
-    // widget's render information and location in the widget tree.
-    //
-    // The context.size property provides the size of the widget's render box i.e. how much space is
-    // the widget taking up on the screen as a box. This value is only to be used outside the build
-    // function in callbacks like from GestureDetectors as the widget has already been rendered. The
-    // property gives use the size of the widget's render box.
-    //
-    // We can use the context.size to understand the available space that the widget can be
-    // moved and thus using the current drag delta we can calculate the percentage of the
-    // available space that the user has dragged the widget down. In this way we can manually
-    // tie the users movements to the slide animation and give the effect that the user is
-    // performing the slide movement directly rather than indirectly via a slide animation.
-
-    //print('MediaQuery: ${MediaQuery.of(context).size.height}');
-    //print('Context: ${context.size!.height}');
     _slideController.value = _dragDelta.abs() / context.size!.height;
     // }
   }
