@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class PageButton extends StatelessWidget {
+  final bool dialog;
   final String title;
   final Widget child;
-  const PageButton({required this.title, required this.child, super.key});
+  const PageButton({required this.title, required this.child, this.dialog = false, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,9 +12,18 @@ class PageButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: ElevatedButton(
         onPressed: () {
+          if (dialog) {
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              barrierColor: Colors.transparent,
+              builder: (context) => child,
+            );
+            return;
+          }
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (_) => Scaffold(
+              builder: (context) => Scaffold(
                 backgroundColor: Colors.black,
                 body: Stack(
                   children: <Widget>[

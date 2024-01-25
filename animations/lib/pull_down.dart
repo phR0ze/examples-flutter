@@ -9,13 +9,15 @@ enum _Fling { none, down, up }
 /// This is an interesting problem to solve as we need to detect the user's pointer movement and
 /// then translate that into an animation. This is not how animations normally work and makes for
 /// and interesting manual manipulation of the animation mechanisms.
-class ExplicitPullDown extends StatefulWidget {
-  const ExplicitPullDown({
+class PullDown extends StatefulWidget {
+  final Widget child;
+  const PullDown({
+    required this.child,
     super.key,
   });
 
   @override
-  State<ExplicitPullDown> createState() => _ExplicitPullDownState();
+  State<PullDown> createState() => _PullDownState();
 }
 
 // AnimationControllers linearly produce values from 0.0 to 1.0 over the given duration by default.
@@ -25,7 +27,7 @@ class ExplicitPullDown extends StatefulWidget {
 // user drags the pointer down the screen we calculate the drag distance in reference to the top of
 // the widget's original location which becomes a percentage that Tween<Offset> will then translate
 // into a offset that the SlideTransition will use to move the child widget.
-class _ExplicitPullDownState extends State<ExplicitPullDown> with TickerProviderStateMixin {
+class _PullDownState extends State<PullDown> with TickerProviderStateMixin {
   bool _draggedToEnd = false;
   double _dragDelta = 0.0;
   final GlobalKey _childKey = GlobalKey();
@@ -137,24 +139,7 @@ class _ExplicitPullDownState extends State<ExplicitPullDown> with TickerProvider
         // Wrapping the child in a known key allows us to refer to it later
         child: KeyedSubtree(
           key: _childKey,
-          child: Container(
-            color: Colors.blue,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 40),
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: !_draggedToEnd
-                    ? const Text(
-                        "Drag down up to 3/4",
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                      )
-                    : const Text(
-                        "You can drag it back up if you want",
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-              ),
-            ),
-          ),
+          child: widget.child,
         ),
       ),
     );
