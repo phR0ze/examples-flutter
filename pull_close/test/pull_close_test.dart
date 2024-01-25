@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:pull_down/pull_down.dart';
+import 'package:pull_close/pull_close.dart';
 
 void main() {
   test('adds one to input values', () {
