@@ -54,6 +54,8 @@ class _ImageViewPagerState extends State<ImageViewPager> {
       key: const Key('ImageViewPager'),
       direction: _dismissible ? DismissDirection.down : DismissDirection.none,
       resizeDuration: null,
+      // Potentially allows the InteractiveView to behave correctly
+      behavior: HitTestBehavior.translucent,
       onDismissed: (_) {
         Navigator.of(context).pop();
       },
