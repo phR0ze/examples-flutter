@@ -3,21 +3,27 @@ import 'package:flutter/material.dart';
 // Used as a fling indicator
 enum _Fling { none, down, up }
 
-/// Implements the ability for a user to pull down a widget and have it just stay that way until
-/// the user decideds to pull it back up or the page is refreshed.
+/// Implements the ability for a user to pull down a widget to close it.
 ///
 /// This is an interesting problem to solve as we need to detect the user's pointer movement and
 /// then translate that into an animation. This is not how animations normally work and makes for
 /// and interesting manual manipulation of the animation mechanisms.
-class PullDown extends StatefulWidget {
-  final Widget child;
-  const PullDown({
+class PullClose extends StatefulWidget {
+  const PullClose({
     required this.child,
+    this.onClosed,
     super.key,
   });
 
+  /// The widget below this widget in the tree
+  final Widget child;
+
+  /// Called when the widget has been closed. This must be handled to remove the closed widget from
+  /// the widget tree e.g. [Navigator.of(context).pop()].
+  final VoidCallback? onClosed;
+
   @override
-  State<PullDown> createState() => _PullDownState();
+  State<PullClose> createState() => _PullCloseState();
 }
 
 // AnimationControllers linearly produce values from 0.0 to 1.0 over the given duration by default.
@@ -27,7 +33,8 @@ class PullDown extends StatefulWidget {
 // user drags the pointer down the screen we calculate the drag distance in reference to the top of
 // the widget's original location which becomes a percentage that Tween<Offset> will then translate
 // into a offset that the SlideTransition will use to move the child widget.
-class _PullDownState extends State<PullDown> with TickerProviderStateMixin {
+class _PullCloseState extends State<PullClose> with TickerProviderStateMixin {
+  bool _isClosed = false;
   double _dragDelta = 0.0;
   final GlobalKey _childKey = GlobalKey();
 
@@ -80,9 +87,9 @@ class _PullDownState extends State<PullDown> with TickerProviderStateMixin {
     // Don't allow to drag past the top of the widget' original location
     if (_dragDelta < 0.0) _dragDelta = 0.0;
 
-    // Don't allow to drag past 3/4 of the widget's original height
-    if (_dragDelta >= height * 0.75) {
-      _dragDelta = height * 0.75;
+    // Trigger close action if user has pulled more than 50% down
+    if (_dragDelta >= height * 0.50) {
+      _handleOnClosed();
     }
 
     // Calculate the percentage the user intended to pull down the widget
@@ -113,12 +120,19 @@ class _PullDownState extends State<PullDown> with TickerProviderStateMixin {
         _controller.value = 0.0;
         _dragDelta = 0.0;
       case _Fling.down:
-        // Set close to 75%
-        _controller.value = 0.75;
-        _dragDelta = context.size!.height * 0.75;
+        _handleOnClosed();
       default:
         // Do nothing
         break;
+    }
+  }
+
+  // Call the onClosed callback if provided.
+  // Only allow it to be called once or it will close more than it should.
+  void _handleOnClosed() {
+    if (!_isClosed && widget.onClosed != null) {
+      _isClosed = true;
+      widget.onClosed!();
     }
   }
 

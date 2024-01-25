@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'explicit_grow_and_shrink.dart';
 import 'explicit_fade_and_grow.dart';
-import 'explicit_slide.dart';
 import 'implicit_hero.dart';
 import 'implicit_slide.dart';
 import 'implicit_tween.dart';
 import 'implicit_container.dart';
-import 'pull_down_page.dart';
+import 'pull_close.dart';
+import 'pull_page.dart';
 import 'page_button.dart';
 import 'pull_down.dart';
 
@@ -40,40 +40,44 @@ class MyHomePage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Animation examples'),
       ),
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            PageButton(
+            const PageButton(
               title: 'Implicit - Slide',
               child: ImplicitSlide(),
             ),
-            PageButton(
+            const PageButton(
               title: 'Implicit - Hero',
               child: ImplicitHero(),
             ),
-            PageButton(
+            const PageButton(
               title: 'Implicit Tween',
               child: ImplicitTween(),
             ),
-            PageButton(
+            const PageButton(
               title: 'Implicit - AnimatedContainer',
               child: ImplicitContainer(),
             ),
             PageButton(
-              title: 'Explicit - Slide ',
-              child: ExplicitSlide(),
+              dialog: true,
+              title: 'Explicit - Pull Close',
+              child: PullClose(
+                child: const PullPage(),
+                onClosed: () => Navigator.of(context).pop(),
+              ),
             ),
-            PageButton(
+            const PageButton(
               dialog: true,
               title: 'Explicit - Pull Down 3/4',
-              child: PullDown(child: PullDownPage()),
+              child: PullDown(child: PullPage()),
             ),
-            PageButton(
+            const PageButton(
               title: 'Explicit - Grow and shrink container',
               child: ExplicitGrowAndShrink(),
             ),
-            PageButton(
+            const PageButton(
               title: 'Explicit - Fade and grow',
               child: ExplicitFadeAndGrow(),
             ),
