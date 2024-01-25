@@ -16,6 +16,8 @@ class _ExplicitFadeAndGrowState extends State<ExplicitFadeAndGrow> with TickerPr
   void initState() {
     super.initState();
     controller = AnimationController(duration: const Duration(seconds: 2), vsync: this);
+
+    // Its perfectly fine to have a single controller for multiple animations
     grow = Tween<double>(begin: 0, end: 400).animate(controller)
       ..addListener(() => setState(() {}));
     fade = Tween<double>(begin: 0.1, end: 1).animate(controller)

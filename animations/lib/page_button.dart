@@ -13,10 +13,12 @@ class PageButton extends StatelessWidget {
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (_) => Container(
-                color: Colors.black,
-                child: Stack(
+              builder: (_) => Scaffold(
+                backgroundColor: Colors.black,
+                body: Stack(
                   children: <Widget>[
+                    // Consume full space with first layer so that the close button
+                    // can be positioned in top right.
                     SizedBox.expand(child: child),
 
                     // Draw the close button as back up

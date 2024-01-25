@@ -1,7 +1,10 @@
+import 'explicit_pull_down.dart';
 import 'package:flutter/material.dart';
 import 'explicit_grow_and_shrink.dart';
 import 'explicit_fade_and_grow.dart';
+import 'explicit_slide.dart';
 import 'implicit_hero.dart';
+import 'implicit_slide.dart';
 import 'implicit_tween.dart';
 import 'implicit_container.dart';
 import 'page_button.dart';
@@ -41,6 +44,10 @@ class MyHomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             PageButton(
+              title: 'Implicit - Slide',
+              child: ImplicitSlide(),
+            ),
+            PageButton(
               title: 'Implicit - Hero',
               child: ImplicitHero(),
             ),
@@ -51,6 +58,14 @@ class MyHomePage extends StatelessWidget {
             PageButton(
               title: 'Implicit - AnimatedContainer',
               child: ImplicitContainer(),
+            ),
+            PageButton(
+              title: 'Explicit - Slide ',
+              child: ExplicitSlide(),
+            ),
+            PageButton(
+              title: 'Explicit - Pull Down 3/4',
+              child: ExplicitPullDown(),
             ),
             PageButton(
               title: 'Explicit - Grow and shrink container',
