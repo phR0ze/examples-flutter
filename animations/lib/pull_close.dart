@@ -5,13 +5,21 @@ enum _Fling { none, down, up }
 
 /// Implements the ability for a user to pull down a widget to close it.
 ///
-/// This is an interesting problem to solve as we need to detect the user's pointer movement and
-/// then translate that into an animation. This is not how animations normally work and makes for
-/// and interesting manual manipulation of the animation mechanisms.
+/// ### Features
+/// - Pull or fling down to close
+/// - Pull or fling up to reset
+/// - Fade and scale down while pulled down
+/// - Callback when widget is closed
+///
+/// ### Parameters
+/// - [child] - The widget to provide the pull close animation for.
+/// - [onClosed] - Called when the widget has been closed.
+/// - [threshold] - The percentage of the widget's height user must pull down to trigger close
 class PullClose extends StatefulWidget {
   const PullClose({
     required this.child,
     this.onClosed,
+    this.threshold = 0.30,
     super.key,
   });
 
@@ -21,6 +29,9 @@ class PullClose extends StatefulWidget {
   /// Called when the widget has been closed. This must be handled to remove the closed widget from
   /// the widget tree e.g. [Navigator.of(context).pop()].
   final VoidCallback? onClosed;
+
+  /// The percentage of the widget's height that the user must pull down to trigger a close.
+  final double threshold;
 
   @override
   State<PullClose> createState() => _PullCloseState();
@@ -33,13 +44,17 @@ class PullClose extends StatefulWidget {
 // user drags the pointer down the screen we calculate the drag distance in reference to the top of
 // the widget's original location which becomes a percentage that Tween<Offset> will then translate
 // into a offset that the SlideTransition will use to move the child widget.
+//
+// As a result we get manually controlled animations without every running any animation effects
+// from the controller.
 class _PullCloseState extends State<PullClose> with TickerProviderStateMixin {
   bool _isClosed = false;
   double _dragDelta = 0.0;
   final GlobalKey _childKey = GlobalKey();
 
-  // Slide animation
+  // Animations
   late Animation<Offset> _slideAnimation;
+  late Animation<double> _percentAnimation;
   late AnimationController _controller;
 
   @override
@@ -55,6 +70,14 @@ class _PullCloseState extends State<PullClose> with TickerProviderStateMixin {
       begin: Offset.zero,
       end: const Offset(0.0, 1.0),
     ).animate(_controller);
+
+    // Reusing this [double] animation for both the Scale and Fade transitions as they both use a
+    // percentage type value to scale down and reduce opacity respectively. For example a value of
+    // 0.25 would mean scaling down to 25% of the original size or reducing opacity to 25%.
+    // By setting this to start at 1.0 and scale down to 0.0 we get a faster change in scale and
+    // opacity relative to the slide down but will never be allowed to get too small as the slide
+    // effect will trigger a close before that happens.
+    _percentAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(_controller);
   }
 
   // Reset the slide animation in the direction of the drag.
@@ -87,13 +110,14 @@ class _PullCloseState extends State<PullClose> with TickerProviderStateMixin {
     // Don't allow to drag past the top of the widget' original location
     if (_dragDelta < 0.0) _dragDelta = 0.0;
 
-    // Trigger close action if user has pulled more than 50% down
-    if (_dragDelta >= height * 0.50) {
+    // Trigger close action if user has pulled more than the threshold
+    if (_dragDelta >= height * widget.threshold) {
       _handleOnClosed();
     }
 
-    // Calculate the percentage the user intended to pull down the widget
-    _controller.value = _dragDelta / height;
+    // Calculate the percentage the user pulled down the widget
+    final percentage = _dragDelta / height;
+    _controller.value = percentage;
   }
 
   // End of a drag is only useful in that a user may have flung the widget down or up.
@@ -116,7 +140,7 @@ class _PullCloseState extends State<PullClose> with TickerProviderStateMixin {
     // Adjust the controller for a fling
     switch (fling) {
       case _Fling.up:
-        // Set close to 0%
+        // Reset animations
         _controller.value = 0.0;
         _dragDelta = 0.0;
       case _Fling.down:
@@ -144,12 +168,18 @@ class _PullCloseState extends State<PullClose> with TickerProviderStateMixin {
       //behavior: widget.behavior,
 
       // Child widget to provide slide animation for.
-      child: SlideTransition(
-        position: _slideAnimation,
-        // Wrapping the child in a known key allows us to refer to it later
-        child: KeyedSubtree(
-          key: _childKey,
-          child: widget.child,
+      child: FadeTransition(
+        opacity: _percentAnimation,
+        child: ScaleTransition(
+          scale: _percentAnimation,
+          child: SlideTransition(
+            position: _slideAnimation,
+            // Wrapping the child in a known key allows us to refer to it later
+            child: KeyedSubtree(
+              key: _childKey,
+              child: widget.child,
+            ),
+          ),
         ),
       ),
     );
