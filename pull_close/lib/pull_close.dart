@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 /// Implements the ability for a user to pull down a widget to close it.
@@ -18,6 +17,7 @@ class PullClose extends StatefulWidget {
     required this.child,
     this.onClosed,
     this.threshold = 0.30,
+    this.behavior = HitTestBehavior.opaque,
     super.key,
   });
 
@@ -30,6 +30,11 @@ class PullClose extends StatefulWidget {
 
   /// The percentage of the widget's height that the user must pull down to trigger a close.
   final double threshold;
+
+  /// How to behave during hit tests.
+  ///
+  /// This defaults to [HitTestBehavior.opaque].
+  final HitTestBehavior behavior;
 
   @override
   State<PullClose> createState() => _PullCloseState();
@@ -172,7 +177,7 @@ class _PullCloseState extends State<PullClose> with TickerProviderStateMixin {
       onVerticalDragStart: _handleVerticalDragStart,
       onVerticalDragUpdate: _handleVerticalDragUpdate,
       onVerticalDragEnd: _handleVerticalDragEnd,
-      //behavior: widget.behavior,
+      behavior: widget.behavior,
 
       // Child widget to provide slide animation for.
       child: FadeTransition(
