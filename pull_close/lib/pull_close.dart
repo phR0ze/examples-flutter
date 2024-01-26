@@ -1,7 +1,5 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
-// Used as a fling indicator
-enum _Fling { none, down, up }
 
 /// Implements the ability for a user to pull down a widget to close it.
 ///
@@ -48,7 +46,11 @@ class PullClose extends StatefulWidget {
 // As a result we get manually controlled animations without every running any animation effects
 // from the controller.
 class _PullCloseState extends State<PullClose> with TickerProviderStateMixin {
-  bool _isClosed = false;
+  // I had weid animation jank when not protecting callbacks with these two flags.
+  // There must be timing issues with the gesture callbacks.
+  bool _started = false;
+  bool _closed = false;
+
   double _dragDelta = 0.0;
   final GlobalKey _childKey = GlobalKey();
 
@@ -80,10 +82,18 @@ class _PullCloseState extends State<PullClose> with TickerProviderStateMixin {
     _percentAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(_controller);
   }
 
+  // Track when the user started to drage the pointer
+  void _handleVerticalDragStart(DragStartDetails details) {
+    if (_closed) return;
+    _started = true;
+  }
+
   // Reset the slide animation in the direction of the drag.
   // Offset is used here to represent a 2D location on the screen. The slide tween
   // animation will be generating location values to move the child widget.
   void _handleVerticalDragUpdate(DragUpdateDetails details) {
+    if (!_started || _closed) return;
+
     // Each widget has its own BuildContext i.e. context, which becomes the parent of the widget
     // returned by the build function. This means that inside the build function the context is not
     // the same as the context outside the build function. context provides information about the
@@ -103,6 +113,7 @@ class _PullCloseState extends State<PullClose> with TickerProviderStateMixin {
     // This is the same technique that SlideTransition uses to understand where to animate the
     // movement of the child widget to i.e. 0.25 means move down 25% of the widget's height.
     final height = context.size!.height;
+    final prevDelta = _dragDelta;
 
     // Accumulate the primary axis drag delta
     _dragDelta += details.primaryDelta!;
@@ -110,9 +121,13 @@ class _PullCloseState extends State<PullClose> with TickerProviderStateMixin {
     // Don't allow to drag past the top of the widget' original location
     if (_dragDelta < 0.0) _dragDelta = 0.0;
 
+    // No change can be immediately returned without affecting the animation
+    // this will stop the animations from interferring with other GestureDetectors.
+    if (prevDelta == _dragDelta) return;
+
     // Trigger close action if user has pulled more than the threshold
     if (_dragDelta >= height * widget.threshold) {
-      _handleOnClosed();
+      return _handleOnClosed();
     }
 
     // Calculate the percentage the user pulled down the widget
@@ -120,49 +135,41 @@ class _PullCloseState extends State<PullClose> with TickerProviderStateMixin {
     _controller.value = percentage;
   }
 
-  // End of a drag is only useful in that a user may have flung the widget down or up.
-  // In which case we can ensure the widget is either fully down or fully up.
+  // End of a drag is only useful in that a user may have flung the widget down in which case we
+  // should closer the widget. Otherwise we should reset the widget.
   void _handleVerticalDragEnd(DragEndDetails details) {
+    if (!_started || _closed) return;
+
     const double minFlingVelocity = 700.0;
     const double minFlingVelocityDelta = 400.0;
     final double vx = details.velocity.pixelsPerSecond.dx;
     final double vy = details.velocity.pixelsPerSecond.dy;
 
-    // Determine if this was a fling that ended the drag
-    var fling = _Fling.down;
-    if (vy == 0 || vy.abs() - vx.abs() < minFlingVelocityDelta || vy.abs() < minFlingVelocity) {
-      // Flings that are not true enough in one direction or are too slow don't count
-      fling = _Fling.none;
-    } else if (vy < 0) {
-      fling = _Fling.up;
-    }
-
-    // Adjust the controller for a fling
-    switch (fling) {
-      case _Fling.up:
-        // Reset animations
-        _controller.value = 0.0;
-        _dragDelta = 0.0;
-      case _Fling.down:
-        _handleOnClosed();
-      default:
-        // Do nothing
-        break;
+    if (vy > 0 && vy.abs() - vx.abs() > minFlingVelocityDelta && vy.abs() > minFlingVelocity) {
+      _handleOnClosed();
+    } else {
+      _started = false;
+      _dragDelta = 0.0;
+      _controller.value = 0.0;
     }
   }
 
   // Call the onClosed callback if provided.
-  // Only allow it to be called once or it will close more than it should.
   void _handleOnClosed() {
-    if (!_isClosed && widget.onClosed != null) {
-      _isClosed = true;
-      widget.onClosed!();
+    // Only allow it to be called once to avoid calling onClosed multiple times
+    if (_started && !_closed) {
+      _started = false;
+      _closed = true;
+
+      // Execute the client's callback
+      if (widget.onClosed != null) widget.onClosed!();
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onVerticalDragStart: _handleVerticalDragStart,
       onVerticalDragUpdate: _handleVerticalDragUpdate,
       onVerticalDragEnd: _handleVerticalDragEnd,
       //behavior: widget.behavior,

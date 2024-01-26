@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pull_close/pull_close.dart';
 import 'const.dart';
-import 'image_view.dart';
+import 'image_pager.dart';
 
 void main() => runApp(const MyApp());
 
@@ -21,9 +21,16 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+final _imageProviders = List.generate(15, (_) => const AssetImage(Const.assetFreeImage));
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -38,10 +45,8 @@ class HomePage extends StatelessWidget {
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
             padding: const EdgeInsets.all(20),
-            children: List.generate(15, (index) {
-              return ImageView(
-                index: index,
-                image: Const.assetFreeImage,
+            children: _imageProviders.asMap().entries.map((x) {
+              return InkWell(
                 onTap: () {
                   showDialog(
                     context: context,
@@ -50,16 +55,23 @@ class HomePage extends StatelessWidget {
                     builder: (context) {
                       return PullClose(
                         onClosed: () => Navigator.of(context).pop(),
-                        child: ImageView(
-                          index: index,
-                          image: Const.assetFreeImage,
-                        ),
+                        child: ImagePager(x.key, _imageProviders),
                       );
                     },
                   );
                 },
+                child: Stack(
+                  children: <Widget>[
+                    SizedBox.expand(child: Image(image: x.value, fit: BoxFit.cover)),
+                    Positioned(
+                      left: 5,
+                      bottom: 0,
+                      child: Text(x.key.toString(), style: const TextStyle(color: Colors.white)),
+                    )
+                  ],
+                ),
               );
-            }),
+            }).toList(),
           ),
         ),
       ),

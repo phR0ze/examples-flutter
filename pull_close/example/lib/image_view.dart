@@ -1,26 +1,56 @@
 import 'package:flutter/material.dart';
 
-class ImageView extends StatelessWidget {
-  final int index;
-  final String image;
-  final VoidCallback? onTap;
+/// An interactive view to an image providing various gesture capablities.
+///
+/// ### Features
+/// - Pinch to zoom
+/// - Drag to pan once zoomed
+/// - Double tap to zoom in and out
+///
+/// ### Parameters
+/// - `imageProvider` - The image provider to get the image from to display.
+/// - `onScale` - Callback that triggers when the image is scaled.
+class ImageView extends StatefulWidget {
+  const ImageView(this.imageProvider, {Key? key, this.onScaleEnd}) : super(key: key);
 
-  const ImageView({
-    required this.image,
-    required this.index,
-    this.onTap,
-    super.key,
-  });
+  /// The image provider to get the image from to display.
+  final ImageProvider imageProvider;
+
+  /// Callback that triggers when the image is scaled. Useful for disabling
+  /// other gesture based actions while the image is scaled.
+  final void Function(double)? onScaleEnd;
+
+  @override
+  State<ImageView> createState() => _ImageViewState();
+}
+
+class _ImageViewState extends State<ImageView> {
+  final _transformationController = TransformationController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _transformationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Material(
-        child: InkWell(
-          onTap: onTap,
-          child: Image.asset(image, fit: BoxFit.contain),
-        ),
-      ),
+    return InteractiveViewer(
+      // Default of 0.8 and 2.5 are odd and restrictive
+      minScale: 1.0,
+      maxScale: 10.0,
+      transformationController: _transformationController,
+      child: Image(image: widget.imageProvider),
+      onInteractionEnd: (_) {
+        if (widget.onScaleEnd != null) {
+          widget.onScaleEnd!(_transformationController.value.getMaxScaleOnAxis());
+        }
+      },
     );
   }
 }
