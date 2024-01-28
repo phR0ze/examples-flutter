@@ -53,10 +53,7 @@ class _HomePageState extends State<HomePage> {
                     barrierColor: Colors.transparent,
                     barrierDismissible: false,
                     builder: (context) {
-                      return PullClose(
-                        onClosed: () => Navigator.of(context).pop(),
-                        child: ImagePager(x.key, _imageProviders),
-                      );
+                      return ImagePager(x.key, _imageProviders);
                     },
                   );
                 },

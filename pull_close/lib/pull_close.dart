@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 /// ### Features
 /// - Pull or fling down to close
 /// - Pull or fling up to reset
+/// - Able to be disabled and not respond to user input
 /// - Fade and scale down while pulled down
 /// - Callback when widget is closed
 ///
@@ -16,8 +17,9 @@ class PullClose extends StatefulWidget {
   const PullClose({
     required this.child,
     this.onClosed,
+    this.disabled = false,
     this.threshold = 0.30,
-    this.behavior = HitTestBehavior.opaque,
+    this.behavior = HitTestBehavior.deferToChild,
     super.key,
   });
 
@@ -27,6 +29,9 @@ class PullClose extends StatefulWidget {
   /// Called when the widget has been closed. This must be handled to remove the closed widget from
   /// the widget tree e.g. [Navigator.of(context).pop()].
   final VoidCallback? onClosed;
+
+  /// Whether the widget is disabled and should not respond to user input.
+  final bool disabled;
 
   /// The percentage of the widget's height that the user must pull down to trigger a close.
   final double threshold;
@@ -89,7 +94,7 @@ class _PullCloseState extends State<PullClose> with TickerProviderStateMixin {
 
   // Track when the user started to drage the pointer
   void _handleVerticalDragStart(DragStartDetails details) {
-    if (_closed) return;
+    if (widget.disabled || _closed) return;
     _started = true;
   }
 
@@ -97,7 +102,7 @@ class _PullCloseState extends State<PullClose> with TickerProviderStateMixin {
   // Offset is used here to represent a 2D location on the screen. The slide tween
   // animation will be generating location values to move the child widget.
   void _handleVerticalDragUpdate(DragUpdateDetails details) {
-    if (!_started || _closed) return;
+    if (widget.disabled || !_started || _closed) return;
 
     // Each widget has its own BuildContext i.e. context, which becomes the parent of the widget
     // returned by the build function. This means that inside the build function the context is not
@@ -143,7 +148,7 @@ class _PullCloseState extends State<PullClose> with TickerProviderStateMixin {
   // End of a drag is only useful in that a user may have flung the widget down in which case we
   // should closer the widget. Otherwise we should reset the widget.
   void _handleVerticalDragEnd(DragEndDetails details) {
-    if (!_started || _closed) return;
+    if (widget.disabled || !_started || _closed) return;
 
     const double minFlingVelocity = 700.0;
     const double minFlingVelocityDelta = 400.0;
