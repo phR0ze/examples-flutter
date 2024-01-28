@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'const.dart';
 import 'multi_gesture.dart';
 
 void main() {
@@ -30,14 +29,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String _fling = 'none';
+  FlingDetails? _fling;
+  double _flingVelocity = 700.0;
+  double _flingVelocityDelta = 400.0;
 
   @override
   Widget build(BuildContext context) {
     return MultiGesture(
+      velocity: _flingVelocity,
+      velocityDelta: _flingVelocityDelta,
       onFling: (fling) {
         setState(() {
-          _fling = fling.toString();
+          _fling = fling;
         });
       },
       child: Scaffold(
@@ -47,14 +50,99 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: Stack(
           children: <Widget>[
-            SizedBox.expand(
-              child: Image.asset(Const.assetFreeImage),
+            const SizedBox.expand(),
+            Positioned(
+              left: 20,
+              top: 20,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Row(
+                    children: <Widget>[
+                      const Text('Fling Velocity: ', style: TextStyle(fontSize: 18)),
+                      Text(_flingVelocity.toString(),
+                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      const SizedBox(width: 10),
+                      ClipOval(
+                        child: Material(
+                          color: Colors.blue,
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                _flingVelocity += 10;
+                              });
+                            },
+                            child: const SizedBox(width: 25, height: 25, child: Icon(Icons.add)),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      ClipOval(
+                        child: Material(
+                          color: Colors.blue,
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                _flingVelocity -= 10;
+                              });
+                            },
+                            child: const SizedBox(width: 25, height: 25, child: Icon(Icons.remove)),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: <Widget>[
+                      const Text('Fling Velocity Delta: '),
+                      Text(_flingVelocityDelta.toString(),
+                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      const SizedBox(width: 10),
+                      ClipOval(
+                        child: Material(
+                          color: Colors.blue,
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                _flingVelocityDelta += 10;
+                              });
+                            },
+                            child: const SizedBox(width: 25, height: 25, child: Icon(Icons.add)),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      ClipOval(
+                        child: Material(
+                          color: Colors.blue,
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                _flingVelocityDelta -= 10;
+                              });
+                            },
+                            child: const SizedBox(width: 25, height: 25, child: Icon(Icons.remove)),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
             Positioned(
-              top: 20,
               left: 20,
-              child:
-                  Text(_fling, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              bottom: 20,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Result: ${_fling != null ? _fling!.fling.toString() : 'null'}',
+                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  Text('Velocity: ${_fling != null ? _fling!.velocity.toString() : 'null'}',
+                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                ],
+              ),
             )
           ],
         ),

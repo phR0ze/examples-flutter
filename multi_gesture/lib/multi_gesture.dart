@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
-const double _kMinFlingVelocity = 700.0;
-const double _kMinFlingVelocityDelta = 400.0;
+class FlingDetails {
+  FlingDetails({required this.fling, required this.velocity});
+  final Fling fling;
+  final Velocity velocity;
+}
 
 enum Fling {
   none,
@@ -14,10 +17,20 @@ enum Fling {
 class MultiGesture extends StatefulWidget {
   // Devloper notes
   // * Calculate flings in the end functions
-  final Function(Fling)? onFling;
-  const MultiGesture({required this.child, this.onFling, super.key});
+  const MultiGesture(
+      {required this.child,
+      this.onFling,
+      this.velocity = 700.0,
+      this.velocityDelta = 400.0,
+      super.key});
 
   final Widget child;
+
+  final Function(FlingDetails)? onFling;
+
+  final double velocity;
+
+  final double velocityDelta;
 
   @override
   State<MultiGesture> createState() => _MultiGestureState();
@@ -31,14 +44,14 @@ class _MultiGestureState extends State<MultiGesture> {
   void _handleVerticalDragEnd(DragEndDetails details) {
     final fling = _checkFling(details.velocity);
     if (widget.onFling != null) {
-      widget.onFling!(fling);
+      widget.onFling!(FlingDetails(fling: fling, velocity: details.velocity));
     }
   }
 
   void _handleHorizontalDragEnd(DragEndDetails details) {
     final fling = _checkFling(details.velocity);
     if (widget.onFling != null) {
-      widget.onFling!(fling);
+      widget.onFling!(FlingDetails(fling: fling, velocity: details.velocity));
     }
   }
 
@@ -46,16 +59,15 @@ class _MultiGestureState extends State<MultiGesture> {
   Fling _checkFling(Velocity velocity) {
     final double vx = velocity.pixelsPerSecond.dx;
     final double vy = velocity.pixelsPerSecond.dy;
-    print('vx: $vx, vy: $vy');
 
     // First check if the velocity is in the right direction then if it was fast enough.
-    if (vy.abs() - vx.abs() > _kMinFlingVelocityDelta && vy.abs() > _kMinFlingVelocity) {
+    if (vy.abs() - vx.abs() > widget.velocityDelta && vy.abs() > widget.velocity) {
       if (vy > 0) {
         return Fling.down;
       } else {
         return Fling.up;
       }
-    } else if (vx.abs() - vy.abs() > _kMinFlingVelocityDelta && vx.abs() > _kMinFlingVelocity) {
+    } else if (vx.abs() - vy.abs() > widget.velocityDelta && vx.abs() > widget.velocity) {
       if (vx > 0) {
         return Fling.left;
       } else {
