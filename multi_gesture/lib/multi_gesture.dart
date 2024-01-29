@@ -69,9 +69,9 @@ class _MultiGestureState extends State<MultiGesture> {
       }
     } else if (vx.abs() - vy.abs() > widget.velocityDelta && vx.abs() > widget.velocity) {
       if (vx > 0) {
-        return Fling.left;
-      } else {
         return Fling.right;
+      } else {
+        return Fling.left;
       }
     }
 
